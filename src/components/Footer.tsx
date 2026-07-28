@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="bg-[#004077] text-white pt-12 pb-6 border-t border-blue-900">
-      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
         {/* Col 1: About & Info */}
         <div>
           <div className="mb-4 inline-block bg-white rounded-lg px-3 py-2 shadow-md">
@@ -64,7 +64,20 @@ export const Footer: React.FC = () => {
           </ul>
         </div>
 
-        {/* Col 4: Support Hotline */}
+        {/* Col 4: External Links */}
+        <div>
+          <h4 className="text-sm font-bold uppercase mb-4 tracking-wide border-b border-white/20 pb-2">
+            Trang Liên Kết
+          </h4>
+          <ul className="text-xs space-y-2 text-white/80">
+            <li><a href="https://www.euroowindow.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Eurowindow-Nhà Cung Cấp Cửa Hàng Đầu Việt Nam</a></li>
+            <li><a href="https://www.eurowindowvn.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Eurowindow-Chi Nhánh Miền Nam</a></li>
+            <li><a href="https://www.eurowindowhcm.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Cửa Eurowindow Hồ Chí Minh</a></li>
+            <li><a href="https://www.eurowindow.top/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Cửa Eurowindow Miền Nam</a></li>
+          </ul>
+        </div>
+
+        {/* Col 5: Support Hotline */}
         <div>
           <h4 className="text-sm font-bold uppercase mb-4 tracking-wide border-b border-white/20 pb-2">
             {t('footer_support')}
