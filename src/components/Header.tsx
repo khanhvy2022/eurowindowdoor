@@ -126,6 +126,10 @@ export const Header: React.FC = () => {
                   <span className="w-1.5 h-1.5 rounded-full bg-[#005ba7]" />
                   {isEn ? 'Factories & Showrooms Network' : 'Hệ thống Nhà máy & Showroom'}
                 </Link>
+                <Link href="/tai-lieu" className="flex items-center gap-2 px-4 py-2 hover:bg-blue-50 hover:text-[#005ba7]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#005ba7]" />
+                  {isEn ? 'Technical Documents' : 'Tài liệu kỹ thuật & Hồ sơ'}
+                </Link>
               </div>
             </div>
 

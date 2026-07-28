@@ -14,17 +14,18 @@ interface DocumentItem {
   type: string;
   size: string;
   year: string;
+  url: string;
 }
 
 const documentsList: DocumentItem[] = [
-  { id: '1', title: 'Catalogue Tổng quan Giải pháp Cửa Eurowindow 2026', titleEn: 'Eurowindow Door Solutions Overview Catalogue 2026', category: 'Catalogue', type: 'PDF', size: '12.5 MB', year: '2026' },
-  { id: '2', title: 'Báo giá Chi tiết Cửa nhôm & Vách nhôm kính lớn', titleEn: 'Detailed Price List for Aluminum Doors & Large Glass Curtain Walls', category: 'Báo giá', type: 'PDF', size: '4.8 MB', year: '2026' },
-  { id: '3', title: 'Catalogue Cửa sổ & Cửa đi uPVC tiêu chuẩn Châu Âu', titleEn: 'European Standard uPVC Window & Door Catalogue', category: 'Catalogue', type: 'PDF', size: '8.1 MB', year: '2026' },
-  { id: '4', title: 'Hướng dẫn Sử dụng & Bảo dưỡng Cửa Eurowindow', titleEn: 'Eurowindow Doors User & Maintenance Guide', category: 'Hướng dẫn', type: 'PDF', size: '2.1 MB', year: '2025' },
-  { id: '5', title: 'Chứng nhận Tiêu chuẩn Châu Âu ISO 9001:2015 DNV UKAS', titleEn: 'ISO 9001:2015 DNV UKAS European Standard Certificate', category: 'Chứng nhận', type: 'PDF', size: '3.5 MB', year: '2025' },
-  { id: '6', title: 'Catalogue Cửa gỗ tự nhiên & Cửa gỗ chống cháy', titleEn: 'Natural Wooden Doors & Fireproof Wooden Doors Catalogue', category: 'Catalogue', type: 'PDF', size: '9.3 MB', year: '2026' },
-  { id: '7', title: 'Báo giá Cửa thông minh thế hệ mới tích hợp công nghệ 4.0', titleEn: 'Next-Gen Smart Door 4.0 Technology Price List', category: 'Báo giá', type: 'PDF', size: '5.2 MB', year: '2026' },
-  { id: '8', title: 'Chứng nhận Thương Hiệu Quốc Gia 14 năm liên tiếp', titleEn: '14 Consecutive Years Vietnam Value National Brand Certificate', category: 'Chứng nhận', type: 'PDF', size: '1.8 MB', year: '2026' }
+  { id: '1', title: 'Catalogue Eurowindow 2025', titleEn: 'Eurowindow Catalogue 2025', category: 'Catalogue', type: 'PDF', size: '25 MB', year: '2025', url: 'https://sudospaces.com/eurowindow/2025/12/catalogue-eurowindow-2025.pdf' },
+  { id: '2', title: 'Catalogue Sản Phẩm Mới 2025', titleEn: 'New Products Catalogue 2025', category: 'Catalogue', type: 'PDF', size: '18 MB', year: '2025', url: 'https://sudospaces.com/eurowindow/2025/12/catalogue-san-pham-moi-2025.pdf' },
+  { id: '3', title: 'Tờ Rơi Nhôm Có Cầu Cách Nhiệt', titleEn: 'Thermally Broken Aluminum Leaflet', category: 'Catalogue', type: 'PDF', size: '4.2 MB', year: '2021', url: 'https://sudospaces.com/eurowindow/2021/11/to-roi-nhom-co-cau-thiet-ke.pdf' },
+  { id: '4', title: 'Tờ Rơi Bảng Màu Sơn Nhôm', titleEn: 'Aluminum Color Palette Leaflet', category: 'Catalogue', type: 'PDF', size: '2.5 MB', year: '2021', url: 'https://sudospaces.com/eurowindow/2021/11/to-roi-mau-mau-son.pdf' },
+  { id: '5', title: 'Tờ Rơi Cửa Cuốn', titleEn: 'Roller Shutters Leaflet', category: 'Catalogue', type: 'PDF', size: '3.1 MB', year: '2021', url: 'https://sudospaces.com/eurowindow/2021/11/to-roi-cua-cuon-a4-2020.pdf' },
+  { id: '6', title: 'Tờ Rơi Cửa Gỗ', titleEn: 'Wooden Doors Leaflet', category: 'Catalogue', type: 'PDF', size: '5.6 MB', year: '2021', url: 'https://sudospaces.com/eurowindow/2021/11/to-roi-cua-go.pdf' },
+  { id: '7', title: 'Tờ Rơi Rèm Trong Hộp Kính', titleEn: 'Blinds Inside Glass Leaflet', category: 'Catalogue', type: 'PDF', size: '2.8 MB', year: '2022', url: 'https://sudospaces.com/eurowindow/2022/03/to-roi-sp-rem-trong-hop-kinh.pdf' },
+  { id: '8', title: 'Sổ Tay Văn Hóa Doanh Nghiệp', titleEn: 'Corporate Culture Handbook', category: 'Hướng dẫn', type: 'PDF', size: '8.4 MB', year: '2024', url: 'https://sudospaces.com/eurowindow/2024/10/final-so-tay-a5-small.pdf' }
 ];
 
 const docCategories = ['Tất cả', 'Catalogue', 'Báo giá', 'Hướng dẫn', 'Chứng nhận'];
@@ -49,10 +50,15 @@ export default function TaiLieuPage() {
   const handleDownload = (doc: DocumentItem) => {
     const docName = language === 'ENG' ? doc.titleEn : doc.title;
     setDownloadingDoc(docName);
+    
+    // Open PDF in new tab to view/download
+    if (doc.url) {
+      window.open(doc.url, '_blank');
+    }
+    
     setTimeout(() => {
       setDownloadingDoc(null);
-      alert(language === 'ENG' ? `Successfully downloaded: ${docName}` : `Đã tải xuống thành công tài liệu: ${docName}`);
-    }, 1000);
+    }, 800);
   };
 
   return (
