@@ -50,9 +50,9 @@ export const HeroBanner: React.FC = () => {
       </div>
 
       <LazyMotion features={domMax}>
-      <div className="relative w-full overflow-hidden">
+      <div className="relative w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[550px] xl:h-[650px] overflow-hidden">
         <m.div 
-          className="flex cursor-grab active:cursor-grabbing"
+          className="flex h-full cursor-grab active:cursor-grabbing"
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.2}
@@ -63,16 +63,15 @@ export const HeroBanner: React.FC = () => {
           {slidesData.map((slide, idx) => (
             <div
               key={slide.id}
-              className="relative min-w-full flex-shrink-0"
+              className="relative min-w-full h-full flex-shrink-0"
             >
               <ImageWithFallback
                 src={slide.image}
                 alt={slide.alt}
-                width={1920}
-                height={800}
+                fill
                 sizes="100vw"
                 priority={idx === 0}
-                className="w-full h-auto object-cover transform scale-100 group-hover:scale-[1.02] transition-transform duration-1000"
+                className="object-cover object-center w-full h-full transform scale-100 group-hover:scale-[1.02] transition-transform duration-1000"
               />
             </div>
           ))}
@@ -133,7 +132,7 @@ export const HeroBanner: React.FC = () => {
       </button>
 
       {/* Slide Pagination Dots */}
-      <div className="absolute bottom-5 lg:bottom-16 left-1/2 -translate-x-1/2 z-30 flex items-center space-x-2 bg-slate-950/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-xl">
+      <div className="absolute bottom-5 lg:bottom-16 left-1/2 -translate-x-1/2 z-30 hidden md:flex items-center space-x-2 bg-slate-950/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-xl">
         {slidesData.map((_, idx) => (
           <button
             key={idx}

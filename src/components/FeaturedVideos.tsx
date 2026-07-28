@@ -100,11 +100,11 @@ export const FeaturedVideos: React.FC = () => {
         </div>
 
         {/* Video Carousel Track */}
-        <div className="relative px-6">
+        <div className="relative group">
           {/* Left Arrow Button */}
           <button
             onClick={handlePrev}
-            className="btn-tactile absolute -left-2 top-1/2 -translate-y-1/2 w-11 h-11 bg-white/30 hover:bg-amber-400 hover:text-gray-900 text-white rounded-full flex items-center justify-center shadow-xl z-30 backdrop-blur-md transition-all hover:scale-110 active:scale-95"
+            className="btn-tactile absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 bg-white/40 sm:bg-white/30 hover:bg-amber-400 hover:text-gray-900 text-white rounded-full flex items-center justify-center shadow-xl z-30 backdrop-blur-md transition-all hover:scale-110 active:scale-95 opacity-80 sm:opacity-0 group-hover:opacity-100"
             aria-label="Previous Video"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,10 +113,10 @@ export const FeaturedVideos: React.FC = () => {
           </button>
 
           {/* Cards Container */}
-          <div className="-mx-3">
+          <div className="w-full">
             <div 
               ref={scrollRef}
-              className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 pt-2 hide-scrollbar"
+              className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 pt-2 hide-scrollbar gap-4"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               {videos.map((vid, idx) => {
@@ -124,7 +124,7 @@ export const FeaturedVideos: React.FC = () => {
                 return (
                   <div
                     key={`${vid.id}-${idx}`}
-                    className="w-[90%] sm:w-1/2 lg:w-1/4 flex-shrink-0 px-3 snap-center sm:snap-start"
+                    className="w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] flex-shrink-0 snap-center"
                   >
                     <div
                       onClick={() => setSelectedVideo(vid)}
@@ -164,7 +164,7 @@ export const FeaturedVideos: React.FC = () => {
           {/* Right Arrow Button */}
           <button
             onClick={handleNext}
-            className="btn-tactile absolute -right-2 top-1/2 -translate-y-1/2 w-11 h-11 bg-white/30 hover:bg-amber-400 hover:text-gray-900 text-white rounded-full flex items-center justify-center shadow-xl z-30 backdrop-blur-md transition-all hover:scale-110 active:scale-95"
+            className="btn-tactile absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 bg-white/40 sm:bg-white/30 hover:bg-amber-400 hover:text-gray-900 text-white rounded-full flex items-center justify-center shadow-xl z-30 backdrop-blur-md transition-all hover:scale-110 active:scale-95 opacity-80 sm:opacity-0 group-hover:opacity-100"
             aria-label="Next Video"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
