@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { m, LazyMotion, domAnimation, AnimatePresence } from 'framer-motion';
+import { m, LazyMotion, domMax, AnimatePresence } from 'framer-motion';
 import { slidesData } from '@/data/slides';
 import { ImageWithFallback } from './ImageWithFallback';
 import { useLanguage } from '@/context/LanguageContext';
@@ -28,30 +28,18 @@ export const HeroBanner: React.FC = () => {
     return () => clearInterval(interval);
   }, [handleNext]);
 
-  // Touch handlers
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX - touchEndX;
-
-    if (diff > 50) {
+  // Framer Motion Drag Handler
+  const handleDragEnd = (e: any, { offset, velocity }: any) => {
+    const swipe = offset.x;
+    if (swipe < -50) {
       handleNext();
-    } else if (diff < -50) {
+    } else if (swipe > 50) {
       handlePrev();
     }
-    setTouchStartX(null);
   };
 
   return (
-    <section 
-      className="relative w-full overflow-hidden mt-[105px] group select-none font-sans"
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-    >
+    <section className="relative w-full overflow-hidden mt-[105px] group select-none font-sans touch-pan-y">
       {/* Top Countdown Progress Bar */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-white/20 z-40">
         <div 
@@ -61,12 +49,16 @@ export const HeroBanner: React.FC = () => {
         />
       </div>
 
-      {/* Sliding Track */}
-      <LazyMotion features={domAnimation}>
+      <LazyMotion features={domMax}>
       <div className="relative w-full h-[360px] sm:h-[500px] md:h-[600px] lg:h-[680px]">
-        <div 
-          className="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        <m.div 
+          className="flex h-full cursor-grab active:cursor-grabbing"
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.2}
+          onDragEnd={handleDragEnd}
+          animate={{ translateX: `-${currentIndex * 100}%` }}
+          transition={{ type: "spring", stiffness: 300, damping: 30, duration: 0.5 }}
         >
           {slidesData.map((slide, idx) => (
             <div
@@ -126,7 +118,7 @@ export const HeroBanner: React.FC = () => {
               </AnimatePresence>
             </div>
           ))}
-        </div>
+        </m.div>
       </div>
       </LazyMotion>
 

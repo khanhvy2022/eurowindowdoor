@@ -39,7 +39,7 @@ export const Header: React.FC = () => {
         <div className="container mx-auto px-4 flex items-center justify-between">
           
           {/* Left: Contact Info & Hotline */}
-          <div className="flex items-center space-x-4 md:space-x-6 whitespace-nowrap">
+          <div className="flex items-center space-x-2 md:space-x-6 whitespace-nowrap">
             <a href="tel:0966994338" className="flex items-center gap-1.5 hover:text-amber-400 transition-colors">
               <svg className="w-3 h-3 text-amber-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/>
@@ -89,7 +89,7 @@ export const Header: React.FC = () => {
         <div className="container mx-auto px-4 flex items-center justify-between">
           
           {/* Logo Brand */}
-          <Link href="/" className="flex items-center flex-shrink-0 mr-8 xl:mr-16 2xl:mr-20 group">
+          <Link href="/" className="flex items-center flex-shrink-0 mr-4 xl:mr-16 2xl:mr-20 group">
             <Image 
               src="/images/logo-high-res.png"
               alt="Eurowindow Logo"
@@ -260,7 +260,7 @@ export const Header: React.FC = () => {
           </nav>
 
           {/* Right Action Section */}
-          <div className="flex items-center space-x-2 xl:space-x-3 flex-shrink-0 ml-4 xl:ml-8">
+          <div className="flex items-center space-x-2 xl:space-x-3 flex-shrink-0 ml-2 xl:ml-8">
             
             {/* Search Pill Input */}
             <form 
