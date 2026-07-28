@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 import { slidesData } from '@/data/slides';
 import { ImageWithFallback } from './ImageWithFallback';
 import { useLanguage } from '@/context/LanguageContext';
@@ -85,35 +86,43 @@ export const HeroBanner: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-transparent to-transparent pointer-events-none hidden md:block" />
 
               {/* Floating Hero Content Glass Box */}
-              <div className={`absolute bottom-20 sm:bottom-24 left-6 sm:left-14 max-w-2xl text-white z-20 transition-all duration-700 delay-100 ${
-                idx === currentIndex ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-              }`}>
-                <div className="inline-flex items-center gap-2 bg-[#005ba7]/90 backdrop-blur-md text-amber-300 text-[11px] font-extrabold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3 shadow-lg border border-blue-400/30">
-                  <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                  <span>EUROWINDOW ARCHITECTURAL SOLUTIONS</span>
-                </div>
-                
-                <h1 className="text-2xl sm:text-4xl md:text-5xl font-black drop-shadow-md leading-[1.15] mb-5 tracking-tight text-white">
-                  {language === 'ENG' ? slide.titleEn : slide.title}
-                </h1>
-
-                <div className="flex flex-wrap items-center gap-4">
-                  <Link
-                    href={slide.link}
-                    className="inline-flex items-center px-7 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-slate-950 font-black text-xs uppercase tracking-wider rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 gap-2"
+              <AnimatePresence>
+                {idx === currentIndex && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    className="absolute bottom-20 sm:bottom-24 left-6 sm:left-14 max-w-2xl text-white z-20"
                   >
-                    <span>{t('hero_discover')}</span>
-                    <span className="text-base">&rarr;</span>
-                  </Link>
+                    <div className="inline-flex items-center gap-2 bg-[#005ba7]/90 backdrop-blur-md text-amber-300 text-[11px] font-extrabold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3 shadow-lg border border-blue-400/30">
+                      <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+                      <span>EUROWINDOW ARCHITECTURAL SOLUTIONS</span>
+                    </div>
+                    
+                    <h1 className="text-2xl sm:text-4xl md:text-5xl font-black drop-shadow-md leading-[1.15] mb-5 tracking-tight text-white">
+                      {language === 'ENG' ? slide.titleEn : slide.title}
+                    </h1>
 
-                  <Link
-                    href="/lien-he"
-                    className="inline-flex items-center px-7 py-3.5 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold text-xs uppercase tracking-wider rounded-full border border-white/30 transition-all hover:scale-105"
-                  >
-                    {language === 'ENG' ? 'Get A Quote' : 'Nhận Báo Giá'}
-                  </Link>
-                </div>
-              </div>
+                    <div className="flex flex-wrap items-center gap-4">
+                      <Link
+                        href={slide.link}
+                        className="inline-flex items-center px-7 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-slate-950 font-black text-xs uppercase tracking-wider rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 gap-2"
+                      >
+                        <span>{t('hero_discover')}</span>
+                        <span className="text-base">&rarr;</span>
+                      </Link>
+
+                      <Link
+                        href="/lien-he"
+                        className="inline-flex items-center px-7 py-3.5 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold text-xs uppercase tracking-wider rounded-full border border-white/30 transition-all hover:scale-105"
+                      >
+                        {language === 'ENG' ? 'Get A Quote' : 'Nhận Báo Giá'}
+                      </Link>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           ))}
         </div>

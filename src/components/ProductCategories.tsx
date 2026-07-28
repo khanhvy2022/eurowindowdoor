@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { ArrowRightIcon } from './icons';
 import { ImageWithFallback } from './ImageWithFallback';
 import { useLanguage } from '@/context/LanguageContext';
@@ -49,7 +50,13 @@ export const ProductCategories: React.FC = () => {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white via-slate-50 to-white relative overflow-hidden font-sans">
+    <motion.section 
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8 }}
+      className="py-24 bg-gradient-to-b from-white via-slate-50 to-white relative overflow-hidden font-sans"
+    >
       
       {/* Background Decorative Ambient Orbs */}
       <div className="absolute top-10 right-10 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-3xl -z-0 pointer-events-none" />
@@ -58,7 +65,13 @@ export const ProductCategories: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
           <span className="text-[#005ba7] font-bold text-xs uppercase tracking-widest bg-blue-100/80 px-4 py-1.5 rounded-full inline-block mb-3 shadow-sm border border-blue-200/50">
             {t('prod_badge')}
           </span>
@@ -68,13 +81,17 @@ export const ProductCategories: React.FC = () => {
           <p className="text-slate-600 text-sm mt-4 leading-relaxed max-w-xl mx-auto">
             {t('prod_desc')}
           </p>
-        </div>
+        </motion.div>
 
         {/* 3 Main Product Category Cards Grid + Right Highlight Column */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
-          {categories.map((cat) => (
-            <div 
+          {categories.map((cat, idx) => (
+            <motion.div 
               key={cat.id} 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: idx * 0.1 }}
               className="group relative h-[470px] rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 bg-white border border-slate-200/80 flex flex-col justify-between"
             >
               {/* Image & Gradient Backdrop */}
@@ -130,11 +147,17 @@ export const ProductCategories: React.FC = () => {
                   </Link>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
 
           {/* Right Smart Product High-Tech Column */}
-          <div className="bg-gradient-to-br from-[#005ba7] via-blue-900 to-slate-950 rounded-3xl p-6 text-white flex flex-col justify-between shadow-2xl border border-blue-800/50 relative overflow-hidden">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="bg-gradient-to-br from-[#005ba7] via-blue-900 to-slate-950 rounded-3xl p-6 text-white flex flex-col justify-between shadow-2xl border border-blue-800/50 relative overflow-hidden"
+          >
             <div className="absolute -top-12 -right-12 w-40 h-40 bg-amber-400/20 rounded-full blur-2xl pointer-events-none" />
 
             <div>
@@ -183,11 +206,11 @@ export const ProductCategories: React.FC = () => {
                 <ArrowRightIcon className="w-4 h-4" />
               </Link>
             </div>
-          </div>
+          </motion.div>
 
         </div>
 
       </div>
-    </section>
+    </motion.section>
   );
 };

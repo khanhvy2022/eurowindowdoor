@@ -85,7 +85,7 @@ export const Header: React.FC = () => {
       </div>
 
       {/* 2. MAIN HEADER NAVIGATION BAR */}
-      <div className={`bg-white transition-all duration-300 ${isScrolled ? 'shadow-md py-2' : 'shadow-sm py-3'}`}>
+      <div className={`transition-all duration-300 backdrop-blur-md ${isScrolled ? 'bg-white/95 shadow-md py-2' : 'bg-white/90 shadow-sm py-3'}`}>
         <div className="container mx-auto px-4 flex items-center justify-between">
           
           {/* Logo Brand */}

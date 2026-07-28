@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ImageWithFallback } from './ImageWithFallback';
 import { projectsData } from '@/data/projects';
 import { useLanguage } from '@/context/LanguageContext';
@@ -30,11 +31,17 @@ export const FeaturedProjects: React.FC = () => {
   };
 
   return (
-    <section className="py-16 bg-white font-sans">
+    <section className="py-16 bg-white font-sans overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-8">
           {/* Left Text Column (4 cols) */}
-          <div className="lg:col-span-4 space-y-4">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-4 space-y-4"
+          >
             <h2 className="text-3xl font-extrabold text-[#005ba7] uppercase relative inline-block pb-3">
               {t('proj_title')}
               <span className="absolute bottom-0 left-0 w-16 h-1 bg-[#005ba7]" />
@@ -52,10 +59,16 @@ export const FeaturedProjects: React.FC = () => {
                 {t('proj_all_btn')}
               </Link>
             </div>
-          </div>
+          </motion.div>
 
           {/* Middle Category Tabs (3 cols) */}
-          <div className="lg:col-span-3 flex flex-col space-y-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-3 flex flex-col space-y-4"
+          >
             {/* Tab 1 */}
             <button
               onClick={() => handleCategoryChange('quoc-gia')}
@@ -112,7 +125,7 @@ export const FeaturedProjects: React.FC = () => {
                 {t('proj_tab_civil')}
               </span>
             </button>
-          </div>
+          </motion.div>
 
           {/* Right Main Featured Project Card (5 cols) */}
           {mainProject && (() => {
@@ -120,8 +133,23 @@ export const FeaturedProjects: React.FC = () => {
             const mainLocation = isEn && mainProject.locationEn ? mainProject.locationEn : mainProject.location;
 
             return (
-              <div className="lg:col-span-5 relative h-80 lg:h-[340px] rounded-2xl overflow-hidden shadow-md group">
-                <Link href={`/cong-trinh-tieu-bieu/${mainProject.slug}`} className="relative block w-full h-full">
+              <motion.div 
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="lg:col-span-5 relative h-80 lg:h-[340px] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 group"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={mainProject.id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="relative block w-full h-full"
+                  >
+                    <Link href={`/cong-trinh-tieu-bieu/${mainProject.slug}`} className="relative block w-full h-full">
                   <ImageWithFallback
                     key={mainProject.id}
                     src={mainProject.image}
@@ -132,14 +160,16 @@ export const FeaturedProjects: React.FC = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-                  {/* Title Overlay */}
-                  <div className="absolute bottom-6 left-6 right-16 text-white">
-                    <h3 className="text-base font-bold uppercase tracking-wide drop-shadow-sm group-hover:text-amber-300 transition-colors">
-                      {mainName}
-                    </h3>
-                    <p className="text-xs text-amber-300 mt-0.5">{mainLocation} • {mainProject.year}</p>
-                  </div>
-                </Link>
+                    {/* Title Overlay */}
+                    <div className="absolute bottom-6 left-6 right-16 text-white">
+                      <h3 className="text-base font-bold uppercase tracking-wide drop-shadow-sm group-hover:text-amber-300 transition-colors">
+                        {mainName}
+                      </h3>
+                      <p className="text-xs text-amber-300 mt-0.5">{mainLocation} • {mainProject.year}</p>
+                    </div>
+                  </Link>
+                </motion.div>
+                </AnimatePresence>
 
                 {/* Vertical Dots Slider Container */}
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 bg-[#005ba7] rounded-full px-2.5 py-4 flex flex-col space-y-2.5 shadow-lg z-20">
@@ -156,19 +186,26 @@ export const FeaturedProjects: React.FC = () => {
                     />
                   ))}
                 </div>
-              </div>
+              </motion.div>
             );
           })()}
         </div>
 
         {/* Bottom 2 Grid Project Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {secondaryProjects.map((proj) => {
+          {secondaryProjects.map((proj, idx) => {
             const projName = isEn && proj.nameEn ? proj.nameEn : proj.name;
             const projLocation = isEn && proj.locationEn ? proj.locationEn : proj.location;
 
             return (
-              <div key={proj.id} className="relative h-64 rounded-2xl overflow-hidden shadow-md group">
+              <motion.div 
+                key={proj.id} 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: idx * 0.2 }}
+                className="relative h-64 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl group"
+              >
                 <Link href={`/cong-trinh-tieu-bieu/${proj.slug}`} className="relative block w-full h-full">
                   <ImageWithFallback
                     src={proj.image}
@@ -191,7 +228,7 @@ export const FeaturedProjects: React.FC = () => {
                     </p>
                   </div>
                 </Link>
-              </div>
+              </motion.div>
             );
           })}
         </div>

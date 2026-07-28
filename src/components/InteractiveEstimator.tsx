@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 
 export const InteractiveEstimator: React.FC = () => {
@@ -57,7 +58,13 @@ export const InteractiveEstimator: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-14"
+        >
           <span className="text-amber-300 font-bold text-xs uppercase tracking-widest bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full inline-block mb-3 border border-white/20">
             {isEn ? 'EUROWINDOW CALCULATOR TOOL' : 'BỘ TÍNH TOÁN DỰ TOÁN & CÁCH ÂM'}
           </span>
@@ -69,13 +76,19 @@ export const InteractiveEstimator: React.FC = () => {
               ? 'Select your door requirements to calculate noise insulation (dB reduction), electric savings %, and estimated budget.' 
               : 'Tùy chọn loại cửa và loại kính để tính toán khả năng giảm tiếng ồn, tiết kiệm điện năng điều hòa và dự toán ngân sách.'}
           </p>
-        </div>
+        </motion.div>
 
         {/* Interactive Estimator Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-5xl mx-auto">
           
           {/* Controls Panel (7 Cols) */}
-          <div className="lg:col-span-7 bg-white/10 backdrop-blur-xl border border-white/20 p-7 rounded-3xl space-y-6 shadow-2xl">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-7 bg-white/10 backdrop-blur-xl border border-white/20 p-7 rounded-3xl space-y-6 shadow-2xl"
+          >
             
             {/* Step 1: Select Door Type */}
             <div>
@@ -156,10 +169,16 @@ export const InteractiveEstimator: React.FC = () => {
               </div>
             </div>
 
-          </div>
+          </motion.div>
 
           {/* Results Summary Box (5 Cols) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 border border-amber-400/40 p-7 rounded-3xl flex flex-col justify-between shadow-2xl relative">
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="lg:col-span-5 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 border border-amber-400/40 p-7 rounded-3xl flex flex-col justify-between shadow-2xl relative"
+          >
             <div>
               <span className="text-[10px] font-black uppercase tracking-widest bg-amber-400 text-slate-950 px-3 py-1 rounded-full inline-block mb-4 shadow">
                 {isEn ? 'CALCULATED METRICS' : 'KẾT QUẢ DỰ TOÁN NĂNG LƯỢNG'}
@@ -209,7 +228,7 @@ export const InteractiveEstimator: React.FC = () => {
               </a>
             </div>
 
-          </div>
+          </motion.div>
 
         </div>
 

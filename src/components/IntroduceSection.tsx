@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { ImageWithFallback } from './ImageWithFallback';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -13,19 +14,31 @@ export const IntroduceSection: React.FC = () => {
       <div className="container mx-auto px-4">
         
         {/* Header Title */}
-        <div className="text-center max-w-2xl mx-auto mb-14">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-2xl mx-auto mb-14"
+        >
           <span className="text-[#005ba7] font-bold text-xs uppercase tracking-widest bg-blue-50 px-4 py-1.5 rounded-full inline-block mb-3">
             {t('intro_badge')}
           </span>
           <h2 className="home_title text-3xl sm:text-4xl font-extrabold text-[#005ba7] uppercase">
             {t('intro_title')}
           </h2>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center max-w-6xl mx-auto">
           
           {/* Left Column: Rich Text Content */}
-          <div className="lg:col-span-7 space-y-6 text-gray-700 text-sm sm:text-base leading-relaxed">
+          <motion.div 
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="lg:col-span-7 space-y-6 text-gray-700 text-sm sm:text-base leading-relaxed"
+          >
             <div className="bg-gradient-to-r from-blue-50 to-slate-50 border-l-4 border-[#005ba7] p-5 rounded-r-2xl shadow-sm">
               <p className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
                 {t('intro_highlight')}
@@ -63,10 +76,16 @@ export const IntroduceSection: React.FC = () => {
                 <span>&rarr;</span>
               </Link>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: High-Res Glassmorphic Image with Floating Stat Badge */}
-          <div className="lg:col-span-5 relative flex justify-center">
+          <motion.div 
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="lg:col-span-5 relative flex justify-center"
+          >
             <div className="relative w-full max-w-md h-[400px] rounded-3xl overflow-hidden shadow-2xl border-8 border-white ring-1 ring-slate-100 group">
               <ImageWithFallback
                 src="/images/vach-nhom-kinh-lon-eurowindow-mat-dung.png.webp"
@@ -94,7 +113,7 @@ export const IntroduceSection: React.FC = () => {
               </div>
             </div>
 
-          </div>
+          </motion.div>
 
         </div>
       </div>
