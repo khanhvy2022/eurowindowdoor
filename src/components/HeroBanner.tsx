@@ -127,8 +127,8 @@ export const HeroBanner: React.FC = () => {
             </div>
           ))}
         </div>
-      </LazyMotion>
       </div>
+      </LazyMotion>
 
       {/* Floating Bottom Quick Features Ribbon */}
       <div className="absolute bottom-4 left-6 right-6 hidden lg:flex items-center justify-between z-30 bg-slate-950/60 backdrop-blur-xl border border-white/15 px-8 py-3.5 rounded-2xl shadow-2xl text-white text-xs">
