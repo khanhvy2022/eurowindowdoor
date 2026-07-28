@@ -147,7 +147,7 @@ export const InteractiveEstimator: React.FC = () => {
             {/* Step 3: Area Slider */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="text-xs font-black uppercase tracking-wider text-amber-300">
+                <label htmlFor="area-slider" className="text-xs font-black uppercase tracking-wider text-amber-300">
                   3. {isEn ? 'Total Surface Area' : 'Tổng Diện Tích Cửa'}
                 </label>
                 <span className="text-sm font-black text-amber-300 font-mono bg-white/15 px-3 py-1 rounded-lg">
@@ -155,6 +155,7 @@ export const InteractiveEstimator: React.FC = () => {
                 </span>
               </div>
               <input 
+                id="area-slider"
                 type="range" 
                 min="5" 
                 max="200" 

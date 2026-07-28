@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, LazyMotion, domAnimation, AnimatePresence } from 'framer-motion';
 import { slidesData } from '@/data/slides';
 import { ImageWithFallback } from './ImageWithFallback';
 import { useLanguage } from '@/context/LanguageContext';
@@ -62,6 +62,7 @@ export const HeroBanner: React.FC = () => {
       </div>
 
       {/* Sliding Track */}
+      <LazyMotion features={domAnimation}>
       <div className="relative w-full h-[360px] sm:h-[500px] md:h-[600px] lg:h-[680px]">
         <div 
           className="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
@@ -88,7 +89,7 @@ export const HeroBanner: React.FC = () => {
               {/* Floating Hero Content Glass Box */}
               <AnimatePresence>
                 {idx === currentIndex && (
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
@@ -120,12 +121,13 @@ export const HeroBanner: React.FC = () => {
                         {language === 'ENG' ? 'Get A Quote' : 'Nhận Báo Giá'}
                       </Link>
                     </div>
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
             </div>
           ))}
         </div>
+      </LazyMotion>
       </div>
 
       {/* Floating Bottom Quick Features Ribbon */}
