@@ -6,8 +6,7 @@ import { ProductCategories } from '@/components/ProductCategories';
 
 // Below-the-fold: lazy load to reduce initial bundle
 const InteractiveEstimator = dynamic(() =>
-  import('@/components/InteractiveEstimator').then(m => ({ default: m.InteractiveEstimator })),
-  { ssr: false }
+  import('@/components/InteractiveEstimator').then(m => ({ default: m.InteractiveEstimator }))
 );
 const FeaturedProjects = dynamic(() =>
   import('@/components/FeaturedProjects').then(m => ({ default: m.FeaturedProjects }))
@@ -19,8 +18,7 @@ const NotableAchievements = dynamic(() =>
   import('@/components/NotableAchievements').then(m => ({ default: m.NotableAchievements }))
 );
 const FeaturedVideos = dynamic(() =>
-  import('@/components/FeaturedVideos').then(m => ({ default: m.FeaturedVideos })),
-  { ssr: false }
+  import('@/components/FeaturedVideos').then(m => ({ default: m.FeaturedVideos }))
 );
 const NewsSection = dynamic(() =>
   import('@/components/NewsSection').then(m => ({ default: m.NewsSection }))
@@ -29,8 +27,7 @@ const Footer = dynamic(() =>
   import('@/components/Footer').then(m => ({ default: m.Footer }))
 );
 const FloatingContact = dynamic(() =>
-  import('@/components/FloatingContact').then(m => ({ default: m.FloatingContact })),
-  { ssr: false }
+  import('@/components/FloatingContact').then(m => ({ default: m.FloatingContact }))
 );
 
 export default function Home() {
