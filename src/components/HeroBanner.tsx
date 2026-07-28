@@ -135,7 +135,7 @@ export const HeroBanner: React.FC = () => {
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-[#005ba7] flex items-center justify-center font-bold text-amber-300">✓</div>
           <div>
-            <div className="font-extrabold uppercase text-[11px]">{language === 'ENG' ? '22+ Years Leadership' : '22+ Năm Dẫn Đầu Market'}</div>
+            <div className="font-extrabold uppercase text-[11px]">{language === 'ENG' ? '22+ Years Leadership' : '22+ Năm Dẫn Đầu Thị Trường'}</div>
             <div className="text-[10px] text-slate-300">{language === 'ENG' ? 'European standard quality' : 'Tiêu chuẩn chất lượng Châu Âu'}</div>
           </div>
         </div>
