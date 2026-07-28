@@ -186,8 +186,8 @@ export const HeroBanner: React.FC = () => {
           <button
             key={idx}
             onClick={() => setCurrentIndex(idx)}
-            className={`h-2.5 rounded-full transition-all duration-500 ease-out ${
-              idx === currentIndex ? 'bg-amber-400 w-8' : 'bg-white/50 hover:bg-white w-2.5'
+            className={`h-4 rounded-full transition-all duration-500 ease-out ${
+              idx === currentIndex ? 'bg-amber-400 w-10' : 'bg-white/50 hover:bg-white w-4'
             }`}
             aria-label={`Go to slide ${idx + 1}`}
           />

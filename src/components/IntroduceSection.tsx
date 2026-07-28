@@ -98,7 +98,7 @@ export const IntroduceSection: React.FC = () => {
               
               <div className="absolute bottom-6 left-6 right-6 text-white">
                 <span className="text-xs font-bold uppercase tracking-wider text-amber-300">{t('intro_img_arch_label')}</span>
-                <h4 className="text-lg font-extrabold">{t('intro_img_arch_name')}</h4>
+                <h3 className="text-lg font-extrabold">{t('intro_img_arch_name')}</h3>
               </div>
             </div>
 

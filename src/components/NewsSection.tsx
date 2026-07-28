@@ -71,7 +71,7 @@ export const NewsSection: React.FC = () => {
                     </div>
 
                     <div className="p-5">
-                      <div className="flex items-center gap-2 text-[11px] font-medium text-slate-400 mb-2">
+                      <div className="flex items-center gap-2 text-[11px] font-medium text-slate-600 mb-2">
                         <span>📅 {item.date}</span>
                       </div>
 

@@ -12,6 +12,7 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   alt,
   fallbackSrc = '/images/eurowindow-banner-cua-nhom-kinh-trang-chu.png.webp',
   className,
+  priority,
   ...props
 }) => {
   const [imgSrc, setImgSrc] = useState(src);
@@ -28,6 +29,9 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
       src={hasError ? fallbackSrc : imgSrc}
       alt={alt || 'Eurowindow'}
       className={className || ''}
+      priority={priority}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchPriority={priority ? 'high' : 'auto'}
       onError={() => {
         setHasError(true);
       }}

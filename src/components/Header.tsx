@@ -270,8 +270,8 @@ export const Header: React.FC = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-3 pr-7 py-1 text-[11px] bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:ring-1 focus:ring-[#005ba7] focus:bg-white text-gray-700 placeholder-gray-400 shadow-none"
               />
-              <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#005ba7]">
-                <SearchIcon className="w-3 h-3" />
+              <button type="submit" aria-label="Tìm kiếm sản phẩm" className="absolute right-1 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#005ba7] p-2">
+                <SearchIcon className="w-4 h-4" />
               </button>
             </form>
 
@@ -324,8 +324,8 @@ export const Header: React.FC = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-3 pr-8 py-2 text-xs bg-gray-100 border border-gray-200 rounded-lg text-gray-800"
             />
-            <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-              <SearchIcon className="w-4 h-4" />
+            <button type="submit" aria-label="Tìm kiếm sản phẩm" className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 p-3">
+              <SearchIcon className="w-5 h-5" />
             </button>
           </form>
 

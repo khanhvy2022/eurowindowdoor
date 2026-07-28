@@ -181,6 +181,10 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdLocalBusiness) }}
         />
+        {/* Preconnect to Google Tag Manager for faster load */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.google-analytics.com" />
       </head>
       <body className={`${jakarta.className} antialiased bg-white text-gray-900`}>
         {/* Google Analytics - Optimized lazy load */}
