@@ -1,16 +1,37 @@
+import dynamic from 'next/dynamic';
 import { Header } from '@/components/Header';
 import { HeroBanner } from '@/components/HeroBanner';
 import { IntroduceSection } from '@/components/IntroduceSection';
 import { ProductCategories } from '@/components/ProductCategories';
-import { InteractiveEstimator } from '@/components/InteractiveEstimator';
-import { FeaturedProjects } from '@/components/FeaturedProjects';
-import { AdsBanner } from '@/components/AdsBanner';
-import { NotableAchievements } from '@/components/NotableAchievements';
 
-import { FeaturedVideos } from '@/components/FeaturedVideos';
-import { NewsSection } from '@/components/NewsSection';
-import { Footer } from '@/components/Footer';
-import { FloatingContact } from '@/components/FloatingContact';
+// Below-the-fold: lazy load to reduce initial bundle
+const InteractiveEstimator = dynamic(() =>
+  import('@/components/InteractiveEstimator').then(m => ({ default: m.InteractiveEstimator })),
+  { ssr: false }
+);
+const FeaturedProjects = dynamic(() =>
+  import('@/components/FeaturedProjects').then(m => ({ default: m.FeaturedProjects }))
+);
+const AdsBanner = dynamic(() =>
+  import('@/components/AdsBanner').then(m => ({ default: m.AdsBanner }))
+);
+const NotableAchievements = dynamic(() =>
+  import('@/components/NotableAchievements').then(m => ({ default: m.NotableAchievements }))
+);
+const FeaturedVideos = dynamic(() =>
+  import('@/components/FeaturedVideos').then(m => ({ default: m.FeaturedVideos })),
+  { ssr: false }
+);
+const NewsSection = dynamic(() =>
+  import('@/components/NewsSection').then(m => ({ default: m.NewsSection }))
+);
+const Footer = dynamic(() =>
+  import('@/components/Footer').then(m => ({ default: m.Footer }))
+);
+const FloatingContact = dynamic(() =>
+  import('@/components/FloatingContact').then(m => ({ default: m.FloatingContact })),
+  { ssr: false }
+);
 
 export default function Home() {
   return (
@@ -23,7 +44,6 @@ export default function Home() {
       <FeaturedProjects />
       <AdsBanner />
       <NotableAchievements />
-
       <FeaturedVideos />
       <NewsSection />
       <Footer />
