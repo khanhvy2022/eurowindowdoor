@@ -11,12 +11,12 @@ export const metadata: Metadata = {
     'Nhà máy Eurowindow'
   ],
   alternates: {
-    canonical: 'https://eurowindow.biz/gioi-thieu',
+    canonical: 'https://eurowindowdoor.com/gioi-thieu',
   },
   openGraph: {
     title: 'Giới Thiệu Eurowindow - 23 Năm Tiên Phong Công Nghệ Châu Âu',
     description: 'Hành trình tiên phong kiến tạo không gian sống xanh và hiện đại.',
-    url: 'https://eurowindow.biz/gioi-thieu',
+    url: 'https://eurowindowdoor.com/gioi-thieu',
   },
 };
 

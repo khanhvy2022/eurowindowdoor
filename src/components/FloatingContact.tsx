@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { submitToGoogleForms } from '@/utils/googleForms';
 
 const PhoneIcon = () => (
   <svg viewBox="0 0 24 24" fill="white" className="w-6 h-6">
@@ -30,11 +31,34 @@ export const FloatingContact: React.FC = () => {
   const { t } = useLanguage();
   const [modalOpen, setModalOpen] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 600);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get('name') as string,
+      phone: formData.get('phone') as string,
+      message: formData.get('product') as string, // Map product selection to message
+    };
+
+    const success = await submitToGoogleForms(data);
+    setIsSubmitting(false);
+
+    if (success) {
+      alert('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi trong thời gian sớm nhất.');
+      setModalOpen(false);
+    } else {
+      alert('Có lỗi xảy ra, vui lòng thử lại sau.');
+    }
+  };
 
   return (
     <>
@@ -135,37 +159,38 @@ export const FloatingContact: React.FC = () => {
 
             {/* Form */}
             <form
-              onSubmit={(e) => { e.preventDefault(); alert(t('float_modal_badge')); setModalOpen(false); }}
+              onSubmit={handleSubmit}
               className="px-6 py-5 space-y-4"
             >
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">{t('float_label_name')}</label>
-                <input type="text" placeholder={t('float_ph_name')} required
+                <input name="name" type="text" placeholder={t('float_ph_name')} required
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#005ba7]/40 focus:border-[#005ba7] focus:bg-white text-gray-800 transition-all" />
               </div>
 
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">{t('float_label_phone')}</label>
-                <input type="tel" placeholder={t('float_ph_phone')} required
+                <input name="phone" type="tel" placeholder={t('float_ph_phone')} required
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#005ba7]/40 focus:border-[#005ba7] focus:bg-white text-gray-800 transition-all" />
               </div>
 
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">{t('float_label_product')}</label>
-                <select className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#005ba7]/40 focus:border-[#005ba7] focus:bg-white text-gray-800 transition-all">
-                  <option>{t('float_opt1')}</option>
-                  <option>{t('float_opt2')}</option>
-                  <option>{t('float_opt3')}</option>
-                  <option>{t('float_opt4')}</option>
-                  <option>{t('float_opt5')}</option>
+                <select name="product" className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#005ba7]/40 focus:border-[#005ba7] focus:bg-white text-gray-800 transition-all">
+                  <option value={t('float_opt1')}>{t('float_opt1')}</option>
+                  <option value={t('float_opt2')}>{t('float_opt2')}</option>
+                  <option value={t('float_opt3')}>{t('float_opt3')}</option>
+                  <option value={t('float_opt4')}>{t('float_opt4')}</option>
+                  <option value={t('float_opt5')}>{t('float_opt5')}</option>
                 </select>
               </div>
 
               <button type="submit"
-                className="w-full py-3.5 text-white text-sm font-black uppercase tracking-wider rounded-xl transition-all shadow-lg hover:shadow-blue-600/40 hover:scale-[1.01]"
+                disabled={isSubmitting}
+                className="w-full py-3.5 text-white text-sm font-black uppercase tracking-wider rounded-xl transition-all shadow-lg hover:shadow-blue-600/40 hover:scale-[1.01] disabled:opacity-70 disabled:cursor-not-allowed"
                 style={{ background: 'linear-gradient(135deg,#005ba7 0%,#1a6fd8 100%)' }}
               >
-                {t('float_submit')}
+                {isSubmitting ? 'ĐANG GỬI...' : t('float_submit')}
               </button>
 
               <p className="text-center text-[10px] text-gray-400">

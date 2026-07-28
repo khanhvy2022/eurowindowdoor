@@ -104,7 +104,7 @@ export const showroomsData: Showroom[] = [
     address: 'Số 263 Nguyễn Văn Linh, Quận Thanh Khê, TP. Đà Nẵng',
     addressEn: '263 Nguyen Van Linh, Thanh Khe District, Da Nang',
     phone: '0236 374 7470',
-    email: 'danang@eurowindow.biz',
+    email: 'danang@eurowindowdoor.com',
     hours: '08:00 - 17:30'
   },
   {
@@ -151,7 +151,7 @@ export const showroomsData: Showroom[] = [
     address: 'Số 39 bis Trương Định, Phường Võ Thị Sáu, Quận 3, TP.HCM',
     addressEn: '39 bis Truong Dinh, Vo Thi Sau Ward, District 3, HCMC',
     phone: '028 3930 2708',
-    email: 'hcm@eurowindow.biz',
+    email: 'hcm@eurowindowdoor.com',
     hours: '08:00 - 17:30 (Thứ 2 - Thứ 6)',
     isHeadquarter: true
   },

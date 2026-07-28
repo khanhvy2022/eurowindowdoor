@@ -22,12 +22,12 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
     openGraph: {
       title: project.name,
       description: project.description,
-      url: `https://eurowindow.biz/cong-trinh-tieu-bieu/${project.slug}`,
+      url: `https://eurowindowdoor.com/cong-trinh-tieu-bieu/${project.slug}`,
       type: 'article',
       images: [{ url: project.image }],
     },
     alternates: {
-      canonical: `https://eurowindow.biz/cong-trinh-tieu-bieu/${project.slug}`,
+      canonical: `https://eurowindowdoor.com/cong-trinh-tieu-bieu/${project.slug}`,
     },
   };
 }
@@ -48,19 +48,19 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         '@type': 'ListItem',
         position: 1,
         name: 'Trang chủ',
-        item: 'https://eurowindow.biz',
+        item: 'https://eurowindowdoor.com',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Công trình tiêu biểu',
-        item: 'https://eurowindow.biz/cong-trinh-tieu-bieu',
+        item: 'https://eurowindowdoor.com/cong-trinh-tieu-bieu',
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: project.name,
-        item: `https://eurowindow.biz/cong-trinh-tieu-bieu/${project.slug}`,
+        item: `https://eurowindowdoor.com/cong-trinh-tieu-bieu/${project.slug}`,
       },
     ],
   };

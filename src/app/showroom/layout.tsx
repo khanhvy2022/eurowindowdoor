@@ -11,12 +11,12 @@ export const metadata: Metadata = {
     'Eurowindow TP.HCM'
   ],
   alternates: {
-    canonical: 'https://eurowindow.biz/showroom',
+    canonical: 'https://eurowindowdoor.com/showroom',
   },
   openGraph: {
     title: 'Showroom Eurowindow - Trải Nghiệm Thực Tế Sản Phẩm Cao Cấp',
     description: 'Hệ thống Showroom hiện đại trải dài từ Bắc vào Nam.',
-    url: 'https://eurowindow.biz/showroom',
+    url: 'https://eurowindowdoor.com/showroom',
   },
 };
 

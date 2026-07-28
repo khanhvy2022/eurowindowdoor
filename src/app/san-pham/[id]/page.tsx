@@ -66,7 +66,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: productName,
-    image: galleryList.map((img) => `https://eurowindow.biz${img}`),
+    image: galleryList.map((img) => `https://eurowindowdoor.com${img}`),
     description: productDesc,
     brand: {
       '@type': 'Brand',
@@ -78,7 +78,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
       priceCurrency: 'VND',
       price: '0',
       availability: 'https://schema.org/InStock',
-      url: `https://eurowindow.biz/san-pham/${product.slug}`,
+      url: `https://eurowindowdoor.com/san-pham/${product.slug}`,
       seller: {
         '@type': 'Organization',
         name: 'Eurowindow Việt Nam',
@@ -94,19 +94,19 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
         '@type': 'ListItem',
         position: 1,
         name: isEn ? 'Home' : 'Trang chủ',
-        item: 'https://eurowindow.biz',
+        item: 'https://eurowindowdoor.com',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: isEn ? 'Products' : 'Sản phẩm',
-        item: 'https://eurowindow.biz/san-pham',
+        item: 'https://eurowindowdoor.com/san-pham',
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: productName,
-        item: `https://eurowindow.biz/san-pham/${product.slug}`,
+        item: `https://eurowindowdoor.com/san-pham/${product.slug}`,
       },
     ],
   };

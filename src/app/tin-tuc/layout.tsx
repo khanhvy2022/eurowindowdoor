@@ -11,12 +11,12 @@ export const metadata: Metadata = {
     'Xu hướng kiến trúc 2026'
   ],
   alternates: {
-    canonical: 'https://eurowindow.biz/tin-tuc',
+    canonical: 'https://eurowindowdoor.com/tin-tuc',
   },
   openGraph: {
     title: 'Tin Tức Eurowindow - Khuyến Mãi & Công Nghệ Cửa Mới Nhất',
     description: 'Cập nhật sự kiện, thông tin báo chí và ưu đãi mới nhất từ Eurowindow.',
-    url: 'https://eurowindow.biz/tin-tuc',
+    url: 'https://eurowindowdoor.com/tin-tuc',
   },
 };
 

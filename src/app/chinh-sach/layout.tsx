@@ -10,12 +10,12 @@ export const metadata: Metadata = {
     'Hỗ trợ kỹ thuật Eurowindow'
   ],
   alternates: {
-    canonical: 'https://eurowindow.biz/chinh-sach',
+    canonical: 'https://eurowindowdoor.com/chinh-sach',
   },
   openGraph: {
     title: 'Chính Sách Eurowindow - Cam Kết Chất Lượng & Bảo Hành Uy Tín',
     description: 'Chính sách bảo hành và bảo trì hàng đầu ngành cửa tại Việt Nam.',
-    url: 'https://eurowindow.biz/chinh-sach',
+    url: 'https://eurowindowdoor.com/chinh-sach',
   },
 };
 

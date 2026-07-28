@@ -11,12 +11,12 @@ export const metadata: Metadata = {
     'Công trình sân bay Phú Bài'
   ],
   alternates: {
-    canonical: 'https://eurowindow.biz/cong-trinh-tieu-bieu',
+    canonical: 'https://eurowindowdoor.com/cong-trinh-tieu-bieu',
   },
   openGraph: {
     title: 'Công Trình Tiêu Biểu Eurowindow - 50.000+ Dự Án Đỉnh Cao',
     description: 'Dấu ấn Eurowindow tại các công trình trọng điểm quốc gia và khu đô thị cao cấp.',
-    url: 'https://eurowindow.biz/cong-trinh-tieu-bieu',
+    url: 'https://eurowindowdoor.com/cong-trinh-tieu-bieu',
   },
 };
 

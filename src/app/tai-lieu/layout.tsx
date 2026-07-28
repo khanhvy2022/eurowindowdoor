@@ -11,12 +11,12 @@ export const metadata: Metadata = {
     'Thông số kỹ thuật kính Low-E'
   ],
   alternates: {
-    canonical: 'https://eurowindow.biz/tai-lieu',
+    canonical: 'https://eurowindowdoor.com/tai-lieu',
   },
   openGraph: {
     title: 'Tài Liệu Kỹ Thuật Eurowindow - Tải Catalog Chính Thức',
     description: 'Thư viện tài liệu kỹ thuật và brochure giải pháp vật liệu xây dựng xanh.',
-    url: 'https://eurowindow.biz/tai-lieu',
+    url: 'https://eurowindowdoor.com/tai-lieu',
   },
 };
 

@@ -32,10 +32,10 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
           alt: product.name,
         },
       ],
-      url: `https://eurowindow.biz/san-pham/${product.slug}`,
+      url: `https://eurowindowdoor.com/san-pham/${product.slug}`,
     },
     alternates: {
-      canonical: `https://eurowindow.biz/san-pham/${product.slug}`,
+      canonical: `https://eurowindowdoor.com/san-pham/${product.slug}`,
     },
   };
 }

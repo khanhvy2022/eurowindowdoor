@@ -11,12 +11,12 @@ export const metadata: Metadata = {
     'Eurowindow TP.HCM'
   ],
   alternates: {
-    canonical: 'https://eurowindow.biz/lien-he',
+    canonical: 'https://eurowindowdoor.com/lien-he',
   },
   openGraph: {
     title: 'Liên Hệ Eurowindow - Hotline 0966 994 338 | Tư Vấn Báo Giá',
     description: 'Liên hệ ngay để nhận hỗ trợ tư vấn giải pháp cửa và vách kính tiêu chuẩn Châu Âu.',
-    url: 'https://eurowindow.biz/lien-he',
+    url: 'https://eurowindowdoor.com/lien-he',
   },
 };
 
@@ -29,11 +29,11 @@ export default function ContactLayout({
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
     name: 'Liên hệ Eurowindow Việt Nam',
-    url: 'https://eurowindow.biz/lien-he',
+    url: 'https://eurowindowdoor.com/lien-he',
     mainEntity: {
       '@type': 'LocalBusiness',
       name: 'Eurowindow - Chi Nhánh Miền Nam',
-      image: 'https://eurowindow.biz/images/logo-high-res.png',
+      image: 'https://eurowindowdoor.com/images/logo-high-res.png',
       telephone: '+84-966994338',
       email: 'thangtq2@eurowindow.biz',
       address: {

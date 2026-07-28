@@ -18,13 +18,13 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     openGraph: {
       title: article.title,
       description: article.excerpt || article.title,
-      url: `https://eurowindow.biz/tin-tuc/${article.slug}`,
+      url: `https://eurowindowdoor.com/tin-tuc/${article.slug}`,
       type: 'article',
       publishedTime: article.date,
       images: [{ url: article.image }],
     },
     alternates: {
-      canonical: `https://eurowindow.biz/tin-tuc/${article.slug}`,
+      canonical: `https://eurowindowdoor.com/tin-tuc/${article.slug}`,
     },
   };
 }
@@ -41,7 +41,7 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
     headline: article.title,
-    image: [`https://eurowindow.biz${article.image}`],
+    image: [`https://eurowindowdoor.com${article.image}`],
     datePublished: article.date,
     dateModified: article.date,
     author: {
@@ -53,7 +53,7 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
       name: 'Eurowindow Việt Nam',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://eurowindow.biz/images/logo-eurowindow.png.webp',
+        url: 'https://eurowindowdoor.com/images/logo-eurowindow.png.webp',
       },
     },
     description: article.excerpt || article.title,
@@ -67,19 +67,19 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
         '@type': 'ListItem',
         position: 1,
         name: 'Trang chủ',
-        item: 'https://eurowindow.biz',
+        item: 'https://eurowindowdoor.com',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Tin tức',
-        item: 'https://eurowindow.biz/tin-tuc',
+        item: 'https://eurowindowdoor.com/tin-tuc',
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: article.title,
-        item: `https://eurowindow.biz/tin-tuc/${article.slug}`,
+        item: `https://eurowindowdoor.com/tin-tuc/${article.slug}`,
       },
     ],
   };

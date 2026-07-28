@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/_next/'],
       },
     ],
-    sitemap: 'https://eurowindow.biz/sitemap.xml',
-    host: 'https://eurowindow.biz',
+    sitemap: 'https://eurowindowdoor.com/sitemap.xml',
+    host: 'https://eurowindowdoor.com',
   };
 }

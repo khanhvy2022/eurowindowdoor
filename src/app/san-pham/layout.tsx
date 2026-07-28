@@ -13,12 +13,12 @@ export const metadata: Metadata = {
     'Cửa tự động Eurowindow'
   ],
   alternates: {
-    canonical: 'https://eurowindow.biz/san-pham',
+    canonical: 'https://eurowindowdoor.com/san-pham',
   },
   openGraph: {
     title: 'Sản Phẩm Eurowindow - Cửa Nhôm, Cửa uPVC, Cửa Gỗ, Vách Kính Low-E',
     description: 'Các giải pháp cửa và vách kính công nghệ Châu Âu hàng đầu Việt Nam.',
-    url: 'https://eurowindow.biz/san-pham',
+    url: 'https://eurowindowdoor.com/san-pham',
   },
 };
 

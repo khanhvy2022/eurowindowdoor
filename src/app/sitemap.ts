@@ -3,7 +3,7 @@ import { productsData } from '@/data/products';
 import { projectsData } from '@/data/projects';
 import { newsArticles } from '@/data/news';
 
-const baseUrl = 'https://eurowindow.biz';
+const baseUrl = 'https://eurowindowdoor.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [

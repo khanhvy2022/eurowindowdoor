@@ -9,7 +9,7 @@ const jakarta = Plus_Jakarta_Sans({
   display: 'swap',
 });
 
-const siteUrl = 'https://eurowindow.biz';
+const siteUrl = 'https://eurowindowdoor.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -100,7 +100,7 @@ export const metadata: Metadata = {
     'fb:pages': '416052529237542',
     'fb:app_id': '416052529237542',
     'article:author': 'https://www.facebook.com/eurowindowhcmmn/',
-    'article:publisher': 'https://www.facebook.com/eurowindow.biz',
+    'article:publisher': 'https://www.facebook.com/eurowindowdoor.com',
   },
 };
 
@@ -123,7 +123,7 @@ export default function RootLayout({
       availableLanguage: ['Vietnamese', 'English'],
     },
     sameAs: [
-      'https://www.facebook.com/eurowindow.biz',
+      'https://www.facebook.com/eurowindowdoor.com',
       'https://www.youtube.com/eurowindow',
     ],
   };

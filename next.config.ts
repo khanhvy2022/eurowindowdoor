@@ -25,7 +25,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'eurowindow.biz',
+        hostname: 'eurowindowdoor.com',
         pathname: '/**',
       },
       {
