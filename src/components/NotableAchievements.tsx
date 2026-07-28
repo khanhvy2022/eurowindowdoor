@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { motion } from 'framer-motion';
 import { ImageWithFallback } from './ImageWithFallback';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -78,10 +79,16 @@ export const NotableAchievements: React.FC = () => {
   }, [handleNext]);
 
   return (
-    <section className="py-16 relative overflow-hidden bg-gradient-to-r from-blue-50/80 via-white to-blue-50/50 border-y border-gray-100 select-none">
+    <section className="py-28 relative overflow-hidden bg-gradient-to-r from-blue-50/80 via-white to-blue-50/50 border-y border-gray-100 select-none">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-10"
+        >
           <h2 className="text-3xl font-extrabold text-[#005ba7] uppercase tracking-wider inline-block">
             {t('achieve_title')}
           </h2>
@@ -89,15 +96,21 @@ export const NotableAchievements: React.FC = () => {
           <p className="text-xs text-gray-600 max-w-2xl mx-auto mt-3 leading-relaxed">
             {t('achieve_desc')}
           </p>
-        </div>
+        </motion.div>
 
         {/* Carousel Container */}
-        <div className="relative max-w-5xl mx-auto px-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="relative max-w-5xl mx-auto px-10"
+        >
 
           {/* Left Arrow */}
           <button
             onClick={handlePrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white shadow-md hover:bg-[#005ba7] hover:text-white text-gray-700 rounded-full flex items-center justify-center border border-gray-200 transition-all hover:scale-110 z-20"
+            className="btn-tactile absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white shadow-md hover:bg-[#005ba7] hover:text-white text-gray-700 rounded-full flex items-center justify-center border border-gray-200 transition-all hover:scale-110 z-20"
             aria-label="Previous achievement"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -154,7 +167,7 @@ export const NotableAchievements: React.FC = () => {
           {/* Right Arrow */}
           <button
             onClick={handleNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white shadow-md hover:bg-[#005ba7] hover:text-white text-gray-700 rounded-full flex items-center justify-center border border-gray-200 transition-all hover:scale-110 z-20"
+            className="btn-tactile absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white shadow-md hover:bg-[#005ba7] hover:text-white text-gray-700 rounded-full flex items-center justify-center border border-gray-200 transition-all hover:scale-110 z-20"
             aria-label="Next achievement"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -175,7 +188,7 @@ export const NotableAchievements: React.FC = () => {
               />
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

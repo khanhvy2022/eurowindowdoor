@@ -10,7 +10,7 @@ export const IntroduceSection: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="py-20 bg-white relative overflow-hidden">
+    <section className="py-28 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4">
         
         {/* Header Title */}
@@ -70,7 +70,7 @@ export const IntroduceSection: React.FC = () => {
             <div className="pt-3">
               <Link 
                 href="/gioi-thieu" 
-                className="inline-flex items-center justify-center bg-[#005ba7] hover:bg-[#00386c] text-white font-extrabold text-xs uppercase rounded-full px-8 py-3.5 shadow-lg hover:shadow-xl hover:scale-105 transition-all gap-2"
+                className="btn-tactile inline-flex items-center justify-center bg-[#005ba7] hover:bg-[#00386c] text-white font-extrabold text-xs uppercase rounded-full px-8 py-3.5 shadow-lg hover:shadow-xl hover:scale-105 transition-all gap-2"
               >
                 <span>{t('intro_btn')}</span>
                 <span>&rarr;</span>

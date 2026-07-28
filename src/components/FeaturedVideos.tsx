@@ -88,7 +88,7 @@ export const FeaturedVideos: React.FC = () => {
   }, [handleNext]);
 
   return (
-    <section className="py-16 bg-[#005ba7] text-white relative overflow-hidden select-none">
+    <section className="py-28 bg-[#005ba7] text-white relative overflow-hidden select-none">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-blue-600/10 pointer-events-none" />
 
@@ -106,7 +106,7 @@ export const FeaturedVideos: React.FC = () => {
           {/* Left Arrow Button */}
           <button
             onClick={handlePrev}
-            className="absolute -left-2 top-1/2 -translate-y-1/2 w-11 h-11 bg-white/30 hover:bg-amber-400 hover:text-gray-900 text-white rounded-full flex items-center justify-center shadow-xl z-30 backdrop-blur-md transition-all hover:scale-110 active:scale-95"
+            className="btn-tactile absolute -left-2 top-1/2 -translate-y-1/2 w-11 h-11 bg-white/30 hover:bg-amber-400 hover:text-gray-900 text-white rounded-full flex items-center justify-center shadow-xl z-30 backdrop-blur-md transition-all hover:scale-110 active:scale-95"
             aria-label="Previous Video"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -165,7 +165,7 @@ export const FeaturedVideos: React.FC = () => {
           {/* Right Arrow Button */}
           <button
             onClick={handleNext}
-            className="absolute -right-2 top-1/2 -translate-y-1/2 w-11 h-11 bg-white/30 hover:bg-amber-400 hover:text-gray-900 text-white rounded-full flex items-center justify-center shadow-xl z-30 backdrop-blur-md transition-all hover:scale-110 active:scale-95"
+            className="btn-tactile absolute -right-2 top-1/2 -translate-y-1/2 w-11 h-11 bg-white/30 hover:bg-amber-400 hover:text-gray-900 text-white rounded-full flex items-center justify-center shadow-xl z-30 backdrop-blur-md transition-all hover:scale-110 active:scale-95"
             aria-label="Next Video"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

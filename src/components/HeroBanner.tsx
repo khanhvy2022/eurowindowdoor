@@ -107,7 +107,7 @@ export const HeroBanner: React.FC = () => {
                     <div className="flex flex-wrap items-center gap-4">
                       <Link
                         href={slide.link}
-                        className="inline-flex items-center px-7 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-slate-950 font-black text-xs uppercase tracking-wider rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 gap-2"
+                        className="btn-tactile inline-flex items-center px-7 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-slate-950 font-black text-xs uppercase tracking-wider rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 gap-2"
                       >
                         <span>{t('hero_discover')}</span>
                         <span className="text-base">&rarr;</span>
@@ -115,7 +115,7 @@ export const HeroBanner: React.FC = () => {
 
                       <Link
                         href="/lien-he"
-                        className="inline-flex items-center px-7 py-3.5 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold text-xs uppercase tracking-wider rounded-full border border-white/30 transition-all hover:scale-105"
+                        className="btn-tactile inline-flex items-center px-7 py-3.5 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold text-xs uppercase tracking-wider rounded-full border border-white/30 transition-all hover:scale-105"
                       >
                         {language === 'ENG' ? 'Get A Quote' : 'Nhận Báo Giá'}
                       </Link>
@@ -162,7 +162,7 @@ export const HeroBanner: React.FC = () => {
       {/* Navigation Arrows */}
       <button
         onClick={handlePrev}
-        className="absolute left-5 top-1/2 -translate-y-1/2 w-12 h-12 bg-slate-950/60 hover:bg-[#005ba7] text-white rounded-full flex items-center justify-center z-30 transition-all opacity-80 lg:opacity-0 group-hover:opacity-100 shadow-2xl backdrop-blur-md hover:scale-110 active:scale-95 border border-white/20"
+        className="btn-tactile absolute left-5 top-1/2 -translate-y-1/2 w-12 h-12 bg-slate-950/60 hover:bg-[#005ba7] text-white rounded-full flex items-center justify-center z-30 transition-all opacity-80 lg:opacity-0 group-hover:opacity-100 shadow-2xl backdrop-blur-md hover:scale-110 active:scale-95 border border-white/20"
         aria-label="Previous Slide"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -172,7 +172,7 @@ export const HeroBanner: React.FC = () => {
 
       <button
         onClick={handleNext}
-        className="absolute right-5 top-1/2 -translate-y-1/2 w-12 h-12 bg-slate-950/60 hover:bg-[#005ba7] text-white rounded-full flex items-center justify-center z-30 transition-all opacity-80 lg:opacity-0 group-hover:opacity-100 shadow-2xl backdrop-blur-md hover:scale-110 active:scale-95 border border-white/20"
+        className="btn-tactile absolute right-5 top-1/2 -translate-y-1/2 w-12 h-12 bg-slate-950/60 hover:bg-[#005ba7] text-white rounded-full flex items-center justify-center z-30 transition-all opacity-80 lg:opacity-0 group-hover:opacity-100 shadow-2xl backdrop-blur-md hover:scale-110 active:scale-95 border border-white/20"
         aria-label="Next Slide"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

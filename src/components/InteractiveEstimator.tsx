@@ -49,7 +49,7 @@ export const InteractiveEstimator: React.FC = () => {
   const totalEst = area * getEstCostPerM2();
 
   return (
-    <section className="py-20 bg-[#004077] text-white relative overflow-hidden font-sans border-t border-blue-900">
+    <section className="py-28 bg-[#004077] text-white relative overflow-hidden font-sans border-t border-blue-900">
       
       {/* Glow Effects */}
       <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
@@ -221,7 +221,7 @@ export const InteractiveEstimator: React.FC = () => {
                 href={`https://zalo.me/0966994338`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-full py-3.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider rounded-xl shadow-xl transition-all hover:scale-[1.02] gap-2"
+                className="btn-tactile flex items-center justify-center w-full py-3.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider rounded-xl shadow-xl transition-all hover:scale-[1.02] gap-2"
               >
                 <span>{isEn ? 'Get Official Quote & Consultation' : 'Nhận Báo Giá Chính Thức Qua Zalo'}</span>
                 <span>&rarr;</span>

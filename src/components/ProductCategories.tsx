@@ -55,7 +55,7 @@ export const ProductCategories: React.FC = () => {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8 }}
-      className="py-24 bg-gradient-to-b from-white via-slate-50 to-white relative overflow-hidden font-sans"
+      className="py-32 bg-gradient-to-b from-white via-slate-50 to-white relative overflow-hidden font-sans"
     >
       
       {/* Background Decorative Ambient Orbs */}
@@ -140,7 +140,7 @@ export const ProductCategories: React.FC = () => {
                 <div className="pt-2">
                   <Link 
                     href={cat.link} 
-                    className="inline-flex items-center justify-center w-full py-3 bg-gradient-to-r from-[#005ba7] to-blue-700 hover:from-[#004077] hover:to-blue-800 text-white text-xs font-bold uppercase rounded-xl transition-all shadow-md hover:scale-[1.02] tracking-wider gap-2"
+                    className="btn-tactile inline-flex items-center justify-center w-full py-3 bg-gradient-to-r from-[#005ba7] to-blue-700 hover:from-[#004077] hover:to-blue-800 text-white text-xs font-bold uppercase rounded-xl transition-all shadow-md hover:scale-[1.02] tracking-wider gap-2"
                   >
                     <span>{t('see_all_models')}</span>
                     <ArrowRightIcon className="w-3.5 h-3.5" />
@@ -200,7 +200,7 @@ export const ProductCategories: React.FC = () => {
             <div className="pt-6 border-t border-white/15">
               <Link 
                 href="/san-pham?cat=Cửa+thông+minh" 
-                className="flex items-center justify-center w-full py-3.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg hover:scale-[1.02] gap-2"
+                className="btn-tactile flex items-center justify-center w-full py-3.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg hover:scale-[1.02] gap-2"
               >
                 <span>{t('smart_col_btn')}</span>
                 <ArrowRightIcon className="w-4 h-4" />

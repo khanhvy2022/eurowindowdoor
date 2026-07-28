@@ -18,7 +18,7 @@ export const NewsSection: React.FC = () => {
   const featuredArticle = sortedArticles[0];
 
   return (
-    <section className="py-20 bg-slate-50 relative overflow-hidden font-sans">
+    <section className="py-28 bg-slate-50 relative overflow-hidden font-sans">
       <div className="container mx-auto px-4">
         
         {/* Section Header */}
@@ -34,7 +34,7 @@ export const NewsSection: React.FC = () => {
 
           <Link 
             href="/tin-tuc" 
-            className="hidden sm:inline-flex items-center text-xs font-bold text-[#005ba7] hover:text-amber-600 uppercase tracking-wider bg-white px-5 py-2.5 rounded-full border border-slate-200 shadow-sm hover:shadow transition-all gap-1.5"
+            className="btn-tactile hidden sm:inline-flex items-center text-xs font-bold text-[#005ba7] hover:text-amber-600 uppercase tracking-wider bg-white px-5 py-2.5 rounded-full border border-slate-200 shadow-sm hover:shadow transition-all gap-1.5"
           >
             <span>{t('news_all')}</span>
             <span>&rarr;</span>
@@ -166,7 +166,7 @@ export const NewsSection: React.FC = () => {
         <div className="mt-8 text-center sm:hidden">
           <Link 
             href="/tin-tuc" 
-            className="inline-flex items-center text-xs font-bold text-white bg-[#005ba7] px-6 py-3 rounded-full shadow-lg"
+            className="btn-tactile inline-flex items-center text-xs font-bold text-white bg-[#005ba7] px-6 py-3 rounded-full shadow-lg"
           >
             <span>{t('news_all')} ({articlesData.length} {t('news_all_mobile')})</span>
             <span className="ml-2">&rarr;</span>

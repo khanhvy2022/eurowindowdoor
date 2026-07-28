@@ -278,7 +278,7 @@ export const Header: React.FC = () => {
             {/* Advice Button CTA */}
             <Link 
               href="/lien-he" 
-              className="hidden sm:inline-flex items-center justify-center bg-gradient-to-r from-[#005ba7] to-blue-700 hover:from-[#004077] hover:to-blue-800 text-white text-xs font-bold uppercase rounded-full px-4 xl:px-5 py-2.5 transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-95 tracking-wider gap-1.5 whitespace-nowrap"
+              className="btn-tactile hidden sm:inline-flex items-center justify-center bg-gradient-to-r from-[#005ba7] to-blue-700 hover:from-[#004077] hover:to-blue-800 text-white text-xs font-bold uppercase rounded-full px-4 xl:px-5 py-2.5 transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-95 tracking-wider gap-1.5 whitespace-nowrap"
             >
               <svg className="w-3.5 h-3.5 text-amber-300 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M20 15.5c-1.2 0-2.4-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1-.4-1.2-.6-2.4-.6-3.6 0-.6-.4-1-1-1H3.5c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/>
@@ -380,7 +380,7 @@ export const Header: React.FC = () => {
           <div className="pt-2">
             <Link 
               href="/lien-he" 
-              className="flex items-center justify-center w-full py-3 bg-[#005ba7] text-white font-bold uppercase rounded-lg shadow text-center"
+              className="btn-tactile flex items-center justify-center w-full py-3 bg-[#005ba7] text-white font-bold uppercase rounded-lg shadow text-center"
             >
               {t('nav_consultation')}
             </Link>

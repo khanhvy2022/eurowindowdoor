@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import Script from 'next/script';
+import { Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { LanguageProvider } from '@/context/LanguageContext';
 
-const inter = Inter({ 
+const jakarta = Plus_Jakarta_Sans({ 
   subsets: ['latin', 'vietnamese'],
   display: 'swap',
 });
@@ -181,7 +182,23 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdLocalBusiness) }}
         />
       </head>
-      <body className={`${inter.className} antialiased bg-white text-gray-900`}>
+      <body className={`${jakarta.className} antialiased bg-white text-gray-900`}>
+        {/* Google Analytics - Optimized lazy load */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-Y2F739JNDJ"
+          strategy="lazyOnload"
+        />
+        <Script id="google-analytics" strategy="lazyOnload">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-Y2F739JNDJ', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
+
         <LanguageProvider>
           {children}
         </LanguageProvider>

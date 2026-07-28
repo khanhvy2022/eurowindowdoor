@@ -31,7 +31,7 @@ export const FeaturedProjects: React.FC = () => {
   };
 
   return (
-    <section className="py-16 bg-white font-sans overflow-hidden">
+    <section className="py-28 bg-white font-sans overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-8">
           {/* Left Text Column (4 cols) */}
@@ -54,7 +54,7 @@ export const FeaturedProjects: React.FC = () => {
             <div className="pt-2">
               <Link
                 href="/cong-trinh-tieu-bieu"
-                className="inline-block px-6 py-3 bg-[#005ba7] hover:bg-[#004077] text-white text-xs font-bold uppercase rounded-full shadow transition-all hover:scale-105"
+                className="btn-tactile inline-block px-6 py-3 bg-[#005ba7] hover:bg-[#004077] text-white text-xs font-bold uppercase rounded-full shadow transition-all hover:scale-105"
               >
                 {t('proj_all_btn')}
               </Link>
