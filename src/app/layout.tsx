@@ -66,6 +66,8 @@ export const metadata: Metadata = {
     title: 'Eurowindow - Giải Pháp Cửa & Vách Nhôm Kính Tiêu Chuẩn Châu Âu',
     description: 'Cửa nhôm, cửa uPVC lõi thép, cửa gỗ biến tính nhiệt, vách kính mặt dựng Unitized Eurowindow.',
     images: ['/images/eurowindow-khuyen-mai-2025.png.webp'],
+    site: '@EurowindowMN',
+    creator: '@EurowindowMN',
   },
   robots: {
     index: true,
@@ -81,6 +83,23 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
     apple: '/seo/apple-touch-icon.png',
+  },
+  verification: {
+    google: 'w26lI5Kb1KKM0E2aqDdq5mLrAf8ZRrRdztLSRsCcpkE',
+    yandex: '834c943a00f8fb16',
+    other: {
+      'msvalidate.01': 'CB4464617018E36643BCA09836EAC288',
+      'p:domain_verify': '3419c68192e353bd14adda3f92d6306a',
+    },
+  },
+  other: {
+    'geo.placename': 'Vietnam',
+    'geo.country': 'VN',
+    'fb:admins': '3371215466542032',
+    'fb:pages': '416052529237542',
+    'fb:app_id': '416052529237542',
+    'article:author': 'https://www.facebook.com/eurowindowhcmmn/',
+    'article:publisher': 'https://www.facebook.com/eurowindow.biz',
   },
 };
 
