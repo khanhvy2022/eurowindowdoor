@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ImageWithFallback } from './ImageWithFallback';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -66,26 +66,24 @@ const videos: VideoItem[] = [
 
 export const FeaturedVideos: React.FC = () => {
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
-  const [startIndex, setStartIndex] = useState(0);
   const { language } = useLanguage();
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const isEn = language === 'ENG';
 
-  const handleNext = useCallback(() => {
-    setStartIndex((prev) => (prev + 1) % videos.length);
-  }, []);
+  const handleNext = () => {
+    if (scrollRef.current) {
+      const itemWidth = scrollRef.current.children[0]?.clientWidth || 0;
+      scrollRef.current.scrollBy({ left: itemWidth, behavior: 'smooth' });
+    }
+  };
 
-  const handlePrev = useCallback(() => {
-    setStartIndex((prev) => (prev === 0 ? videos.length - 1 : prev - 1));
-  }, []);
-
-  // Auto-play video slider every 6 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handleNext();
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [handleNext]);
+  const handlePrev = () => {
+    if (scrollRef.current) {
+      const itemWidth = scrollRef.current.children[0]?.clientWidth || 0;
+      scrollRef.current.scrollBy({ left: -itemWidth, behavior: 'smooth' });
+    }
+  };
 
   return (
     <section className="py-28 bg-[#005ba7] text-white relative overflow-hidden select-none">
@@ -115,17 +113,18 @@ export const FeaturedVideos: React.FC = () => {
           </button>
 
           {/* Cards Container */}
-          <div className="overflow-hidden">
+          <div className="-mx-3">
             <div 
-              className="flex transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] -mx-3"
-              style={{ transform: `translateX(-${startIndex * (100 / 4)}%)` }}
+              ref={scrollRef}
+              className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 pt-2 hide-scrollbar"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              {videos.concat(videos).map((vid, idx) => {
+              {videos.map((vid, idx) => {
                 const vidTitle = isEn ? vid.titleEn : vid.title;
                 return (
                   <div
                     key={`${vid.id}-${idx}`}
-                    className="w-full sm:w-1/2 lg:w-1/4 flex-shrink-0 px-3"
+                    className="w-[90%] sm:w-1/2 lg:w-1/4 flex-shrink-0 px-3 snap-center sm:snap-start"
                   >
                     <div
                       onClick={() => setSelectedVideo(vid)}

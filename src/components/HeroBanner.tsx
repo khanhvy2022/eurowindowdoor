@@ -50,9 +50,9 @@ export const HeroBanner: React.FC = () => {
       </div>
 
       <LazyMotion features={domMax}>
-      <div className="relative w-full h-[360px] sm:h-[500px] md:h-[600px] lg:h-[680px]">
+      <div className="relative w-full overflow-hidden">
         <m.div 
-          className="flex h-full cursor-grab active:cursor-grabbing"
+          className="flex cursor-grab active:cursor-grabbing"
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.2}
@@ -63,59 +63,17 @@ export const HeroBanner: React.FC = () => {
           {slidesData.map((slide, idx) => (
             <div
               key={slide.id}
-              className="relative min-w-full h-full flex-shrink-0"
+              className="relative min-w-full flex-shrink-0"
             >
               <ImageWithFallback
                 src={slide.image}
                 alt={slide.alt}
-                fill
+                width={1920}
+                height={800}
                 sizes="100vw"
                 priority={idx === 0}
-                className="object-cover object-center w-full h-full transform scale-100 group-hover:scale-105 transition-transform duration-1000"
+                className="w-full h-auto object-cover transform scale-100 group-hover:scale-[1.02] transition-transform duration-1000"
               />
-
-              {/* Ultra Rich Multi-Layer Gradient Backdrop */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-slate-950/20 pointer-events-none" />
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-transparent to-transparent pointer-events-none hidden md:block" />
-
-              {/* Floating Hero Content Glass Box */}
-              <AnimatePresence>
-                {idx === currentIndex && (
-                  <m.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="absolute bottom-20 sm:bottom-24 left-6 sm:left-14 max-w-2xl text-white z-20"
-                  >
-                    <div className="inline-flex items-center gap-2 bg-[#005ba7]/90 backdrop-blur-md text-amber-300 text-[11px] font-extrabold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3 shadow-lg border border-blue-400/30">
-                      <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                      <span>EUROWINDOW ARCHITECTURAL SOLUTIONS</span>
-                    </div>
-                    
-                    <h1 className="text-2xl sm:text-4xl md:text-5xl font-black drop-shadow-md leading-[1.15] mb-5 tracking-tight text-white">
-                      {language === 'ENG' ? slide.titleEn : slide.title}
-                    </h1>
-
-                    <div className="flex flex-wrap items-center gap-4">
-                      <Link
-                        href={slide.link}
-                        className="btn-tactile inline-flex items-center px-7 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-slate-950 font-black text-xs uppercase tracking-wider rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 gap-2"
-                      >
-                        <span>{t('hero_discover')}</span>
-                        <span className="text-base">&rarr;</span>
-                      </Link>
-
-                      <Link
-                        href="/lien-he"
-                        className="btn-tactile inline-flex items-center px-7 py-3.5 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold text-xs uppercase tracking-wider rounded-full border border-white/30 transition-all hover:scale-105"
-                      >
-                        {language === 'ENG' ? 'Get A Quote' : 'Nhận Báo Giá'}
-                      </Link>
-                    </div>
-                  </m.div>
-                )}
-              </AnimatePresence>
             </div>
           ))}
         </m.div>
@@ -156,7 +114,7 @@ export const HeroBanner: React.FC = () => {
       {/* Navigation Arrows */}
       <button
         onClick={handlePrev}
-        className="btn-tactile absolute left-5 top-1/2 -translate-y-1/2 w-12 h-12 bg-slate-950/60 hover:bg-[#005ba7] text-white rounded-full flex items-center justify-center z-30 transition-all opacity-80 lg:opacity-0 group-hover:opacity-100 shadow-2xl backdrop-blur-md hover:scale-110 active:scale-95 border border-white/20"
+        className="btn-tactile absolute left-2 sm:left-5 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-slate-950/40 hover:bg-[#005ba7] text-white rounded-full flex items-center justify-center z-30 transition-all opacity-100 lg:opacity-0 group-hover:opacity-100 shadow-xl backdrop-blur-sm hover:scale-110 active:scale-95 border border-white/20"
         aria-label="Previous Slide"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -166,7 +124,7 @@ export const HeroBanner: React.FC = () => {
 
       <button
         onClick={handleNext}
-        className="btn-tactile absolute right-5 top-1/2 -translate-y-1/2 w-12 h-12 bg-slate-950/60 hover:bg-[#005ba7] text-white rounded-full flex items-center justify-center z-30 transition-all opacity-80 lg:opacity-0 group-hover:opacity-100 shadow-2xl backdrop-blur-md hover:scale-110 active:scale-95 border border-white/20"
+        className="btn-tactile absolute right-2 sm:right-5 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-slate-950/40 hover:bg-[#005ba7] text-white rounded-full flex items-center justify-center z-30 transition-all opacity-100 lg:opacity-0 group-hover:opacity-100 shadow-xl backdrop-blur-sm hover:scale-110 active:scale-95 border border-white/20"
         aria-label="Next Slide"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
