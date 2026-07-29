@@ -55,7 +55,7 @@ export const Header: React.FC = () => {
             </a>
             <span className="hidden lg:inline text-slate-700">|</span>
             <span className="hidden lg:inline text-gray-400">
-              {isEn ? 'Southern Branch: 39 Bis Mac Dinh Chi, Tan Dinh Ward, HCMC' : 'Chi Nhánh Miền Nam: 39 Bis Mạc Đĩnh Chi, P.Tân Định, TP.HCM'}
+              {isEn ? 'Southern Branch: 39 Bis Mac Dinh Chi, Tan Dinh Ward, HCMC' : 'Chi Nhánh Miền Nam: 39 Bis Mạc Đĩnh Chi, P. Tân Định, TP.HCM'}
             </span>
           </div>
 

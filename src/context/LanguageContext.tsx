@@ -61,8 +61,10 @@ const translations: Translations = {
   contact_message_label: { VN: 'Nội dung liên hệ', ENG: 'Message' },
   contact_message_ph: { VN: 'Nhập nội dung cần tư vấn...', ENG: 'Enter your inquiry details...' },
   contact_submit_btn: { VN: 'Gửi yêu cầu', ENG: 'Submit Request' },
-  contact_hq_title: { VN: 'Trụ sở chính Eurowindow', ENG: 'Eurowindow Headquarters' },
-  contact_south_title: { VN: 'Nhà máy & Văn phòng Miền Nam', ENG: 'Southern Factory & Office' },
+  contact_hq_title: { VN: 'Trụ sở chính', ENG: 'Headquarters' },
+  contact_hq_address: { VN: 'Tòa nhà Văn phòng Eurowindow Office Building, Số 02 Tôn Thất Tùng, Kim Liên, Hà Nội', ENG: 'Eurowindow Office Building, No. 02 Ton That Tung, Kim Lien, Hanoi' },
+  contact_south_title: { VN: 'Chi Nhánh Miền Nam', ENG: 'Southern Branch' },
+  contact_south_address: { VN: '39 Bis Mạc Đĩnh Chi, P. Tân Định, TP.HCM', ENG: '39 Bis Mac Dinh Chi St., Tan Dinh Ward, HCMC' },
 
   // ── Documents Page ──
   doc_title: { VN: 'Tài liệu & Catalogue chính thức', ENG: 'Official Documents & Catalogues' },
@@ -170,11 +172,11 @@ const translations: Translations = {
   cat_wood_spec2: { VN: 'Kháng nước WPC 100%', ENG: '100% WPC waterproof' },
   cat_wood_spec3: { VN: 'Chuẩn QCVN', ENG: 'QCVN Standard' },
 
-  smart_col_title: { VN: '⚡ Kính & Cửa AI', ENG: '⚡ Smart Glass & AI Doors' },
+  smart_col_title: { VN: '⚡ Kính & Cửa thông minh', ENG: '⚡ Smart Glass & Smart Doors' },
   smart_col_btn: { VN: 'Khám Phá Công Nghệ Kính 2026', ENG: 'Explore Smart Glass 2026' },
   smart_p1_title: { VN: 'KÍNH ĐIỆN ĐỔI MÀU', ENG: 'ELECTROCHROMIC GLASS' },
   smart_p1_tag: { VN: 'Cảm biến 0.1s', ENG: 'Sensor 0.1s' },
-  smart_p2_title: { VN: 'CỬA TỰ ĐỘNG AI', ENG: 'AI AUTOMATIC DOOR' },
+  smart_p2_title: { VN: 'CỬA TỰ ĐỘNG THÔNG MINH', ENG: 'SMART AUTOMATIC DOOR' },
   smart_p2_tag: { VN: 'Nhận diện khuôn mặt', ENG: 'Face recognition' },
   smart_p3_title: { VN: 'CỬA CUỐN KHE THOÁNG', ENG: 'VENTILATED ROLLING DOOR' },
   smart_p3_tag: { VN: 'Mã Rolling Code', ENG: 'Rolling Code key' },
@@ -213,9 +215,14 @@ const translations: Translations = {
     VN: 'Nhà cung cấp giải pháp tổng thể về vật liệu xây dựng xanh hàng đầu Việt Nam.',
     ENG: 'Leading total solution provider for green building materials in Vietnam.'
   },
+  footer_main_hq: { VN: 'Trụ sở chính:', ENG: 'Headquarters:' },
+  footer_main_hq_address: {
+    VN: 'Tòa nhà Văn phòng Eurowindow Office Building, Số 02 Tôn Thất Tùng, Kim Liên, Hà Nội',
+    ENG: 'Eurowindow Office Building, No. 02 Ton That Tung, Kim Lien, Hanoi'
+  },
   footer_headquarter: { VN: 'Chi Nhánh Miền Nam:', ENG: 'Southern Branch:' },
   footer_hq_address: {
-    VN: '39 Bis Mạc Đĩnh Chi, P.Tân Định, TP.HCM',
+    VN: '39 Bis Mạc Đĩnh Chi, P. Tân Định, TP.HCM',
     ENG: '39 Bis Mac Dinh Chi St., Tan Dinh Ward, HCMC'
   },
   footer_quick_links: { VN: 'Liên kết nhanh', ENG: 'Quick Links' },
@@ -245,7 +252,7 @@ const translations: Translations = {
   float_opt2: { VN: 'Cửa uPVC lõi thép', ENG: 'uPVC Steel-Core Doors' },
   float_opt3: { VN: 'Cửa gỗ & Cửa gỗ chống cháy', ENG: 'Wood & Fireproof Doors' },
   float_opt4: { VN: 'Cửa cuốn & Cửa tự động', ENG: 'Rolling & Automatic Doors' },
-  float_opt5: { VN: 'Kính điện & Cửa thông minh 2026', ENG: 'Smart Glass & AI Doors 2026' },
+  float_opt5: { VN: 'Kính điện & Cửa thông minh 2026', ENG: 'Smart Glass & Smart Doors 2026' },
   float_submit: { VN: 'Gửi Yêu Cầu Tư Vấn', ENG: 'Submit Consultation Request' },
   float_or_call: { VN: 'Hoặc gọi trực tiếp', ENG: 'Or call directly' },
   float_call_free: { VN: 'Gọi Ngay Miễn Phí', ENG: 'Call Now For Free' },

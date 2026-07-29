@@ -4,6 +4,9 @@ import NewsContent from './NewsContent';
 export const metadata = {
   title: 'Tin tức Eurowindow',
   description: 'Cập nhật các tin tức, sự kiện và khuyến mãi mới nhất từ Eurowindow.',
+  alternates: {
+    canonical: 'https://eurowindowdoor.com/tin-tuc',
+  },
 };
 
 export default function TinTucPage() {

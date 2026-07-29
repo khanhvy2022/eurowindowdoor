@@ -27,7 +27,8 @@ export const Footer: React.FC = () => {
             <strong>{t('footer_company')}</strong><br />
             {t('footer_slogan')}
           </p>
-          <div className="text-xs text-white/80 space-y-1">
+          <div className="text-xs text-white/80 space-y-1.5">
+            <p><strong>{t('footer_main_hq')}</strong> {t('footer_main_hq_address')}</p>
             <p><strong>{t('footer_headquarter')}</strong> {t('footer_hq_address')}</p>
             <p><strong>Hotline:</strong> 0966 994 338</p>
             <p><strong>Email:</strong> thangtq2@eurowindow.biz</p>

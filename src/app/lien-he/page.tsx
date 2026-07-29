@@ -75,16 +75,17 @@ export default function LienHePage() {
             <div className="space-y-6 text-xs text-gray-700">
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm space-y-3">
                 <h3 className="text-lg font-bold text-[#005ba7] border-b pb-2">{t('contact_hq_title')}</h3>
-                <p><strong>{t('sr_address_label')}</strong> {t('footer_hq_address')}</p>
+                <p><strong>{t('sr_address_label')}</strong> {t('contact_hq_address')}</p>
                 <p><strong>Hotline:</strong> 0966 994 338</p>
                 <p><strong>Email:</strong> thangtq2@eurowindow.biz</p>
-                <p><strong>Website:</strong> https://eurowindowdoor.com</p>
+                <p><strong>Website:</strong> https://eurowindow.biz</p>
               </div>
 
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm space-y-3">
                 <h3 className="text-lg font-bold text-[#005ba7] border-b pb-2">{t('contact_south_title')}</h3>
-                <p><strong>{t('sr_address_label')}</strong> 39 Bis Mạc Đĩnh Chi, P.Tân Định, TP.HCM</p>
-                <p><strong>Hotline Miền Nam:</strong> 028 3930 2708</p>
+                <p><strong>{t('sr_address_label')}</strong> {t('contact_south_address')}</p>
+                <p><strong>Hotline:</strong> 0966 994 338</p>
+                <p><strong>Email:</strong> thangtq2@eurowindow.biz</p>
               </div>
             </div>
           </div>

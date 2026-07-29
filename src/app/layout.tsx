@@ -142,26 +142,34 @@ export default function RootLayout({
 
   const jsonLdLocalBusiness = {
     '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: 'Eurowindow - Chi Nhánh Miền Nam',
+    '@type': 'Organization',
+    name: 'Eurowindow',
     image: `${siteUrl}/images/logo-high-res.png`,
     telephone: '+84-966994338',
     email: 'thangtq2@eurowindow.biz',
     url: siteUrl,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '39 Bis Mạc Đĩnh Chi, P.Tân Định',
-      addressLocality: 'Quận 1 / TP.HCM',
-      addressRegion: 'Thành phố Hồ Chí Minh',
+      streetAddress: 'Tòa nhà Văn phòng Eurowindow Office Building, Số 02 Tôn Thất Tùng, Kim Liên',
+      addressLocality: 'Quận Đống Đa',
+      addressRegion: 'Hà Nội',
       addressCountry: 'VN',
     },
-    priceRange: '$$$',
-    openingHoursSpecification: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      opens: '08:00',
-      closes: '17:30',
-    },
+    department: [
+      {
+        '@type': 'LocalBusiness',
+        name: 'Eurowindow - Chi Nhánh Miền Nam',
+        telephone: '+84-966994338',
+        email: 'thangtq2@eurowindow.biz',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: '39 Bis Mạc Đĩnh Chi, P. Tân Định',
+          addressLocality: 'Quận 1',
+          addressRegion: 'Thành phố Hồ Chí Minh',
+          addressCountry: 'VN',
+        }
+      }
+    ]
   };
 
   return (

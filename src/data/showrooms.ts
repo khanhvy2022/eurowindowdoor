@@ -16,12 +16,12 @@ export const showroomsData: Showroom[] = [
   // Miền Bắc
   {
     id: 'hn-1',
-    name: 'Showroom & Trụ sở Tôn Thất Tùng',
-    nameEn: 'Ton That Tung Headquarters & Showroom',
+    name: 'Showroom & Trụ sở chính',
+    nameEn: 'Headquarters & Showroom',
     region: 'Miền Bắc',
     city: 'Hà Nội',
-    address: 'Tòa nhà Eurowindow Office Building, 39 Bis Mạc Đĩnh Chi, P.Tân Định, TP.HCM',
-    addressEn: 'Eurowindow Office Building, No.2 Ton That Tung, Dong Da, Hanoi',
+    address: 'Tòa nhà Văn phòng Eurowindow Office Building, Số 02 Tôn Thất Tùng, Kim Liên, Hà Nội',
+    addressEn: 'Eurowindow Office Building, No. 02 Ton That Tung, Kim Lien, Hanoi',
     phone: '0966 994 338',
     email: 'thangtq2@eurowindow.biz',
     hours: '08:00 - 17:30 (Thứ 2 - Thứ 6)',
@@ -148,12 +148,11 @@ export const showroomsData: Showroom[] = [
     nameEn: 'Southern Branch Office',
     region: 'Miền Nam',
     city: 'TP. Hồ Chí Minh',
-    address: 'Số 39 bis Trương Định, Phường Võ Thị Sáu, Quận 3, TP.HCM',
-    addressEn: '39 bis Truong Dinh, Vo Thi Sau Ward, District 3, HCMC',
-    phone: '028 3930 2708',
-    email: 'hcm@eurowindowdoor.com',
-    hours: '08:00 - 17:30 (Thứ 2 - Thứ 6)',
-    isHeadquarter: true
+    address: '39 Bis Mạc Đĩnh Chi, P. Tân Định, TP.HCM',
+    addressEn: '39 Bis Mac Dinh Chi, Tan Dinh Ward, HCMC',
+    phone: '0966 994 338',
+    email: 'thangtq2@eurowindow.biz',
+    hours: '08:00 - 17:30 (Thứ 2 - Thứ 6)'
   },
   {
     id: 'hcm-2',

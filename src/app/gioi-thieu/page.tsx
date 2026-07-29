@@ -139,7 +139,7 @@ export default function GioiThieuPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
                   <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mb-4">👁️</div>
-                  <h3 className="text-lg font-bold text-[#005ba7] mb-2">{isEn ? 'Strategic Vision' : 'Tầm Nhìn Strategic'}</h3>
+                  <h3 className="text-lg font-bold text-[#005ba7] mb-2">{isEn ? 'Strategic Vision' : 'Tầm Nhìn'}</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">
                     {isEn 
                       ? 'Maintain the position as the leading total solution provider for green building materials & doors in Vietnam, establishing international brand prestige.'
@@ -150,7 +150,7 @@ export default function GioiThieuPage() {
 
                 <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
                   <div className="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center text-2xl mb-4">🎯</div>
-                  <h3 className="text-lg font-bold text-[#005ba7] mb-2">{isEn ? 'Serving Mission' : 'Sứ Mệnh Phụng Sự'}</h3>
+                  <h3 className="text-lg font-bold text-[#005ba7] mb-2">{isEn ? 'Serving Mission' : 'Sứ Mệnh'}</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">
                     {isEn
                       ? 'Create comfortable, safe, energy-efficient living spaces and enhance the quality of life for the Vietnamese community.'
@@ -311,16 +311,18 @@ export default function GioiThieuPage() {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-300">
                 <div className="space-y-2">
-                  <p className="text-white font-bold">🏢 {isEn ? 'Group Headquarters:' : 'Trụ sở chính Tập đoàn:'}</p>
-                  <p>{isEn ? 'Eurowindow Office Building, 39 Bis Mac Dinh Chi, Tan Dinh Ward, HCMC' : 'Tòa nhà Eurowindow Office Building, 39 Bis Mạc Đĩnh Chi, P.Tân Định, TP.HCM'}</p>
-                  <p>☎️ {isEn ? 'Phone:' : 'Điện thoại:'} 0966 994 338</p>
+                  <p className="text-white font-bold">🏢 {isEn ? 'Headquarters:' : 'Trụ sở chính:'}</p>
+                  <p>{isEn ? 'Eurowindow Office Building, No. 02 Ton That Tung, Kim Lien, Hanoi' : 'Tòa nhà Văn phòng Eurowindow Office Building, Số 02 Tôn Thất Tùng, Kim Liên, Hà Nội'}</p>
+                  <p className="text-white font-bold pt-2">🏬 {isEn ? 'Southern Branch:' : 'Chi nhánh Miền Nam:'}</p>
+                  <p>{isEn ? '39 Bis Mac Dinh Chi St., Tan Dinh Ward, HCMC' : '39 Bis Mạc Đĩnh Chi, P. Tân Định, TP.HCM'}</p>
+                  <p>☎️ {isEn ? 'Hotline:' : 'Hotline:'} 0966 994 338</p>
                   <p>📧 Email: thangtq2@eurowindow.biz</p>
                 </div>
                 <div className="space-y-2">
                   <p className="text-white font-bold">🌐 {isEn ? 'Branch & Showroom Network:' : 'Mạng lưới Showroom & Chi nhánh:'}</p>
-                  <p>• {isEn ? 'Branches in Hanoi, Da Nang, Ho Chi Minh City' : 'Chi nhánh Hà Nội, Đà Nẵng, TP. Hồ Chí Minh'}</p>
+                  <p>• {isEn ? 'Branches in North, Central & South Vietnam' : 'Chi nhánh Miền Bắc, Miền Trung, Miền Nam'}</p>
                   <p>• {isEn ? 'Over 40 official showrooms nationwide' : 'Hơn 40 Showroom chính hãng trải dài toàn quốc'}</p>
-                  <p>• {isEn ? 'Hundreds of authorized dealers in 63 provinces' : 'Hệ thống hàng trăm đại lý ủy quyền trên 63 tỉnh thành'}</p>
+                  <p>• {isEn ? 'Hundreds of authorized dealers in 63 provinces' : 'Hệ thống đại lý ủy quyền trên 34 tỉnh thành'}</p>
                 </div>
               </div>
               <div className="pt-4 border-t border-slate-800 text-center">
