@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { articlesData } from '@/data/news';
 import { ArticleDetailClient } from './ArticleDetailClient';
+import NewsContent from '../NewsContent';
 import type { Metadata } from 'next';
+
+const CATEGORY_MAP: Record<string, string> = {
+  'su-kien': 'Tin nội bộ',
+  'tin-du-an': 'Tin dự án',
+  'tu-van': 'Tư vấn',
+  'tin-khuyen-mai': 'Tin khuyến mãi',
+  'tin-noi-bo': 'Tin nội bộ'
+};
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
+  
+  if (CATEGORY_MAP[id]) {
+    return { title: `${CATEGORY_MAP[id]} | Tin tức Eurowindow` };
+  }
+  
   const article = articlesData.find((a) => a.slug === id || a.id === id);
 
   if (!article) {
@@ -31,6 +45,15 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function ArticleDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+
+  if (CATEGORY_MAP[id]) {
+    return (
+      <Suspense fallback={<div className="min-h-screen bg-white" />}>
+        <NewsContent initialCategory={CATEGORY_MAP[id]} />
+      </Suspense>
+    );
+  }
+
   const article = articlesData.find((a) => a.slug === id || a.id === id);
 
   if (!article) {

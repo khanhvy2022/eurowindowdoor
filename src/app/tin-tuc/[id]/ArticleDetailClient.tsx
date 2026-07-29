@@ -19,6 +19,50 @@ export function ArticleDetailClient({ article }: ArticleDetailClientProps) {
   const title = language === 'ENG' && article.titleEn ? article.titleEn : article.title;
   const content = language === 'ENG' && article.contentEn ? article.contentEn : article.content;
 
+  const getProcessedContent = (raw: string) => {
+    let text = raw;
+    
+    // Remove crawler footer junk
+    const junkTokens = ['Chăm sóc khách hàng', 'Dự án quốc tế và xuất khẩu', 'Copyright ©', '[![BCT]', 'Tin tức và Sự kiện', 'Bản tin Nội bộ'];
+    let minIndex = text.length;
+    junkTokens.forEach(token => {
+      const idx = text.indexOf(token);
+      if (idx !== -1 && idx < minIndex) minIndex = idx;
+    });
+    if (minIndex < text.length) {
+      text = text.substring(0, minIndex);
+    }
+    
+    if (text.includes('<p') || text.includes('<div') || text.includes('<span')) {
+      return text;
+    }
+    
+    // Markdown formatting
+    let html = text
+      .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" />')
+      .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+      .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+      .replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+    html = html.split(/\n\n+/).map(p => {
+      let pt = p.trim();
+      if (!pt) return '';
+      if (pt.startsWith('<h') || pt.startsWith('<img') || pt.startsWith('<a')) return pt;
+      if (pt.startsWith('- ') || pt.startsWith('* ')) {
+        const lis = pt.split('\n').map(l => `<li>${l.replace(/^[-*]\s*/, '')}</li>`).join('');
+        return `<ul>${lis}</ul>`;
+      }
+      return `<p>${pt}</p>`;
+    }).join('\n');
+    
+    return html;
+  };
+
+  const processedContent = getProcessedContent(content);
+
   return (
     <main className="min-h-screen bg-white">
       <Header />
@@ -48,45 +92,10 @@ export function ArticleDetailClient({ article }: ArticleDetailClientProps) {
 
           {/* Article Body Content */}
           <div className="text-gray-800 text-sm sm:text-base leading-relaxed border-b border-gray-100 pb-10 overflow-hidden font-sans">
-            {content.includes('<') ? (
-              <div 
-                className="prose prose-blue max-w-none space-y-4 [&_img]:rounded-2xl [&_img]:mx-auto [&_img]:shadow-md [&_img]:max-h-[500px] [&_img]:object-contain [&_p]:mb-4 [&_p]:leading-relaxed [&_a]:text-[#005ba7] [&_a]:font-semibold [&_a]:underline [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#005ba7] [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-[#005ba7] [&_h3]:mt-5 [&_h3]:mb-2"
-                dangerouslySetInnerHTML={{ __html: content }}
-              />
-            ) : (
-              <div className="space-y-5">
-                {content.split(/\n\s*\n|\n/).map((block: string, idx: number) => {
-                  const trimmed = block.trim();
-                  if (!trimmed) return null;
-
-                  if (trimmed.startsWith('###') || trimmed.startsWith('####') || (trimmed.length < 80 && trimmed.endsWith(':'))) {
-                    const headingText = trimmed.replace(/^#+\s*/, '');
-                    return (
-                      <h3 key={idx} className="text-lg sm:text-xl font-bold text-[#005ba7] mt-7 mb-3 leading-snug">
-                        {headingText}
-                      </h3>
-                    );
-                  }
-
-                  if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
-                    return (
-                      <div key={idx} className="flex items-start gap-2.5 my-2 pl-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#005ba7] mt-2 flex-shrink-0" />
-                        <p className="text-gray-700 leading-relaxed">
-                          {trimmed.replace(/^[-*]\s*/, '')}
-                        </p>
-                      </div>
-                    );
-                  }
-
-                  return (
-                    <p key={idx} className="text-gray-700 text-sm sm:text-base leading-relaxed mb-4">
-                      {trimmed}
-                    </p>
-                  );
-                })}
-              </div>
-            )}
+            <div 
+              className="prose prose-blue max-w-none space-y-4 [&_img]:rounded-2xl [&_img]:mx-auto [&_img]:shadow-md [&_img]:max-h-[500px] [&_img]:object-contain [&_p]:mb-4 [&_p]:leading-relaxed [&_a]:text-[#005ba7] [&_a]:font-semibold [&_a]:underline [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-[#005ba7] [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-[#005ba7] [&_h3]:mt-6 [&_h3]:mb-3 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-2"
+              dangerouslySetInnerHTML={{ __html: processedContent }}
+            />
           </div>
 
           <div className="mt-10 pt-6 border-t border-gray-200">

@@ -1,15 +1,27 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { projectsData } from '@/data/projects';
 import { ProjectDetailClient } from './ProjectDetailClient';
+import ProjectsContent from '../ProjectsContent';
 import type { Metadata } from 'next';
 
 interface ProjectDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
+const CATEGORY_MAP: Record<string, string> = {
+  'quoc-gia': 'Công trình cấp quốc gia',
+  'chung-cu': 'Tòa nhà VP - Chung cư',
+  'dan-dung': 'Công trình dân dụng',
+};
+
 export async function generateMetadata({ params }: ProjectDetailPageProps): Promise<Metadata> {
   const resolvedParams = await params;
+  
+  if (CATEGORY_MAP[resolvedParams.id]) {
+    return { title: `${CATEGORY_MAP[resolvedParams.id]} | Công trình tiêu biểu Eurowindow` };
+  }
+  
   const project = projectsData.find((p) => p.slug === resolvedParams.id || p.id === resolvedParams.id);
 
   if (!project) {
@@ -34,6 +46,15 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
 
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
   const resolvedParams = await params;
+  
+  if (CATEGORY_MAP[resolvedParams.id]) {
+    return (
+      <Suspense fallback={<div className="min-h-screen bg-white" />}>
+        <ProjectsContent initialCategory={CATEGORY_MAP[resolvedParams.id]} />
+      </Suspense>
+    );
+  }
+  
   const project = projectsData.find((p) => p.slug === resolvedParams.id || p.id === resolvedParams.id);
 
   if (!project) {

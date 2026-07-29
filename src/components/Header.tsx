@@ -215,13 +215,13 @@ export const Header: React.FC = () => {
                 {t('nav_projects')} <ChevronDownIcon className="w-2.5 h-2.5 text-gray-400 group-hover:text-[#005ba7]" />
               </Link>
               <div className="absolute top-full left-0 w-60 bg-white shadow-xl rounded-b-xl border border-gray-100 py-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 normal-case font-medium text-xs text-gray-700 z-50 whitespace-normal">
-                <Link href="/cong-trinh-tieu-bieu?cat=quoc-gia" className="flex items-center gap-2 px-4 py-2 hover:bg-blue-50 hover:text-[#005ba7]">
+                <Link href="/cong-trinh-tieu-bieu/quoc-gia" className="flex items-center gap-2 px-4 py-2 hover:bg-blue-50 hover:text-[#005ba7]">
                   {isEn ? 'National Key Projects' : 'Công trình cấp Quốc gia'}
                 </Link>
-                <Link href="/cong-trinh-tieu-bieu?cat=chung-cu" className="flex items-center gap-2 px-4 py-2 hover:bg-blue-50 hover:text-[#005ba7]">
+                <Link href="/cong-trinh-tieu-bieu/chung-cu" className="flex items-center gap-2 px-4 py-2 hover:bg-blue-50 hover:text-[#005ba7]">
                   {isEn ? 'High-rise Towers & Apartments' : 'Tòa nhà VP - Chung cư cao tầng'}
                 </Link>
-                <Link href="/cong-trinh-tieu-bieu?cat=dan-dung" className="flex items-center gap-2 px-4 py-2 hover:bg-blue-50 hover:text-[#005ba7]">
+                <Link href="/cong-trinh-tieu-bieu/dan-dung" className="flex items-center gap-2 px-4 py-2 hover:bg-blue-50 hover:text-[#005ba7]">
                   {isEn ? 'Villas & Residential Projects' : 'Biệt thự & Công trình Dân dụng'}
                 </Link>
               </div>
@@ -233,17 +233,17 @@ export const Header: React.FC = () => {
                 {t('nav_news')} <ChevronDownIcon className="w-2.5 h-2.5 text-gray-400 group-hover:text-[#005ba7]" />
               </Link>
               <div className="absolute top-full left-0 w-56 bg-white shadow-xl rounded-b-xl border border-gray-100 py-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 normal-case font-medium text-xs text-gray-700 z-50 whitespace-normal">
-                <Link href="/tin-tuc?cat=Tin+tức+sự+kiện" className="flex items-center gap-2 px-4 py-2 hover:bg-blue-50 hover:text-[#005ba7]">
+                <Link href="/tin-tuc/su-kien" className="flex items-center gap-2 px-4 py-2 hover:bg-blue-50 hover:text-[#005ba7]">
                   {isEn ? 'Events & Corporate News' : 'Tin tức sự kiện'}
                 </Link>
-                <Link href="/tin-tuc?cat=Tin+dự+án" className="flex items-center gap-2 px-4 py-2 hover:bg-blue-50 hover:text-[#005ba7]">
+                <Link href="/tin-tuc/tin-du-an" className="flex items-center gap-2 px-4 py-2 hover:bg-blue-50 hover:text-[#005ba7]">
                   {isEn ? 'Project & Construction News' : 'Tin dự án & Thi công'}
                 </Link>
-                <Link href="/tin-tuc?cat=Tư+vấn" className="flex items-center gap-2 px-4 py-2 hover:bg-blue-50 hover:text-[#005ba7]">
-                  {isEn ? 'Videos & Technical Advice' : 'Video & Tư vấn kỹ thuật'}
+                <Link href="/tin-tuc/tu-van" className="flex items-center gap-2 px-4 py-2 hover:bg-blue-50 hover:text-[#005ba7]">
+                  {isEn ? 'Consulting & Guidelines' : 'Tư vấn & Hướng dẫn'}
                 </Link>
-                <Link href="/tin-tuc?cat=Khuyến+mãi" className="flex items-center gap-2 px-4 py-2 hover:bg-blue-50 hover:text-[#005ba7]">
-                  {isEn ? 'Special Promotions' : 'Chương trình khuyến mãi'}
+                <Link href="/tin-tuc/tin-khuyen-mai" className="flex items-center gap-2 px-4 py-2 hover:bg-blue-50 hover:text-[#005ba7]">
+                  {isEn ? 'Promotions & Offers' : 'Tin khuyến mãi'}
                 </Link>
               </div>
             </div>

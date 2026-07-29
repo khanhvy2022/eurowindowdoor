@@ -1,0 +1,235 @@
+  * VN
+  * ENG
+
+
+[ ![Eurowindow](https://storage.sudospaces.com/eurowindow/2021/10/logo-ngang-xanh-13.png.webp) ](https://eurowindow.biz)
+[Nhận tư vấn](javascript:;)
+[ ![Eurowindow](https://storage.sudospaces.com/eurowindow/2021/10/logo-ngang-xanh-13.png.webp) ](https://eurowindow.biz) ![Close](https://eurowindow.biz/assets/images/icon/header_close.png)
+  * [ ![vi](https://eurowindow.biz/core/img/flags/vn.png) VI ](javascript:;)
+  * [ ![en](https://eurowindow.biz/core/img/flags/en.png) EN ](javascript:;)
+
+
+  * [ GIỚI THIỆU ](https://eurowindow.biz/gioi-thieu.html)
+  * [ SẢN PHẨM ](javascript:;)
+    * Back
+    * [CỬA NHÔM](https://eurowindow.biz/cua-vach-nhom)
+      * [CỬA ĐI](https://eurowindow.biz/cua-vach-nhom/cua-di-nhom)
+      * [CỬA SỔ](https://eurowindow.biz/cua-vach-nhom/cua-so-nhom)
+      * [VÁCH KÍNH](https://eurowindow.biz/cua-vach-nhom/vach-kinh-nhom)
+    * [CỬA uPVC](https://eurowindow.biz/cua-nhua-upvc)
+      * [CỬA ĐI uPVC](https://eurowindow.biz/cua-nhua-upvc/cua-di-upvc)
+      * [CỬA SỔ uPVC](https://eurowindow.biz/cua-nhua-upvc/cua-so-upvc)
+    * [CỬA GỖ](https://eurowindow.biz/cua-go)
+      * [CỬA GỖ TỰ NHIÊN](https://eurowindow.biz/cua-go/cua-go-tu-nhien.html)
+      * [CỬA GỖ CÔNG NGHIỆP](https://eurowindow.biz/cua-go/cua-go-cong-nghiep.html)
+      * [CỬA GỖ GHÉP THANH](https://eurowindow.biz/cua-go/cua-go-ghep-thanh.html)
+      * [CỬA GỖ HỖN HỢP](https://eurowindow.biz/cua-go/cua-go-hon-hop.html)
+      * [CỬA GỖ CHỐNG CHÁY](https://eurowindow.biz/cua-go/cua-go-chong-chay.html)
+      * [CỬA GỖ COMPOSITE](https://eurowindow.biz/cua-go/cua-go-composite.html)
+    * [CỬA CUỐN](https://eurowindow.biz/cua-cuon)
+    * [CỬA TỰ ĐỘNG](https://eurowindow.biz/cua-tu-dong)
+    * [SẢN PHẨM KÍNH](https://eurowindow.biz/san-pham-kinh)
+    * [CỬA THÔNG MINH THẾ HỆ MỚI](https://eurowindow.biz/cua-thong-minh-the-he-moi)
+  * [ SHOWROOM ](https://eurowindow.biz/he-thong-cua-hang.html)
+  * [ CÔNG TRÌNH TIÊU BIỂU ](https://eurowindow.biz/cong-trinh-tieu-bieu/cong-trinh-cap-quoc-gia)
+    * Back
+    * [CÔNG TRÌNH CẤP QUỐC GIA](https://eurowindow.biz/cong-trinh-tieu-bieu/cong-trinh-cap-quoc-gia)
+    * [TÒA NHÀ VP - CHUNG CƯ](https://eurowindow.biz/cong-trinh-tieu-bieu/toa-nha-vp-chung-cu)
+    * [CÔNG TRÌNH DÂN DỤNG](https://eurowindow.biz/cong-trinh-tieu-bieu/cong-trinh-dan-dung)
+  * [ TÀI LIỆU ](https://eurowindow.biz/tai-lieu.html)
+  * [ TIN TỨC ](https://eurowindow.biz/tin-tuc)
+    * Back
+    * [TIN TỨC SỰ KIỆN](https://eurowindow.biz/tin-tuc/tin-tuc-su-kien)
+    * [TIN DỰ ÁN](https://eurowindow.biz/tin-tuc/tin-du-an)
+    * [TIN NỘI BỘ](https://eurowindow.biz/tin-tuc/tin-noi-bo)
+    * [TIN KHUYẾN MÃI](https://eurowindow.biz/tin-tuc/tin-khuyen-mai)
+    * [TUYỂN DỤNG](https://eurowindow.biz/tin-tuc/tuyen-dung)
+    * [TƯ VẤN](https://eurowindow.biz/tu-van)
+    * [VIDEO](https://eurowindow.biz/tin-tuc/tin-tuc-su-kien/video)
+  * [ CHÍNH SÁCH ](javascript:;)
+    * Back
+    * [CHÍNH SÁCH BẢO HÀNH](https://eurowindow.biz/bao-hanh.html)
+    * [CHÍNH SÁCH BẢO MẬT THÔNG TIN KHÁCH HÀNG](https://eurowindow.biz/chinh-sach-bao-mat-thong-tin-khach-hang.html)
+  * [ LIÊN HỆ ](https://eurowindow.biz/lien-he.html)
+
+
+[ ![Eurowindow](https://storage.sudospaces.com/eurowindow/2021/10/logo-ngang-xanh-13.png.webp) ](https://eurowindow.biz)
+[Nhận tư vấn](javascript:;)
+  * [ Trang chủ ](https://eurowindow.biz)
+  * [ Tư vấn ](https://eurowindow.biz/tu-van)
+  * [ Cửa cách âm cách nhiệt – Giải pháp 2 trong 1 cho đô thị ](https://eurowindow.biz/tu-van/cua-cach-am-cach-nhiet-giai-phap-2-trong-1-cho-do-thi.html)
+
+
+# Cửa cách âm cách nhiệt – Giải pháp 2 trong 1 cho đô thị
+18/06/2026 169 Lượt xem
+![z7925052816591-170c812da3c5dc2dd28d4ccbfbf48f0c](https://storage.sudospaces.com/eurowindow/2026/06/z7925052816591-170c812da3c5dc2dd28d4ccbfbf48f0c.jpg.webp)
+Tại các đô thị lớn, tiếng ồn giao thông, khói bụi và nhiệt độ ngày càng gia tăng đang ảnh hưởng trực tiếp tới chất lượng sống của cư dân. Không gian sống hiện đại không chỉ cần đẹp mà còn phải đảm bảo sự yên tĩnh, riêng tư và tiết kiệm năng lượng.
+Đó là lý do cửa cách âm cách nhiệt ngày càng trở thành lựa chọn được nhiều gia đình, chủ đầu tư và kiến trúc sư ưu tiên. Với khả năng giảm tiếng ồn, hạn chế thất thoát nhiệt và hỗ trợ tiết kiệm điện năng, đây được xem là giải pháp "2 trong 1" giúp nâng cao trải nghiệm sống trong đô thị hiện đại.
+## **Vì sao nhà phố, căn hộ đô thị cần cửa cách âm cách nhiệt?**
+**Tiếng ồn đô thị ngày càng gia tăng**
+Sự phát triển của giao thông, mật độ dân cư đông đúc cùng các hoạt động thương mại khiến tiếng ồn trở thành vấn đề phổ biến tại các thành phố lớn. Nhà ở gần đường lớn, khu thương mại, trường học hay công trình xây dựng thường xuyên phải đối mặt với âm thanh từ xe cộ, còi xe và các hoạt động bên ngoài.
+Tiếng ồn kéo dài không chỉ gây khó chịu mà còn ảnh hưởng đến chất lượng giấc ngủ, khả năng tập trung và sức khỏe tinh thần của các thành viên trong gia đình.
+**Nhiệt độ môi trường ngày càng cao**
+![screenshot-3](https://eurowindow.biz/core/img/default_image.png)
+Biến đổi khí hậu và hiệu ứng đảo nhiệt đô thị khiến nền nhiệt tại các thành phố thường vượt ngưỡng 40 độ C cao hơn khu vực ngoại ô. Nhiệt lượng hấp thụ qua cửa kính và các bề mặt tiếp xúc trực tiếp với ánh nắng là nguyên nhân khiến điều hòa phải hoạt động với công suất lớn hơn. 
+Một hệ cửa có khả năng cách nhiệt tốt giúp hạn chế lượng nhiệt truyền từ bên ngoài vào trong nhà, duy trì không gian mát mẻ hơn và giảm áp lực cho hệ thống làm mát.
+**Xu hướng sống riêng tư và chất lượng hơn**
+Sau những giờ làm việc căng thẳng, nhiều người mong muốn trở về một không gian yên tĩnh để nghỉ ngơi và tái tạo năng lượng. Đây cũng là lý do các giải pháp cửa hiện đại ngày càng được chú trọng khả năng chống ồn, cách nhiệt hiệu quả tạo nên môi trường sống yên tĩnh, thoải mái hơn cho cả gia đình. 
+## **3 công nghệ tạo nên khả năng cách âm, cách nhiệt hiệu quả**
+Khả năng cách âm, cách nhiệt của cửa không đến từ một chi tiết riêng lẻ mà là sự kết hợp đồng bộ của nhiều công nghệ vật liệu tiên tiến.
+![anh-3](https://eurowindow.biz/core/img/default_image.png)
+**Hộp kính giúp giảm tiếng ồn và truyền nhiệt**
+Hộp kính là cấu tạo gồm hai hoặc nhiều lớp kính được liên kết với nhau, ở giữa là khoảng không khí hoặc khí trơ Argon.
+Cấu tạo này giúp làm giảm sự truyền âm từ môi trường bên ngoài vào bên trong công trình, đồng thời hạn chế quá trình trao đổi nhiệt. So với kính thông thường, hộp kính mang lại hiệu quả cách âm và cách nhiệt vượt trội hơn. 
+Đối với các công trình yêu cầu hiệu quả chống nóng tốt hơn, hộp kính có thể kết hợp cùng kính Low-E để giảm bức xạ nhiệt mặt trời nhưng vẫn đảm bảo khả năng lấy sáng tự nhiên cho không gian bên trong. 
+**Nhôm cầu cách nhiệt, giảm truyền nhiệt qua khung cửa**
+Ở các hệ [cửa nhôm](https://eurowindow.biz/cua-vach-nhom) thông thường, kim loại là vật liệu dẫn nhiệt tốt. Điều này khiến nhiệt độ bên ngoài dễ dàng truyền qua khung cửa vào không gian bên trong.
+Hệ nhôm cầu cách nhiệt được thiết kế với thanh Polyamide kỹ thuật đặt giữa hai thanh nhôm, tạo thành lớp ngăn cách nhiệt hiệu quả. Công nghệ này giúp hạn chế đáng kể quá trình truyền nhiệt, đồng thời góp phần nâng cao khả năng cách âm của bộ cửa.
+Đây là giải pháp được ứng dụng rộng rãi trong các công trình nhà phố, biệt thự, chung cư cao cấp và các công trình xanh hiện nay.
+**Gioăng EPDM đa lớp tăng độ kín khít**
+Một trong những yếu tố quan trọng quyết định hiệu quả cách âm cách nhiệt là độ kín khít của bộ cửa.
+Hệ gioăng EPDM đa lớp giúp chất lượng cao được bố trí tại các vị trí tiếp giáp giữa khung và cánh cửa giúp hạn chế khe hở, ngăn tiếng ồn, bụi và luồng khí nóng xâm nhập vào bên trong. Đồng thời, vật liệu EPDM có độ bền cao, chống lão hóa tốt, giúp cửa duy trì hiệu quả vận hành ổn định trong thời gian dài.
+## **Cửa cách âm cách nhiệt mang lại những lợi ích gì?**
+**Giảm tiếng ồn hiệu quả**
+Nhờ cấu tạo đồng bộ giữa hộp kính, hệ gioăng kín khít và kết cấu profile hiện đại, cửa cách âm cách nhiệt giúp hạn chế đáng kể âm thanh từ môi trường bên ngoài.
+Tùy cấu hình sản phẩm, khả năng cách âm có thể đạt tới khoảng 35–40 dB, đây là giải pháp phù hợp cho các căn hộ chung cư, nhà phố mặt tiền, biệt thự trong khu đô thị hoặc các công trình gần trục giao thông lớn.
+**Hạn chế thất thoát nhiệt lạnh**
+Khi sử dụng điều hòa, một phần năng lượng thường bị thất thoát qua hệ cửa nếu khả năng cách nhiệt không tốt.
+Cửa cách âm cách nhiệt giúp giữ ổn định nhiệt độ trong phòng, hạn chế hơi lạnh thoát ra ngoài vào mùa hè và giữ nhiệt tốt hơn vào mùa đông, từ đó nâng cao hiệu quả sử dụng điều hòa không khí.
+**Tiết kiệm điện năng**
+Khi nhiệt độ trong nhà được duy trì ổn định, điều hòa không cần hoạt động với công suất cao trong thời gian dài.
+Điều này giúp giảm lượng điện tiêu thụ hàng tháng, đồng thời kéo dài tuổi thọ thiết bị làm mát. Đối với các công trình có diện tích kính lớn hoặc thường xuyên sử dụng điều hòa, hiệu quả tiết kiệm năng lượng càng trở nên rõ rệt.
+## **Cửa cách âm cách nhiệt phù hợp với những công trình nào?**
+  * Nhà phố mặt tiền gần trục giao thông lớn.
+  * Căn hộ chung cư cần tăng khả năng chống ồn.
+  * Biệt thự đô thị ưu tiên không gian sống riêng tư.
+  * Văn phòng làm việc.
+  * Khách sạn, khu nghỉ dưỡng.
+  * Trường học, bệnh viện.
+
+
+## **Nên lựa chọn cửa cách âm cách nhiệt như thế nào?**
+Để tối ưu hiệu quả sử dụng, người dùng nên ưu tiên các hệ cửa được thiết kế đồng bộ từ khung, kính, gioăng và phụ kiện.
+Một bộ cửa chất lượng cao thường bao gồm:
+  * Hộp kính cách âm cách nhiệt.
+  * Hệ nhôm cầu cách nhiệt hoặc profile uPVC chất lượng cao.
+  * Gioăng EPDM đa lớp.
+  * Phụ kiện kim khí đồng bộ.
+  * Thi công lắp đặt đúng kỹ thuật.
+
+
+Việc lựa chọn giải pháp tổng thể thay vì chỉ quan tâm tới một cấu phần riêng lẻ sẽ giúp phát huy tối đa hiệu quả chống ồn, chống nóng và tiết kiệm năng lượng cho công trình.
+Trong bối cảnh đô thị ngày càng đông đúc và nhiệt độ có xu hướng gia tăng, cửa cách âm cách nhiệt không chỉ là giải pháp nâng cao chất lượng sống mà còn góp phần tối ưu chi phí vận hành công trình về lâu dài.
+Với sự kết hợp của hộp kính, nhôm cầu cách nhiệt và gioăng EPDM đa lớp, cửa cách âm cách nhiệt giúp giảm tiếng ồn, hạn chế truyền nhiệt và tiết kiệm điện năng hiệu quả, mang đến không gian sống yên tĩnh, thoải mái và bền vững hơn cho gia đình hiện đại.
+Nếu bạn chưa biết nên lựa chọn kính hộp, kính Low-E hay hệ nhôm cầu cách nhiệt nào cho công trình? Hãy liên hệ để được Eurowindow tư vấn và đề xuất giải pháp phù hợp với nhu cầu sử dụng và ngân sách thực tế. 
+  * Miền Bắc: 0909.888.000
+  * Miền Trung: 0906.000.111
+  * Miền Nam: 0903.11.8888
+
+
+Chia sẻ: [ Facebook ](https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Feurowindow.biz%2Ftu-van%2Fcua-cach-am-cach-nhiet-giai-phap-2-trong-1-cho-do-thi.html) [ Zalo ](https://sp.zalo.me/share?url=https%3A%2F%2Feurowindow.biz%2Ftu-van%2Fcua-cach-am-cach-nhiet-giai-phap-2-trong-1-cho-do-thi.html)
+Tóm tắt với AI:
+[ ](javascript:void\(0\) "Tóm tắt với ChatGPT") [ ](javascript:void\(0\) "Tóm tắt với Claude") [ ](javascript:void\(0\) "Tóm tắt với Perplexity")
+Đánh giá:
+  * **0/5**
+
+
+Bình luận (0 Bình luận)
+Vui lòng bổ sung thông tin
+Gửi
+![Close](https://eurowindow.biz/assets/images/icon/header_close.png)
+Danh mục tin tức
+  * [Tin khuyến mãi](https://eurowindow.biz/tin-tuc/tin-khuyen-mai)
+  * [Tuyển dụng](https://eurowindow.biz/tin-tuc/tuyen-dung)
+  * [Tin nội bộ](https://eurowindow.biz/tin-tuc/tin-noi-bo)
+  * [Tin dự án](https://eurowindow.biz/tin-tuc/tin-du-an)
+  * [Tin tức sự kiện](https://eurowindow.biz/tin-tuc/tin-tuc-su-kien)
+
+
+Bài viết mới
+  * [Tổng hợp giải pháp cửa chống nóng Eurowindow mùa hè 2026](https://eurowindow.biz/tu-van/giai-phap-cach-nhiet-eurowindow-he-2026.html)
+  * [Nên chọn cửa gì cho mùa hè nắng nóng?](https://eurowindow.biz/tu-van/nen-chon-cua-gi-cho-mua-he-nang-nong.html)
+  * [PHÁT ĐỘNG CUỘC THI "EUROWINDOW – NƠI LÀM VIỆC TÔI YÊU"](https://eurowindow.biz/tin-tuc/tin-noi-bo/phat-dong-cuoc-thi-eurowindow-noi-lam-viec-toi-yeu.html)
+
+
+Bài viết đọc nhiều
+  * [EUROWINDOW KHUYẾN MÃI NHÂN DỊP VIETBUILD: “ĐÓN CỬA TÂN GIA – NHẬN QUÀ NGHỈ DƯỠNG”](https://eurowindow.biz/tin-tuc/tin-khuyen-mai/eurowindow-khuyen-mai-nhan-dip-vietbuild-don-cua-tan-gia-nhan-qua-nghi-duong.html)
+  * [THỂ LỆ CHƯƠNG TRÌNH KHUYẾN MÃI: “NGÀN ƯU ĐÃI VÀNG – TRI ÂN KHÁCH HÀNG” NHÂN KỶ NIỆM 20 NĂM THÀNH LẬP EUROWINDOW](https://eurowindow.biz/tin-tuc/tin-khuyen-mai/the-le-chuong-trinh-khuyen-mai-ngan-uu-dai-vang-tri-an-khach-hang-nhan-ky-niem-20-nam-thanh-lap-eurowindow.html)
+  * [THỂ LỆ CHƯƠNG TRÌNH KHUYẾN MÃI “ĐẦU TƯ XỨNG TẦM – ƯU ĐÃI CỰC PHẨM”](https://eurowindow.biz/tin-tuc/tin-khuyen-mai/the-le-chuong-trinh-khuyen-mai-%E2%80%9Cdau-tu-xung-tam-%E2%80%93-uu-dai-cuc-pham%E2%80%9D.html)
+
+
+[![popup-website](https://storage.sudospaces.com/eurowindow/2026/06/w250/popup-website.png.webp)](https://eurowindow.biz/tin-tuc/tin-khuyen-mai/chuong-trinh-khuyen-mai-dac-biet-danh-cho-khach-hang-mua-kinh-dien-eurowindow.html)
+![logo-ngang-xanh-13](https://storage.sudospaces.com/eurowindow/2021/10/logo-ngang-xanh-13.png.webp)
+Đăng ký ngay để nhận tư vấn từ Eurowindow!
+Họ và tên là bắt buộc!
+Số điện thoại là bắt buộc!
+Số điện thoại không đúng định dạng!
+Email là bắt buộc!
+Email không đúng định dạng!
+Gửi
+Đã sao chép liên kết bài viết.  
+Đang mở trình duyệt AI...
+[![logo-ngang-xanh-13](https://storage.sudospaces.com/eurowindow/2021/10/logo-ngang-xanh-13.png.webp)](https://eurowindow.biz)
+[![Facebook](https://eurowindow.biz/assets/images/icon/facebook.svg)](https://www.facebook.com/eurowindow.biz)[![Instagram](https://eurowindow.biz/assets/images/icon/instagram.svg)](https://www.instagram.com/eurowindow.biz/)[![Youtube](https://eurowindow.biz/assets/images/icon/youtube.svg)](https://www.youtube.com/channel/UCpMyOKyn5p1TX3urz_dHo7A)[![Zalo](https://eurowindow.biz/assets/images/icon/zalo.svg)](https://zalo.me/3969929733792079943) [ ](https://www.tiktok.com/@eurowindow.official)
+[(84 - 24) 37 47 47 00](tel:\(84%20-%2024\)%2037%2047%2047%2000)
+infoew@eurowindow.biz
+[Tòa nhà Văn phòng Eurowindow Office Building, Số 02 Tôn Thất Tùng, Kim Liên, Hà Nội](https://maps.app.goo.gl/6Bj1QCJAheiMKr9Z6)
+[![BCT](https://eurowindow.biz/assets/images/bct.png)](javascript:;)[![DMCA.com Protection Status](https://eurowindow.biz/assets/images/dmca.png)](https://www.dmca.com/Protection/Status.aspx?ID=9753a5d8-c1fa-42e2-876e-3a12383d7ae0)
+Giới thiệu
+  * [Giới thiệu](https://eurowindow.biz/gioi-thieu.html)
+  * [Tầm nhìn sứ mệnh](https://eurowindow.biz/tam-nhin-su-menh.html)
+  * [Giải thưởng](https://eurowindow.biz/giai-thuong)
+  * [Tài liệu](https://eurowindow.biz/tai-lieu.html)
+
+
+Sản phẩm
+  * [Cửa - Vách nhôm](https://eurowindow.biz/cua-vach-nhom)
+  * [Cửa uPVC](https://eurowindow.biz/cua-nhua-upvc)
+  * [Cửa gỗ](https://eurowindow.biz/cua-go)
+  * [Cửa cuốn](https://eurowindow.biz/cua-cuon)
+  * [Cửa thông minh](https://eurowindow.biz/cua-thong-minh-the-he-moi)
+
+
+Tin tức
+  * [Tin tức sự kiện](https://eurowindow.biz/tin-tuc/tin-tuc-su-kien)
+  * [Tin dự án](https://eurowindow.biz/tin-tuc/tin-du-an)
+  * [Tin nội bộ](https://eurowindow.biz/tin-tuc/tin-noi-bo)
+  * [Tin khuyến mãi](https://eurowindow.biz/tin-tuc/tin-khuyen-mai)
+  * [Tư vấn](https://eurowindow.biz/tu-van)
+
+
+Chăm sóc khách hàng
+  * [Chính sách bảo hành](https://eurowindow.biz/bao-hanh.html)
+  * [Chính sách bảo mật thông tin khách hàng](https://eurowindow.biz/chinh-sach-bao-mat-thong-tin-khach-hang.html)
+  * [(84 - 24) 37 47 47 00](tel:\(84%20-%2024\)%2037%2047%2047%2000)
+  * cskhhn@eurowindow.biz
+Dự án quốc tế và xuất khẩu
+    * [+84 -903 41 55 52](tel:+84%20-903%2041%2055%2052)
+    * export@eurowindow.biz
+
+
+[![BCT](https://eurowindow.biz/assets/images/bct.png)](javascript:;)[![DMCA.com Protection Status](https://eurowindow.biz/assets/images/dmca.png)](https://www.dmca.com/Protection/Status.aspx?ID=9753a5d8-c1fa-42e2-876e-3a12383d7ae0)
+Copyright © 2021 www.eurowindow.biz
+[![Hotline](https://eurowindow.biz/tu-van/cua-cach-am-cach-nhiet-giai-phap-2-trong-1-cho-do-thi.html)](tel:+84909%20888%20000)
+![logo-ngang-xanh-12](https://storage.sudospaces.com/eurowindow/2021/10/logo-ngang-xanh-12.png.webp)
+Họ và tên:
+Thiếu Họ và tên. Quý khách vui lòng nhập thêm!
+Địa chỉ công trình:
+Thiếu Địa chỉ công trình. Quý khách vui lòng nhập thêm!
+Số điện thoại liên hệ:
+Thiếu Số điện thoại. Quý khách vui lòng nhập thêm!
+Số điện thoại không đúng định dạng!
+Email:
+Thiếu Email. Quý khách vui lòng nhập thêm!
+Email không đúng định dạng!
+Công trình: Nhà riêng Dự án Nhà riêng
+Nhận tư vấn
+![logo-ngang-xanh-13](https://storage.sudospaces.com/eurowindow/2021/10/logo-ngang-xanh-13.png.webp)
+Cảm ơn bạn đã cung cấp thông tin. Nhân viên của Eurowindow sẽ liên hệ với bạn trong thời gian sớm nhất!
+Nếu bạn cần hỗ trợ ngay hãy gọi Hotline:
+Hotline Miền Bắc
+[0909 888 000](tel:0909%20888%20000)
+Hotline Miền Trung
+[0906 000 111](tel:0906%20000%20111)
+Hotline Miền Nam
+[0903 11 8888](tel:0903%2011%208888)
