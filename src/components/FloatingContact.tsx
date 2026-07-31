@@ -312,9 +312,9 @@ export const FloatingContact: React.FC = () => {
                   })}
 
                   {isLoading && (
-                    <div className="flex gap-2 items-center text-slate-400 italic text-xs pl-9">
+                    <div className="flex items-center text-slate-400 italic text-xs pl-9" aria-label="Đang trả lời">
                       <span className="w-2 h-2 bg-[#005ba7] rounded-full animate-ping" />
-                      <span>Đang tra cứu thông tin báo giá...</span>
+                      <span className="ml-1.5">...</span>
                     </div>
                   )}
 

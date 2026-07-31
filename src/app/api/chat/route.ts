@@ -26,6 +26,18 @@ import {
 
 export const maxDuration = 60; // max duration for edge/serverless function (up to 60s for Hobby)
 
+function withTimeout<T>(operation: Promise<T>, timeoutMs: number, label: string): Promise<T> {
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
+  const timeout = new Promise<never>((_, reject) => {
+    timeoutId = setTimeout(() => reject(new Error(`${label} timed out after ${timeoutMs}ms`)), timeoutMs);
+  });
+
+  return Promise.race([operation, timeout]).finally(() => {
+    if (timeoutId) clearTimeout(timeoutId);
+  }) as Promise<T>;
+}
+
 const SYSTEM_PROMPT = `Bạn là chuyên gia tư vấn cửa Eurowindow cao cấp. 
 Nhiệm vụ của bạn là tư vấn cho khách hàng về các dòng sản phẩm cửa của Eurowindow như cửa nhôm, cửa nhựa uPVC, cửa gỗ, vách kính lớn, và các phụ kiện đi kèm.
 
@@ -189,10 +201,19 @@ export async function POST(req: Request) {
         searchContent = latestMessage.content;
       }
 
-      if (searchContent) {
+      // RAG is optional for the public chat. It can involve external embedding
+      // and database requests, which must not consume the serverless response
+      // window before the model has a chance to answer.
+      if (searchContent && process.env.ENABLE_CHAT_RAG === 'true') {
         try {
           const { retrieveRelevantContext } = await import('@/lib/rag');
-          context = await retrieveRelevantContext(searchContent, 25);
+          // Retrieval is supplementary. Do not let a slow embedding, Supabase,
+          // or MongoDB request prevent the chatbot from answering.
+          context = await withTimeout(
+            retrieveRelevantContext(searchContent, 25),
+            8_000,
+            'Knowledge retrieval'
+          );
         } catch (ragError) {
           console.log('RAG search failed:', (ragError as Error).message);
         }
@@ -289,28 +310,6 @@ ${JSON.stringify(pricingAsia, null, 2)}
       const latestDoc = getLatestDocument();
       if (latestDoc) {
         context = latestDoc.content;
-      } else {
-        // Fallback to MongoDB latest document
-        try {
-          await connectToDatabase();
-      const db = mongoose.connection.db;
-          const latestMongoDocs = await db.collection('documents')
-            .find({})
-            .sort({ created_at: -1 })
-            .limit(1)
-            .toArray();
-          if (latestMongoDocs && latestMongoDocs.length > 0) {
-            const docId = latestMongoDocs[0].id || latestMongoDocs[0]._id.toString();
-            const chunks = await db.collection('document_chunks')
-              .find({ document_id: docId })
-              .toArray();
-            if (chunks && chunks.length > 0) {
-              context = chunks.map((c: any) => c.content).join('\n\n');
-            }
-          }
-        } catch (dbErr) {
-          console.error('Error fetching latest document from MongoDB fallback:', dbErr);
-        }
       }
     }
 

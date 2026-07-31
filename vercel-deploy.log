@@ -1,0 +1,204 @@
+Vercel CLI 54.10.2 (Node.js 24.13.0)
+Retrieving project…
+Deploying eurowindows-projects/eurowindowdoor
+Uploading [--------------------] (0.0B/267.9KB)
+Uploading [======--------------] (82.3KB/267.9KB)
+Uploading [==========----------] (146.3KB/267.9KB)
+Uploading [===============-----] (210.3KB/267.9KB)
+Uploading [====================] (267.9KB/267.9KB)
+  Inspect     https://vercel.com/eurowindows-projects/eurowindowdoor/Gatt63eVmruNHcfCumaevVCfeyA3
+▲ Production  https://eurowindowdoor-curl2ynvn-eurowindows-projects.vercel.app
+https://eurowindowdoor-curl2ynvn-eurowindows-projects.vercel.appBuilding…
+Building…
+Running build in Washington, D.C., USA (East) – iad1
+Build machine configuration: 2 cores, 8 GB
+Retrieving list of deployment files...
+Downloading 12526 deployment files...
+Restored build cache from previous deployment (CCrXRBE5B5YCezgJrCQapAAru89q)
+Running "vercel build"
+Vercel CLI 58.4.0
+Installing dependencies...
+up to date in 1s
+243 packages are looking for funding
+run `npm fund` for details
+Detected Next.js version: 16.2.11
+Running "npm run build"
+> eurowindowdoor@0.1.0 build
+> next build
+Applying modifyConfig from Vercel
+▲ Next.js 16.2.11 (Turbopack)
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+Creating an optimized production build ...
+Turbopack build encountered 2 warnings:
+./src/lib/ai/sandbox.ts:182:23
+The file pattern ('/ROOT/data/blogs.json' | '/ROOTdata/blogs.json' | '/ROOT/data/projects.json' | '/ROOTdata/projects.json' | '/ROOT/data/showrooms.json' | '/ROOTdata/showrooms.json' | '/ROOT/src/app/bao-gia/pricing.ts' | '/ROOTsrc/app/bao-gia/pricing.ts' | '/ROOT/' <dynamic> | '/ROOT' <dynamic>) matches 24736 files in [project]/
+180 |     ];
+181 |     for (const relativePath of localDataPaths) {
+> 182 |       const srcPath = path.resolve(process.cwd(), relativePath);
+|                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+183 |       if (fs.existsSync(srcPath)) {
+184 |         const destPath = path.join(dataDir, path.basename(relativePath));
+185 |         fs.copyFileSync(srcPath, destPath);
+Overly broad patterns can lead to build performance issues and over bundling.
+Import trace:
+App Route:
+./src/lib/ai/sandbox.ts
+./src/app/api/chat/route.ts
+./next.config.ts
+Encountered unexpected file in NFT list
+A file was traced that indicates that the whole project was traced unintentionally. Somewhere in the import trace below, there are:
+- filesystem operations (like path.join, path.resolve or fs.readFile), or
+- very dynamic requires (like require('./' + foo)).
+To resolve this, you can
+- remove them if possible, or
+- only use them in development, or
+- make sure they are statically scoped to some subfolder: path.join(process.cwd(), 'data', bar), or
+- add ignore comments: path.join(/*turbopackIgnore: true*/ process.cwd(), bar)
+Import trace:
+App Route:
+./next.config.ts
+./src/lib/ai/sandbox.ts
+./src/app/api/chat/route.ts
+✓ Compiled successfully in 23.1s
+Running TypeScript ...
+Finished TypeScript in 9.2s ...
+Collecting page data using 1 worker ...
+Generating static pages using 1 worker (0/31) ...
+Generating static pages using 1 worker (7/31)
+Generating static pages using 1 worker (15/31)
+Generating static pages using 1 worker (23/31)
+Failed to connect to MongoDB: MongooseServerSelectionError: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/
+at ignore-listed frames {
+errorLabelSet: Set(0) {},
+reason: TopologyDescription {
+type: 'ReplicaSetNoPrimary',
+servers: Map(3) {
+'ac-oxvveva-shard-00-00.egnadfo.mongodb.net:27017' => [ServerDescription],
+'ac-oxvveva-shard-00-01.egnadfo.mongodb.net:27017' => [ServerDescription],
+'ac-oxvveva-shard-00-02.egnadfo.mongodb.net:27017' => [ServerDescription]
+},
+stale: false,
+compatible: true,
+heartbeatFrequencyMS: 10000,
+localThresholdMS: 15,
+setName: 'atlas-srct1k-shard-0',
+maxElectionId: null,
+maxSetVersion: null,
+commonWireVersion: 0,
+logicalSessionTimeoutMinutes: null
+},
+code: undefined,
+[cause]: TopologyDescription {
+type: 'ReplicaSetNoPrimary',
+servers: Map(3) {
+'ac-oxvveva-shard-00-00.egnadfo.mongodb.net:27017' => [ServerDescription],
+'ac-oxvveva-shard-00-01.egnadfo.mongodb.net:27017' => [ServerDescription],
+'ac-oxvveva-shard-00-02.egnadfo.mongodb.net:27017' => [ServerDescription]
+},
+stale: false,
+compatible: true,
+heartbeatFrequencyMS: 10000,
+localThresholdMS: 15,
+setName: 'atlas-srct1k-shard-0',
+maxElectionId: null,
+maxSetVersion: null,
+commonWireVersion: 0,
+logicalSessionTimeoutMinutes: null
+}
+}
+Failed to connect to MongoDB: MongooseServerSelectionError: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/
+at ignore-listed frames {
+errorLabelSet: Set(0) {},
+reason: TopologyDescription {
+type: 'ReplicaSetNoPrimary',
+servers: Map(3) {
+'ac-oxvveva-shard-00-00.egnadfo.mongodb.net:27017' => [ServerDescription],
+'ac-oxvveva-shard-00-01.egnadfo.mongodb.net:27017' => [ServerDescription],
+'ac-oxvveva-shard-00-02.egnadfo.mongodb.net:27017' => [ServerDescription]
+},
+stale: false,
+compatible: true,
+heartbeatFrequencyMS: 10000,
+localThresholdMS: 15,
+setName: 'atlas-srct1k-shard-0',
+maxElectionId: null,
+maxSetVersion: null,
+commonWireVersion: 0,
+logicalSessionTimeoutMinutes: null
+},
+code: undefined,
+[cause]: TopologyDescription {
+type: 'ReplicaSetNoPrimary',
+servers: Map(3) {
+'ac-oxvveva-shard-00-00.egnadfo.mongodb.net:27017' => [ServerDescription],
+'ac-oxvveva-shard-00-01.egnadfo.mongodb.net:27017' => [ServerDescription],
+'ac-oxvveva-shard-00-02.egnadfo.mongodb.net:27017' => [ServerDescription]
+},
+stale: false,
+compatible: true,
+heartbeatFrequencyMS: 10000,
+localThresholdMS: 15,
+setName: 'atlas-srct1k-shard-0',
+maxElectionId: null,
+maxSetVersion: null,
+commonWireVersion: 0,
+logicalSessionTimeoutMinutes: null
+}
+}
+✓ Generating static pages using 1 worker (31/31) in 6.0s
+Finalizing page optimization ...
+Running onBuildComplete from Vercel
+Route (app)                         Revalidate  Expire
+┌ ○ /                                       1m      1y
+├ ○ /_not-found
+├ ƒ /[year]/[month]/[slug]
+├ ○ /admin
+├ ○ /admin/bai-viet
+├ ƒ /admin/bai-viet/[id]/chinh-sua
+├ ○ /admin/bai-viet/them-moi
+├ ○ /admin/dashboard
+├ ○ /admin/knowledge
+├ ○ /admin/login
+├ ○ /admin/nap-tai-lieu
+├ ƒ /api/admin/articles
+├ ƒ /api/admin/articles/[id]
+├ ƒ /api/admin/crawl
+├ ƒ /api/admin/documents
+├ ƒ /api/admin/ingest-catalogue
+├ ƒ /api/admin/knowledge
+├ ƒ /api/admin/login
+├ ƒ /api/admin/logout
+├ ƒ /api/admin/test-retrieval
+├ ƒ /api/chat
+├ ƒ /api/chat/health
+├ ƒ /chat
+├ ○ /chinh-sach
+├ ○ /cong-trinh-tieu-bieu
+├ ƒ /cong-trinh-tieu-bieu/[id]
+├ ○ /gioi-thieu
+├ ○ /icon.png
+├ ○ /lien-he
+├ ○ /manifest.webmanifest
+├ ƒ /p/[slug]
+├ ○ /robots.txt
+├ ○ /san-pham
+├ ƒ /san-pham/[id]
+├ ○ /showroom
+├ ○ /sitemap.xml
+├ ○ /tai-lieu
+├ ○ /tin-tuc                                1m      1y
+└ ƒ /tin-tuc/[id]
+ƒ Proxy (Middleware)
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+Build Completed in /vercel/output [43s]
+Deploying outputs...
+[2K[1A[2K[G▲ Production  https://eurowindowdoor-curl2ynvn-eurowindows-projects.vercel.app
+Completing…
+▲ Aliased     https://eurowindowdoor.com
+
+✓ Ready in 2m
+
+Common next commands:
+- `vercel inspect eurowindowdoor-curl2ynvn-eurowindows-projects.vercel.app --logs`
+- `vercel redeploy eurowindowdoor-curl2ynvn-eurowindows-projects.vercel.app`
