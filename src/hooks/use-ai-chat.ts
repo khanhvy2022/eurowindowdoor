@@ -21,10 +21,14 @@ export interface ChatMessage {
 
 // Simple client-side cache
 const CLIENT_QUERY_CACHE = new Map<string, string>();
-const CHAT_REQUEST_TIMEOUT_MS = 8_000;
+const CHAT_REQUEST_TIMEOUT_MS = 12_000;
 
 function getInstantFallbackReply(prompt: string): string {
   const text = prompt.toLowerCase();
+
+  if (text.includes('kiến thức') || text.includes('nguồn thông tin') || text.includes('lấy ở đâu')) {
+    return 'Tôi lấy thông tin từ kho tri thức Eurowindow đã được quản trị viên nạp vào, gồm catalogue kỹ thuật, tài liệu sản phẩm và các trang website đã đồng bộ. Khi thông tin không có trong nguồn này, tôi sẽ đề nghị anh/chị để lại số điện thoại để chuyên viên xác nhận chính xác.';
+  }
 
   if (text.includes('low-e') || text.includes('cản nhiệt') || text.includes('kính hộp')) {
     return 'Kính Low-E giúp hạn chế bức xạ nhiệt, giảm tải điều hòa và vẫn giữ ánh sáng tự nhiên. Với khu vực nhiều nắng, anh/chị nên dùng kính hộp có lớp Low-E. Để báo giá chính xác, vui lòng cho tôi kích thước rộng × cao, số lượng cửa và địa chỉ công trình.';
@@ -208,7 +212,6 @@ export function useAiChat(options: {
         setMessages(prev =>
           prev.map(m => m.id === assistantId ? { ...m, text: fallbackText } : m)
         );
-        CLIENT_QUERY_CACHE.set(prompt.toLowerCase(), fallbackText);
         setActiveModelInfo({
           provider: 'instant-fallback',
           model: 'empty-ai-response',
@@ -222,7 +225,7 @@ export function useAiChat(options: {
       const fallbackText = getInstantFallbackReply(prompt);
       setActiveModelInfo({
         provider: 'instant-fallback',
-        model: requestTimedOut ? '8-second-timeout' : 'api-unavailable',
+        model: requestTimedOut ? '12-second-timeout' : 'api-unavailable',
         fallbackTriggered: true,
       });
       setMessages(prev => {
@@ -232,7 +235,6 @@ export function useAiChat(options: {
         }
         return prev.map(m => m.id === assistantId && !m.text ? { ...m, text: fallbackText } : m);
       });
-      CLIENT_QUERY_CACHE.set(prompt.toLowerCase(), fallbackText);
       setError(null);
     } finally {
       clearTimeout(timeoutId);

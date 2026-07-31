@@ -45,10 +45,9 @@ export async function streamTextWithFallback(options: FallbackOptions) {
     }
 
     if (provider === 'gemini') {
-      // Models verified available via Gemini API (v1beta/models endpoint)
-      // Try newer models first as they have separate rate limits
-      targets.push({ provider: 'gemini', model: 'gemini-3.5-flash' });
-      targets.push({ provider: 'gemini', model: 'gemini-3.1-flash-lite' });
+      // Stable production models first. A stream only exposes provider errors
+      // asynchronously, so an unavailable first model prevents this fallback
+      // loop from reaching later candidates.
       targets.push({ provider: 'gemini', model: 'gemini-2.5-flash' });
       targets.push({ provider: 'gemini', model: 'gemini-2.5-flash-lite' });
       targets.push({ provider: 'gemini', model: 'gemini-2.0-flash' });

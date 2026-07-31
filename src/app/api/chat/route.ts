@@ -204,14 +204,14 @@ export async function POST(req: Request) {
       // RAG is optional for the public chat. It can involve external embedding
       // and database requests, which must not consume the serverless response
       // window before the model has a chance to answer.
-      if (searchContent && process.env.ENABLE_CHAT_RAG === 'true') {
+      if (searchContent && process.env.ENABLE_CHAT_RAG !== 'false') {
         try {
           const { retrieveRelevantContext } = await import('@/lib/rag');
           // Retrieval is supplementary. Do not let a slow embedding, Supabase,
           // or MongoDB request prevent the chatbot from answering.
           context = await withTimeout(
-            retrieveRelevantContext(searchContent, 25),
-            8_000,
+            retrieveRelevantContext(searchContent, 5),
+            4_000,
             'Knowledge retrieval'
           );
         } catch (ragError) {
