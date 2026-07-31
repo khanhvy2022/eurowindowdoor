@@ -123,7 +123,7 @@ export const FloatingContact: React.FC = () => {
 
       {/* ── Floating Buttons ── */}
       <div
-        className={`fixed bottom-6 right-5 z-50 flex flex-col items-center gap-4 transition-all duration-700 ${
+        className={`fixed bottom-20 right-5 z-50 flex flex-col items-center gap-4 transition-all duration-700 ${
           visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
       >
