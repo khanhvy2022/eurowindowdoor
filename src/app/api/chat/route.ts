@@ -372,16 +372,12 @@ ${JSON.stringify(pricingAsia, null, 2)}
       maxSteps: 5,
     });
 
-    const streamResponse = result.toUIMessageStreamResponse();
-    const responseHeaders = new Headers(streamResponse.headers);
-    responseHeaders.set('X-AI-Provider', provider);
-    responseHeaders.set('X-AI-Model', modelName);
-    responseHeaders.set('X-AI-Fallback-Triggered', fallbackTriggered ? 'true' : 'false');
-
-    return new Response(streamResponse.body, {
-      status: streamResponse.status,
-      statusText: streamResponse.statusText,
-      headers: responseHeaders,
+    return result.toDataStreamResponse({
+      headers: {
+        'X-AI-Provider': provider,
+        'X-AI-Model': modelName,
+        'X-AI-Fallback-Triggered': fallbackTriggered ? 'true' : 'false',
+      },
     });
   } catch (error: any) {
     console.error('Error in chat API, invoking friendly fallback response:', error);
