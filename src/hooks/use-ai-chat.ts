@@ -26,7 +26,13 @@ const CHAT_REQUEST_TIMEOUT_MS = 12_000;
 function getInstantFallbackReply(prompt: string): string {
   const text = prompt.toLowerCase();
 
-  if (text.includes('kiến thức') || text.includes('nguồn thông tin') || text.includes('lấy ở đâu')) {
+  if (
+    text.includes('kiến thức') ||
+    text.includes('nguồn') ||
+    text.includes('nguon') ||
+    text.includes('lấy từ đâu') ||
+    text.includes('trả lời từ đâu')
+  ) {
     return 'Tôi lấy thông tin từ kho tri thức Eurowindow đã được quản trị viên nạp vào, gồm catalogue kỹ thuật, tài liệu sản phẩm và các trang website đã đồng bộ. Khi thông tin không có trong nguồn này, tôi sẽ đề nghị anh/chị để lại số điện thoại để chuyên viên xác nhận chính xác.';
   }
 

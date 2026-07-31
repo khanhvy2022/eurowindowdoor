@@ -1,24 +1,24 @@
 Vercel CLI 54.10.2 (Node.js 24.13.0)
 Retrieving project…
 Deploying eurowindows-projects/eurowindowdoor
-Uploading [--------------------] (0.0B/283.6KB)
-Uploading [=====---------------] (79.8KB/283.6KB)
-Uploading [==========----------] (146.1KB/283.6KB)
-Uploading [===============-----] (226.1KB/283.6KB)
-Uploading [====================] (283.6KB/283.6KB)
-  Inspect     https://vercel.com/eurowindows-projects/eurowindowdoor/HzJai1U8EtHx4aJJVi1bCVc1gmwc
-▲ Production  https://eurowindowdoor-ye3uj6uj6-eurowindows-projects.vercel.app
-https://eurowindowdoor-ye3uj6uj6-eurowindows-projects.vercel.appBuilding…
+Uploading [--------------------] (0.0B/259.6KB)
+Uploading [=====---------------] (74.1KB/259.6KB)
+Uploading [==========----------] (138.1KB/259.6KB)
+Uploading [===============-----] (202.1KB/259.6KB)
+Uploading [====================] (259.6KB/259.6KB)
+  Inspect     https://vercel.com/eurowindows-projects/eurowindowdoor/6eo8esWKw2X9ErBcUqygUwcuN897
+▲ Production  https://eurowindowdoor-cax45pj5k-eurowindows-projects.vercel.app
+https://eurowindowdoor-cax45pj5k-eurowindows-projects.vercel.appBuilding…
 Building…
 Running build in Washington, D.C., USA (East) – iad1
 Build machine configuration: 2 cores, 8 GB
 Retrieving list of deployment files...
 Downloading 12526 deployment files...
-Restored build cache from previous deployment (GAjYZSoivADvAbiZpe1xaizN1SJU)
+Restored build cache from previous deployment (Gyfxahrr7snNSrsRq2ktQWx4fRpT)
 Running "vercel build"
 Vercel CLI 58.4.0
 Installing dependencies...
-up to date in 1s
+up to date in 2s
 243 packages are looking for funding
 run `npm fund` for details
 Detected Next.js version: 16.2.11
@@ -59,16 +59,16 @@ App Route:
 ./next.config.ts
 ./src/lib/ai/sandbox.ts
 ./src/app/api/chat/route.ts
-✓ Compiled successfully in 34.9s
+✓ Compiled successfully in 25.7s
 Running TypeScript ...
-Finished TypeScript in 13.7s ...
+Finished TypeScript in 10.1s ...
 Collecting page data using 1 worker ...
 Generating static pages using 1 worker (0/31) ...
 Generating static pages using 1 worker (7/31)
 Generating static pages using 1 worker (15/31)
 Generating static pages using 1 worker (23/31)
 Connected to MongoDB
-✓ Generating static pages using 1 worker (31/31) in 5.4s
+✓ Generating static pages using 1 worker (31/31) in 5.0s
 Finalizing page optimization ...
 Running onBuildComplete from Vercel
 Route (app)                         Revalidate  Expire
@@ -114,16 +114,16 @@ Route (app)                         Revalidate  Expire
 ƒ Proxy (Middleware)
 ○  (Static)   prerendered as static content
 ƒ  (Dynamic)  server-rendered on demand
-Build Completed in /vercel/output [1m]
+Build Completed in /vercel/output [46s]
 Deploying outputs...
 Deployment completed
 Creating build cache...
-[2K[1A[2K[G▲ Production  https://eurowindowdoor-ye3uj6uj6-eurowindows-projects.vercel.app
+[2K[1A[2K[G▲ Production  https://eurowindowdoor-cax45pj5k-eurowindows-projects.vercel.app
 Completing…
 ▲ Aliased     https://eurowindowdoor.com
 
-✓ Ready in 3m
+✓ Ready in 2m
 
 Common next commands:
-- `vercel inspect eurowindowdoor-ye3uj6uj6-eurowindows-projects.vercel.app --logs`
-- `vercel redeploy eurowindowdoor-ye3uj6uj6-eurowindows-projects.vercel.app`
+- `vercel inspect eurowindowdoor-cax45pj5k-eurowindows-projects.vercel.app --logs`
+- `vercel redeploy eurowindowdoor-cax45pj5k-eurowindows-projects.vercel.app`
