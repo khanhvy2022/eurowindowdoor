@@ -392,6 +392,7 @@ ${JSON.stringify(pricingAsia, null, 2)}
       status: 200,
       headers: {
         'Content-Type': 'text/plain; charset=utf-8',
+        'x-vercel-ai-ui-stream': 'v1',
         'X-AI-Provider': 'fallback-error-handler',
         'X-AI-Model': 'friendly-fallback-msg',
         'X-AI-Fallback-Triggered': 'true'

@@ -101,20 +101,8 @@ export async function streamTextWithFallback(options: FallbackOptions) {
         maxSteps,
       } as any);
 
-      // Create a 15-second timeout promise for API connection response
-      const timeoutPromise = new Promise<never>((_, reject) =>
-        setTimeout(
-          () => reject(new Error(`Model ${modelId} trên ${provider} quá thời gian phản hồi (timeout 15s)`)),
-          15000
-        )
-      );
-
-      // Wait until connection headers are resolved, or timeout occurs
-      await Promise.race([result.response, timeoutPromise]);
-
       // Record success
-      const latency = Date.now() - startTime;
-      recordSuccess(provider, latency);
+      recordSuccess(provider, 0);
 
       console.log(`[AI Fallback System] Kết nối thành công! ${provider} (${modelId}) đang phản hồi.`);
 
