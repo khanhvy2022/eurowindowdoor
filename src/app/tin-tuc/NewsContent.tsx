@@ -6,11 +6,10 @@ import { useSearchParams } from 'next/navigation';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { FloatingContact } from '@/components/FloatingContact';
-import { articlesData } from '@/data/news';
 import { ImageWithFallback } from '@/components/ImageWithFallback';
 import { useLanguage } from '@/context/LanguageContext';
 
-export default function NewsContent({ initialCategory }: { initialCategory?: string }) {
+export default function NewsContent({ initialCategory, articlesData }: { initialCategory?: string, articlesData: any[] }) {
   const { language, t } = useLanguage();
   const searchParams = useSearchParams();
   const catParam = searchParams.get('cat');

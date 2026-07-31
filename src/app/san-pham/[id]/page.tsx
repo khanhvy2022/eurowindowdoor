@@ -341,12 +341,18 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                     </svg>
                     Hotline: 0966 994 338
                   </a>
-                  <Link
-                    href="/lien-he"
+                  <button
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        window.dispatchEvent(new CustomEvent('open-ai-chat', {
+                          detail: { initialPrompt: `Báo giá và tư vấn chi tiết cho sản phẩm: ${productName}` }
+                        }));
+                      }
+                    }}
                     className="flex items-center justify-center gap-2 w-full py-3 bg-[#005ba7] hover:bg-[#004077] text-white text-xs font-bold uppercase rounded-xl shadow transition-all hover:scale-[1.02]"
                   >
-                    {t('nav_consultation')}
-                  </Link>
+                    💬 {t('nav_consultation')}
+                  </button>
                 </div>
               </div>
 

@@ -3,10 +3,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { ImageWithFallback } from './ImageWithFallback';
-import { articlesData } from '@/data/news';
 import { useLanguage } from '@/context/LanguageContext';
 
-export const NewsSection: React.FC = () => {
+export const NewsSection: React.FC<{ articlesData: any[] }> = ({ articlesData }) => {
   const { language, t } = useLanguage();
   const isEn = language === 'ENG';
 

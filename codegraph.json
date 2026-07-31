@@ -1,0 +1,3 @@
+{
+  "exclude": ["scratch/", "public/generated/", "midscene-output/", ".playwright-mcp/"]
+}

@@ -3,6 +3,10 @@ import { Header } from '@/components/Header';
 import { HeroBanner } from '@/components/HeroBanner';
 import { IntroduceSection } from '@/components/IntroduceSection';
 import { ProductCategories } from '@/components/ProductCategories';
+import connectToDatabase from '@/lib/db';
+import { Article } from '@/models/Article';
+
+export const revalidate = 60;
 
 // Below-the-fold: lazy load to reduce initial bundle
 const InteractiveEstimator = dynamic(() =>
@@ -30,7 +34,17 @@ const FloatingContact = dynamic(() =>
   import('@/components/FloatingContact').then(m => ({ default: m.FloatingContact }))
 );
 
-export default function Home() {
+export default async function Home() {
+  await connectToDatabase();
+  const articles = await Article.find({}).sort({ createdAt: -1 }).limit(4).lean();
+  
+  // Serialize Mongoose _id objects to string
+  const serializedArticles = articles.map((article: any) => ({
+    ...article,
+    _id: article._id.toString(),
+    id: article.slug,
+  }));
+
   return (
     <main className="min-h-screen bg-white text-gray-900 flex flex-col font-sans">
       <Header />
@@ -42,7 +56,7 @@ export default function Home() {
       <AdsBanner />
       <NotableAchievements />
       <FeaturedVideos />
-      <NewsSection />
+      <NewsSection articlesData={serializedArticles} />
       <Footer />
       <FloatingContact />
     </main>
