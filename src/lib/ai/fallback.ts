@@ -19,8 +19,7 @@ interface TargetConfig {
 }
 
 /**
- * Executes a streaming chat request using the fallback sequence with multiple free Gemini options.
- * Filters out unhealthy providers (in cooldown) and handles timeouts of 10s per model attempt.
+ * Executes a streaming chat request using the fallback sequence with valid Gemini and OpenRouter models.
  */
 export async function streamTextWithFallback(options: FallbackOptions) {
   const { sequence, task, messages, system, temperature = 0.7, preferredModel, tools, maxSteps } = options;
@@ -34,7 +33,7 @@ export async function streamTextWithFallback(options: FallbackOptions) {
   // If all preferred providers are in cooldown, try all of them anyway as a last resort
   const finalSequence = healthySequence.length > 0 ? healthySequence : sequence;
 
-  // Expand the provider list into specific models to try sequentially (prioritizing free Gemini models)
+  // Expand the provider list into specific models to try sequentially
   const targets: TargetConfig[] = [];
   
   for (const provider of finalSequence) {
@@ -45,34 +44,30 @@ export async function streamTextWithFallback(options: FallbackOptions) {
     }
 
     if (provider === 'gemini') {
-      // Gemini Free-tier — confirmed working models (tested 2026-07-30)
-      // 3.x series works on free tier; 2.x series hits quota limits
-      targets.push({ provider: 'gemini', model: 'gemini-3.5-flash-lite' });   // 819ms, tiếng Việt tốt
-      targets.push({ provider: 'gemini', model: 'gemini-3.1-flash-lite' });   // 782ms, nhanh nhất
-      targets.push({ provider: 'gemini', model: 'gemini-3.6-flash' });        // 1359ms, mới nhất
-      targets.push({ provider: 'gemini', model: 'gemini-flash-lite-latest' }); // 988ms, auto-update
+      // Valid Google Gemini API model IDs
+      targets.push({ provider: 'gemini', model: 'gemini-2.0-flash' });
+      targets.push({ provider: 'gemini', model: 'gemini-2.0-flash-lite' });
+      targets.push({ provider: 'gemini', model: 'gemini-1.5-flash' });
+      targets.push({ provider: 'gemini', model: 'gemini-1.5-flash-8b' });
     } else if (provider === 'openrouter') {
-      // OpenRouter Free-tier — confirmed working models (tested 2026-07-30)
-      // gemma-4-31b: 1.3s, nemotron-3-nano: 1.3s, nemotron-3-super: fast, gpt-oss-20b: slow backup
+      // Valid OpenRouter Free-tier model IDs
       if (task === 'coding') {
-        targets.push({ provider: 'openrouter', model: 'google/gemma-4-31b-it:free' });
-        targets.push({ provider: 'openrouter', model: 'nvidia/nemotron-3-super-120b-a12b:free' });
-        targets.push({ provider: 'openrouter', model: 'nvidia/nemotron-3-nano-30b-a3b:free' });
+        targets.push({ provider: 'openrouter', model: 'google/gemma-2-9b-it:free' });
+        targets.push({ provider: 'openrouter', model: 'meta-llama/llama-3.3-70b-instruct:free' });
+        targets.push({ provider: 'openrouter', model: 'qwen/qwen-2.5-72b-instruct:free' });
       } else if (task === 'reasoning') {
-        targets.push({ provider: 'openrouter', model: 'nvidia/nemotron-3-ultra-550b-a55b:free' });
-        targets.push({ provider: 'openrouter', model: 'google/gemma-4-31b-it:free' });
-        targets.push({ provider: 'openrouter', model: 'nvidia/nemotron-3-nano-30b-a3b:free' });
+        targets.push({ provider: 'openrouter', model: 'deepseek/deepseek-r1:free' });
+        targets.push({ provider: 'openrouter', model: 'google/gemma-2-9b-it:free' });
+        targets.push({ provider: 'openrouter', model: 'meta-llama/llama-3.3-70b-instruct:free' });
       } else {
-        targets.push({ provider: 'openrouter', model: 'google/gemma-4-31b-it:free' });
-        targets.push({ provider: 'openrouter', model: 'nvidia/nemotron-3-nano-30b-a3b:free' });
-        targets.push({ provider: 'openrouter', model: 'nvidia/nemotron-3-super-120b-a12b:free' });
+        targets.push({ provider: 'openrouter', model: 'google/gemma-2-9b-it:free' });
+        targets.push({ provider: 'openrouter', model: 'meta-llama/llama-3.3-70b-instruct:free' });
+        targets.push({ provider: 'openrouter', model: 'qwen/qwen-2.5-72b-instruct:free' });
         targets.push({ provider: 'openrouter', model: 'openrouter/free' });
       }
     } else if (provider === 'deepseek') {
-      // DeepSeek (currently insufficient balance but kept for when topped up)
       targets.push({ provider: 'deepseek', model: 'deepseek-chat' });
     } else if (provider === 'grok') {
-      // Grok (currently forbidden but kept for when key is refreshed)
       targets.push({ provider: 'grok', model: 'grok-2-1212' });
     }
   }
@@ -84,7 +79,6 @@ export async function streamTextWithFallback(options: FallbackOptions) {
       attemptedProviders.push(provider);
     }
     
-    // Record fallback triggers when switching providers
     if (i > 0 && targets[i - 1].provider !== provider) {
       recordFallback(targets[i - 1].provider);
     }
@@ -95,7 +89,7 @@ export async function streamTextWithFallback(options: FallbackOptions) {
       
       const modelInstance = getProviderModel(provider, modelId);
       
-      // Initialize stream request. Set maxRetries: 1 for fast failover.
+      // Initialize stream request
       const result = streamText({
         model: modelInstance,
         messages,
@@ -107,11 +101,11 @@ export async function streamTextWithFallback(options: FallbackOptions) {
         maxSteps,
       } as any);
 
-      // Create a 10-second timeout promise for API connection response
+      // Create a 15-second timeout promise for API connection response
       const timeoutPromise = new Promise<never>((_, reject) =>
         setTimeout(
-          () => reject(new Error(`Model ${modelId} trên ${provider} quá thời gian phản hồi (timeout 5s)`)),
-          5000
+          () => reject(new Error(`Model ${modelId} trên ${provider} quá thời gian phản hồi (timeout 15s)`)),
+          15000
         )
       );
 
@@ -144,21 +138,39 @@ export async function streamTextWithFallback(options: FallbackOptions) {
         errLower.includes('timeout') ||
         errLower.includes('fetch failed');
 
-      // Only trigger cooldown for provider if all attempts on it fail or if we hit global limit
-      // For general errors, trigger a short cooldown
       if (isQuotaOrLimit) {
-        triggerCooldown(provider, `Model ${modelId} lỗi: ${errorMsg}`);
+        triggerCooldown(provider, `Model ${modelId} lỗi: ${errorMsg}`, 1 * 60 * 1000); // 1 minute short cooldown
       } else {
-        triggerCooldown(provider, `Model ${modelId} lỗi: ${errorMsg}`, 1 * 60 * 1000);
+        triggerCooldown(provider, `Model ${modelId} lỗi: ${errorMsg}`, 30 * 1000); // 30s short cooldown
       }
       
       lastError = err;
     }
   }
 
-  // If all models in the expanded targets list failed
-  throw new Error(
-    `Tất cả các mô hình AI trong chuỗi fallback đều gặp lỗi hoặc đang cooldown. Lỗi cuối cùng: ${lastError?.message || lastError}`
-  );
-}
+  // If all models in the expanded targets list failed, try gemini-2.0-flash directly as absolute emergency fallback
+  try {
+    console.log('[AI Fallback System] Thử lại bằng Gemini 2.0 Flash trực tiếp (Emergency Fallback)...');
+    const emergencyModel = getProviderModel('gemini', 'gemini-2.0-flash');
+    const result = streamText({
+      model: emergencyModel,
+      messages,
+      system,
+      temperature,
+      maxRetries: 2,
+      maxTokens: 4000,
+    } as any);
 
+    return {
+      result,
+      provider: 'gemini',
+      modelName: 'gemini-2.0-flash',
+      fallbackTriggered: true,
+      attemptedProviders,
+    };
+  } catch (emergencyErr: any) {
+    throw new Error(
+      `Tất cả các mô hình AI trong chuỗi fallback đều gặp lỗi. Lỗi cuối cùng: ${emergencyErr?.message || lastError?.message || lastError}`
+    );
+  }
+}
