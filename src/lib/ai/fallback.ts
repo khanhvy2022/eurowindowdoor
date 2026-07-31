@@ -1,4 +1,4 @@
-import { streamText } from 'ai';
+import { streamText, stepCountIs } from 'ai';
 import { getProviderModel, ProviderName } from './providers';
 import { recordSuccess, triggerCooldown, recordFallback, isProviderHealthy } from './health';
 
@@ -21,7 +21,6 @@ interface TargetConfig {
 /**
  * Executes a streaming chat request using the fallback sequence.
  * AI SDK v7: streamText() is synchronous but quota/rate errors manifest inside the stream.
- * We use result.finishReason (a Promise) to eagerly detect errors before returning.
  */
 export async function streamTextWithFallback(options: FallbackOptions) {
   const { sequence, task, messages, system, temperature = 0.7, preferredModel, tools, maxSteps } = options;
@@ -92,7 +91,8 @@ export async function streamTextWithFallback(options: FallbackOptions) {
       
       const modelInstance = getProviderModel(provider, modelId);
       
-      // Initialize stream request (synchronous in AI SDK v7)
+      // streamText() initiates the request but does NOT block waiting for the full response.
+      // Return immediately — do NOT await finishReason here as it blocks until stream completes!
       const result = streamText({
         model: modelInstance,
         messages,
@@ -101,55 +101,12 @@ export async function streamTextWithFallback(options: FallbackOptions) {
         maxRetries: 0, // No retries — we handle fallback ourselves
         maxTokens: 4000,
         tools,
-        maxSteps,
+        stopWhen: stepCountIs(maxSteps || 5),
       } as any);
 
-      // AI SDK v7: errors from quota/rate limits manifest in the stream, not synchronously.
-      // We use a short race: try to get finishReason within 20s timeout.
-      // If the stream errors, finishReason will reject with the error.
-      const STREAM_TEST_TIMEOUT = 20000; // 20 second timeout
-      
-      try {
-        await Promise.race([
-          result.finishReason, // Will reject if API returns error (quota, auth, etc.)
-          new Promise<void>((_, reject) =>
-            setTimeout(() => reject(new Error('stream_timeout')), STREAM_TEST_TIMEOUT)
-          ),
-        ]);
-      } catch (streamErr: any) {
-        const errMsg = streamErr?.message || String(streamErr);
-        
-        if (errMsg === 'stream_timeout') {
-          // Timeout doesn't necessarily mean failure — stream might still be going
-          // This is acceptable; proceed with this provider
-          console.log(`[AI Fallback System] Stream timeout check passed for ${provider} (${modelId}) — proceeding.`);
-        } else {
-          // Real error from provider (quota, auth, etc.) — try next provider
-          console.error(`[AI Fallback System] Stream error from ${provider} (${modelId}): ${errMsg}`);
-          
-          const errLower = errMsg.toLowerCase();
-          const isQuotaOrLimit =
-            errLower.includes('quota') ||
-            errLower.includes('429') ||
-            errLower.includes('limit') ||
-            errLower.includes('credit') ||
-            errLower.includes('rate') ||
-            errLower.includes('exceeded');
-
-          if (isQuotaOrLimit) {
-            triggerCooldown(provider, `Model ${modelId} lỗi: ${errMsg}`, 5 * 60 * 1000); // 5 min cooldown
-          } else {
-            triggerCooldown(provider, `Model ${modelId} lỗi: ${errMsg}`, 30 * 1000); // 30s cooldown
-          }
-          
-          lastError = streamErr;
-          continue; // Try next target
-        }
-      }
-
-      // If we get here, provider appears to be working
+      // Record success optimistically — stream has been initiated without sync error
       recordSuccess(provider, 0);
-      console.log(`[AI Fallback System] Kết nối thành công! ${provider} (${modelId}) đang phản hồi.`);
+      console.log(`[AI Fallback System] Stream khởi tạo thành công: ${provider} (${modelId})`);
 
       return {
         result,

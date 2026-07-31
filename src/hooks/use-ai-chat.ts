@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
-import { useChat, UseChatOptions } from '@ai-sdk/react';
+import { useState, useEffect, useRef, useMemo } from 'react';
+import { useChat } from '@ai-sdk/react';
+import { DefaultChatTransport } from 'ai';
 import { UIMessage } from 'ai';
 
 // Client-side simple query cache to prevent repeat requests for identical queries
@@ -31,10 +32,16 @@ export function useAiChat(options: {
     fallbackTriggered: boolean;
   } | null>(null);
 
-  // Use ref to track the last user prompt submitted, for caching purposes
+  // Track the last user prompt submitted for caching
   const lastPromptRef = useRef<string>('');
   // Prevent double submissions
   const submissionLockRef = useRef<boolean>(false);
+  // Stable ref for onResponse to avoid transport recreation
+  const onResponseRef = useRef(onResponse);
+  onResponseRef.current = onResponse;
+  const setActiveModelInfoRef = useRef(setActiveModelInfo);
+  setActiveModelInfoRef.current = setActiveModelInfo;
+  const fetchHealthStatsRef = useRef<() => void>(() => {});
 
   // Fetch health data function
   const fetchHealthStats = async () => {
@@ -54,6 +61,8 @@ export function useAiChat(options: {
     }
   };
 
+  fetchHealthStatsRef.current = fetchHealthStats;
+
   // Poll health status every 20 seconds
   useEffect(() => {
     fetchHealthStats();
@@ -61,52 +70,68 @@ export function useAiChat(options: {
     return () => clearInterval(interval);
   }, []);
 
-  // Configure Vercel AI SDK useChat
+  // Create transport — memoize so it's stable across re-renders
+  // Only recreate when selectedModel or documentId changes
+  const transport = useMemo(() => {
+    return new DefaultChatTransport({
+      api: '/api/chat',
+      body: {
+        model: selectedModel,
+        ...(documentId ? { documentId } : {}),
+      },
+      // Intercept fetch to capture response headers for provider telemetry
+      fetch: async (url: RequestInfo | URL, init?: RequestInit) => {
+        const response = await fetch(url, init);
+        
+        const provider = response.headers.get('X-AI-Provider') || '';
+        const modelName = response.headers.get('X-AI-Model') || '';
+        const fallbackTriggered = response.headers.get('X-AI-Fallback-Triggered') === 'true';
+        
+        if (provider || modelName) {
+          setActiveModelInfoRef.current({ provider, model: modelName, fallbackTriggered });
+        }
+        
+        if (onResponseRef.current) {
+          onResponseRef.current(response.clone());
+        }
+        
+        fetchHealthStatsRef.current();
+        
+        return response;
+      },
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedModel, documentId]);
+
   const chat = useChat({
-    body: {
-      model: selectedModel,
-      ...(documentId ? { documentId } : {}),
-    },
-    onResponse: (response: Response) => {
-      const provider = response.headers.get('X-AI-Provider') || '';
-      const modelName = response.headers.get('X-AI-Model') || '';
-      const fallbackTriggered = response.headers.get('X-AI-Fallback-Triggered') === 'true';
-      
-      if (provider || modelName) {
-        setActiveModelInfo({
-          provider,
-          model: modelName,
-          fallbackTriggered,
-        });
-      }
-      
-      if (onResponse) {
-        onResponse(response);
-      }
-      
-      // Update health stats after a query completes
-      fetchHealthStats();
-    },
-    onFinish: (message: any) => {
+    transport,
+    onFinish: (event: any) => {
       submissionLockRef.current = false;
       
-      // Save query response to client cache if successful
+      // AI SDK v4: onFinish receives { message, messages, isAbort, isDisconnect, isError, finishReason }
+      const message = event?.message ?? event;
+      
+      // Cache the response for identical future queries
       const cleanPrompt = lastPromptRef.current.trim().toLowerCase();
-      if (cleanPrompt && message.content) {
-        CLIENT_QUERY_CACHE.set(cleanPrompt, message.content);
+      const msgText = message?.parts
+        ? message.parts.filter((p: any) => p.type === 'text').map((p: any) => p.text || '').join('')
+        : (typeof message?.content === 'string' ? message.content : '');
+      if (cleanPrompt && msgText) {
+        CLIENT_QUERY_CACHE.set(cleanPrompt, msgText);
       }
     },
     onError: () => {
       submissionLockRef.current = false;
       fetchHealthStats();
     }
-  } as any) as any;
+  } as any);
 
-  const { messages, setMessages, isLoading } = chat;
-  const appendFn = chat.append || chat.sendMessage;
-  const reloadFn = chat.reload || chat.regenerate;
+  const { messages, setMessages, status } = chat;
+  // In AI SDK v4: status is 'submitted' | 'streaming' | 'ready' | 'error'
+  // 'submitted' and 'streaming' are the "loading" states
+  const isLoading = status === 'submitted' || status === 'streaming';
 
-  // Custom submit handler supporting debounce and caching
+  // Custom submit handler with debounce, cache, and AI SDK v4 sendMessage
   const sendMessage = async (
     textToSend?: string,
     data?: { documentId?: string }
@@ -115,33 +140,31 @@ export function useAiChat(options: {
     const cleanPrompt = prompt.trim();
     if (!cleanPrompt) return;
 
-    // 1. Debounce protection: block if loading or locked
+    // 1. Debounce: block if currently loading or locked
     if (isLoading || submissionLockRef.current) {
-      console.warn('Chat request is currently locked or loading. Ignoring duplicate click.');
+      console.warn('Chat is currently loading. Ignoring duplicate submission.');
       return;
     }
 
-    // Lock submission
     submissionLockRef.current = true;
     lastPromptRef.current = cleanPrompt;
 
-    // 2. Cache hit check: bypass network request if identical query exists
+    // 2. Client cache hit
     const cachedResponse = CLIENT_QUERY_CACHE.get(cleanPrompt.toLowerCase());
     if (cachedResponse && !data?.documentId) {
-      console.log('[AI Cache] Trả về câu trả lời đã lưu trong cache client.');
+      console.log('[AI Cache] Returning cached response for:', cleanPrompt);
       
-      // Simulate typing/connection delay of 150ms for natural feel
       setTimeout(() => {
         const userMsg: any = {
           id: `cache-user-${Date.now()}`,
           role: 'user',
-          content: cleanPrompt,
+          parts: [{ type: 'text', text: cleanPrompt }],
           createdAt: new Date(),
         };
         const assistantMsg: any = {
           id: `cache-assistant-${Date.now()}`,
           role: 'assistant',
-          content: cachedResponse,
+          parts: [{ type: 'text', text: cachedResponse }],
           createdAt: new Date(),
         };
 
@@ -157,29 +180,13 @@ export function useAiChat(options: {
       return;
     }
 
-    // 3. Cache miss: trigger regular streaming call
+    // 3. Real streaming request via AI SDK v4 sendMessage
     try {
       setInput('');
-      if (chat.append) {
-        await chat.append({
-          role: 'user',
-          content: cleanPrompt,
-        });
-      } else if (chat.sendMessage) {
-        // @ts-ignore
-        await chat.sendMessage({ text: cleanPrompt });
-      } else if (appendFn) {
-        // Fallback catch-all
-        await appendFn({
-          role: 'user',
-          content: cleanPrompt,
-          text: cleanPrompt,
-        } as any);
-      } else {
-        console.error('Không tìm thấy hàm gửi tin nhắn (append/sendMessage) trong thư viện AI SDK.');
-      }
+      // AI SDK v4 sendMessage signature: ({ text: string }) | CreateUIMessage
+      await chat.sendMessage({ text: cleanPrompt });
     } catch (err) {
-      console.error('Failed to append message:', err);
+      console.error('[useAiChat] sendMessage failed:', err);
       submissionLockRef.current = false;
     }
   };
@@ -187,8 +194,8 @@ export function useAiChat(options: {
   const handleRetry = () => {
     if (messages.length === 0) return;
     submissionLockRef.current = true;
-    if (reloadFn) {
-      reloadFn();
+    if (chat.regenerate) {
+      chat.regenerate();
     }
   };
 
