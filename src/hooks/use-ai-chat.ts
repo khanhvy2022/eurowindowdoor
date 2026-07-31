@@ -21,6 +21,29 @@ export interface ChatMessage {
 
 // Simple client-side cache
 const CLIENT_QUERY_CACHE = new Map<string, string>();
+const CHAT_REQUEST_TIMEOUT_MS = 8_000;
+
+function getInstantFallbackReply(prompt: string): string {
+  const text = prompt.toLowerCase();
+
+  if (text.includes('low-e') || text.includes('cản nhiệt') || text.includes('kính hộp')) {
+    return 'Kính Low-E giúp hạn chế bức xạ nhiệt, giảm tải điều hòa và vẫn giữ ánh sáng tự nhiên. Với khu vực nhiều nắng, anh/chị nên dùng kính hộp có lớp Low-E. Để báo giá chính xác, vui lòng cho tôi kích thước rộng × cao, số lượng cửa và địa chỉ công trình.';
+  }
+
+  if (text.includes('ea60') || text.includes('cách nhiệt')) {
+    return 'Hệ nhôm EA60i phù hợp khi cần cách nhiệt và cách âm tốt. Để lên báo giá, vui lòng gửi kích thước rộng × cao, kiểu cửa (mở quay, mở trượt hoặc vách kính), loại kính và số lượng.';
+  }
+
+  if (text.includes('ea55') || text.includes('báo giá')) {
+    return 'Tôi có thể hỗ trợ báo giá sơ bộ. Anh/chị vui lòng cho biết hệ cửa mong muốn, kích thước rộng × cao, kiểu mở, loại kính và số lượng để tôi tư vấn chính xác hơn.';
+  }
+
+  if (text.includes('kommerling') || text.includes('upvc')) {
+    return 'Cửa uPVC Kommerling là lựa chọn tốt cho nhu cầu cách âm, cách nhiệt và vận hành êm. Vui lòng gửi kích thước, kiểu cửa và số lượng để nhận tư vấn phù hợp.';
+  }
+
+  return 'Cảm ơn anh/chị đã liên hệ Eurowindow. Tôi có thể tư vấn cửa nhôm EA55, EA60i, cửa uPVC Kommerling và kính Low-E. Anh/chị đang quan tâm sản phẩm nào và kích thước dự kiến bao nhiêu?';
+}
 
 export function useAiChat(options: {
   selectedModel: string;
@@ -99,6 +122,11 @@ export function useAiChat(options: {
     apiMessages.push({ role: 'user', parts: [{ type: 'text', text: prompt }] });
 
     abortControllerRef.current = new AbortController();
+    let requestTimedOut = false;
+    const timeoutId = setTimeout(() => {
+      requestTimedOut = true;
+      abortControllerRef.current?.abort();
+    }, CHAT_REQUEST_TIMEOUT_MS);
 
     try {
       const res = await fetch('/api/chat', {
@@ -176,12 +204,24 @@ export function useAiChat(options: {
 
       fetchHealthStats();
     } catch (err: any) {
-      if (err.name === 'AbortError') return;
       console.error('[useAiChat] Stream error:', err);
-      setError(err instanceof Error ? err : new Error(String(err)));
-      // Remove the empty assistant message on error
-      setMessages(prev => prev.filter(m => m.id !== assistantId));
+      const fallbackText = getInstantFallbackReply(prompt);
+      setActiveModelInfo({
+        provider: 'instant-fallback',
+        model: requestTimedOut ? '8-second-timeout' : 'api-unavailable',
+        fallbackTriggered: true,
+      });
+      setMessages(prev => {
+        const hasAssistantMessage = prev.some(m => m.id === assistantId);
+        if (!hasAssistantMessage) {
+          return [...prev, { id: assistantId, role: 'assistant', text: fallbackText, createdAt: new Date() }];
+        }
+        return prev.map(m => m.id === assistantId && !m.text ? { ...m, text: fallbackText } : m);
+      });
+      CLIENT_QUERY_CACHE.set(prompt.toLowerCase(), fallbackText);
+      setError(null);
     } finally {
+      clearTimeout(timeoutId);
       setIsLoading(false);
     }
   };
