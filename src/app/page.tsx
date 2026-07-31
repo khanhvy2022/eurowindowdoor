@@ -35,15 +35,21 @@ const FloatingContact = dynamic(() =>
 );
 
 export default async function Home() {
-  await connectToDatabase();
-  const articles = await Article.find({}).sort({ createdAt: -1 }).limit(4).lean();
-  
-  // Serialize Mongoose _id objects to string
-  const serializedArticles = articles.map((article: any) => ({
-    ...article,
-    _id: article._id.toString(),
-    id: article.slug,
-  }));
+  let serializedArticles: any[] = [];
+
+  try {
+    const conn = await connectToDatabase();
+    if (conn) {
+      const articles = await Article.find({}).sort({ createdAt: -1 }).limit(4).lean();
+      serializedArticles = articles.map((article: any) => ({
+        ...article,
+        _id: article._id ? article._id.toString() : article.slug,
+        id: article.slug,
+      }));
+    }
+  } catch (err: any) {
+    console.warn('Could not fetch home page articles from MongoDB:', err.message || err);
+  }
 
   return (
     <main className="min-h-screen bg-white text-gray-900 flex flex-col font-sans">

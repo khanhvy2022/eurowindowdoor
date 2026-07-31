@@ -23,42 +23,51 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     return { title: `${CATEGORY_MAP[id]} | Tin tức Eurowindow` };
   }
   
-  await connectToDatabase();
-  const article = await Article.findOne({ slug: id }).lean() || await Article.findById(id).lean().catch(() => null);
+  try {
+    const conn = await connectToDatabase();
+    if (conn) {
+      const article = await Article.findOne({ slug: id }).lean() || await Article.findById(id).lean().catch(() => null);
 
-  if (!article) {
-    return { title: 'Tin tức Eurowindow' };
-  }
+      if (article) {
+        return {
+          title: article.title,
+          description: article.excerpt || article.title,
+          openGraph: {
+            title: article.title,
+            description: article.excerpt || article.title,
+            url: `https://eurowindowdoor.com/tin-tuc/${article.slug}`,
+            type: 'article',
+            publishedTime: article.date,
+            images: [{ url: article.image }],
+          },
+          alternates: {
+            canonical: `https://eurowindowdoor.com/tin-tuc/${article.slug}`,
+          },
+        };
+      }
+    }
+  } catch (e) {}
 
-  return {
-    title: article.title,
-    description: article.excerpt || article.title,
-    openGraph: {
-      title: article.title,
-      description: article.excerpt || article.title,
-      url: `https://eurowindowdoor.com/tin-tuc/${article.slug}`,
-      type: 'article',
-      publishedTime: article.date,
-      images: [{ url: article.image }],
-    },
-    alternates: {
-      canonical: `https://eurowindowdoor.com/tin-tuc/${article.slug}`,
-    },
-  };
+  return { title: 'Tin tức Eurowindow' };
 }
 
 export default async function ArticleDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
   if (CATEGORY_MAP[id]) {
-    // If it's a category page, we also need to pass articlesData now
-    await connectToDatabase();
-    const articles = await Article.find({}).sort({ createdAt: -1 }).lean();
-    const serializedArticles = articles.map((a: any) => ({
-      ...a,
-      _id: a._id.toString(),
-      id: a.slug,
-    }));
+    let serializedArticles: any[] = [];
+    try {
+      const conn = await connectToDatabase();
+      if (conn) {
+        const articles = await Article.find({}).sort({ createdAt: -1 }).lean();
+        serializedArticles = articles.map((a: any) => ({
+          ...a,
+          _id: a._id ? a._id.toString() : a.slug,
+          id: a.slug,
+        }));
+      }
+    } catch (e) {}
+
     return (
       <Suspense fallback={<div className="min-h-screen bg-white" />}>
         <NewsContent initialCategory={CATEGORY_MAP[id]} articlesData={serializedArticles} />
@@ -66,8 +75,13 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
     );
   }
 
-  await connectToDatabase();
-  const rawArticle = await Article.findOne({ slug: id }).lean() || await Article.findById(id).lean().catch(() => null);
+  let rawArticle: any = null;
+  try {
+    const conn = await connectToDatabase();
+    if (conn) {
+      rawArticle = await Article.findOne({ slug: id }).lean() || await Article.findById(id).lean().catch(() => null);
+    }
+  } catch (e) {}
 
   if (!rawArticle) {
     notFound();
@@ -75,8 +89,8 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
 
   const article = {
     ...rawArticle,
-    _id: (rawArticle as any)._id.toString(),
-    id: (rawArticle as any).slug
+    _id: rawArticle._id ? rawArticle._id.toString() : rawArticle.slug,
+    id: rawArticle.slug,
   };
 
   const newsJsonLd = {

@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 
+// Disable command buffering globally so Mongoose fails fast when disconnected instead of timing out
+mongoose.set('bufferCommands', false);
+
 let cached = (global as any).mongoose;
 
 if (!cached) {

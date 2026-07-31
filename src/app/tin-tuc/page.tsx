@@ -15,15 +15,21 @@ export const metadata = {
 export const revalidate = 60;
 
 export default async function TinTucPage() {
-  await connectToDatabase();
-  const articles = await Article.find({}).sort({ createdAt: -1 }).lean();
-  
-  // Serialize Mongoose _id objects to string to pass to Client Component safely
-  const serializedArticles = articles.map((article: any) => ({
-    ...article,
-    _id: article._id.toString(),
-    id: article.slug, // fallback for legacy components
-  }));
+  let serializedArticles: any[] = [];
+
+  try {
+    const conn = await connectToDatabase();
+    if (conn) {
+      const articles = await Article.find({}).sort({ createdAt: -1 }).lean();
+      serializedArticles = articles.map((article: any) => ({
+        ...article,
+        _id: article._id ? article._id.toString() : article.slug,
+        id: article.slug,
+      }));
+    }
+  } catch (err: any) {
+    console.warn('Could not fetch tin-tuc articles from MongoDB:', err.message || err);
+  }
 
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center">
