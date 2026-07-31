@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { UIMessage } from 'ai';
+import { ChatMessage as ChatMessageType } from '@/hooks/use-ai-chat';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Bot, User } from 'lucide-react';
@@ -9,23 +9,14 @@ import { motion } from 'framer-motion';
 import clsx from 'clsx';
 
 interface ChatMessageProps {
-  message: UIMessage;
+  message: ChatMessageType;
 }
 
 const MotionDiv = motion.div as any;
 
-const getMessageText = (msg: UIMessage) => {
-  if ((msg as any).content) return (msg as any).content;
-  if (!msg.parts) return '';
-  return msg.parts
-    .filter((part: any) => part.type === 'text')
-    .map((part: any) => part.text)
-    .join('');
-};
-
 export function ChatMessage({ message }: ChatMessageProps) {
   const isUser = message.role === 'user';
-  const text = getMessageText(message);
+  const text = message.text || '';
 
   return (
     <MotionDiv

@@ -37,7 +37,7 @@ async function generateEmbeddings(chunks: string[]): Promise<number[][]> {
     while (true) {
       try {
         const result = await embedMany({
-          model: google.textEmbeddingModel('gemini-embedding-exp-03-07'),
+          model: google.textEmbeddingModel('gemini-embedding-2'),
           values: batchChunks,
         });
         allEmbeddings.push(...result.embeddings);
@@ -253,7 +253,7 @@ export async function retrieveRelevantContext(query: string, matchCount = 5): Pr
 
   try {
     const result = await embed({
-      model: google.textEmbeddingModel('gemini-embedding-exp-03-07'),
+      model: google.textEmbeddingModel('gemini-embedding-2'),
       value: query,
     });
     embedding = result.embedding.slice(0, 768);
