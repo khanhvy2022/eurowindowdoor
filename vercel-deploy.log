@@ -1,24 +1,19 @@
 Vercel CLI 54.10.2 (Node.js 24.13.0)
 Retrieving project…
 Deploying eurowindows-projects/eurowindowdoor
-Uploading [--------------------] (0.0B/258.6KB)
-Uploading [=====---------------] (73.1KB/258.6KB)
-Uploading [==========----------] (137.1KB/258.6KB)
-Uploading [===============-----] (201.1KB/258.6KB)
-Uploading [====================] (258.6KB/258.6KB)
-  Inspect     https://vercel.com/eurowindows-projects/eurowindowdoor/CNHormGBqqJVK5jJokp6vSvM7KMX
-▲ Production  https://eurowindowdoor-9g33f6640-eurowindows-projects.vercel.app
-https://eurowindowdoor-9g33f6640-eurowindows-projects.vercel.appBuilding…
+  Inspect     https://vercel.com/eurowindows-projects/eurowindowdoor/141D7QV24kMnLjhDVNxA1K7oA1hT
+▲ Production  https://eurowindowdoor-13zu8jln1-eurowindows-projects.vercel.app
+https://eurowindowdoor-13zu8jln1-eurowindows-projects.vercel.appBuilding…
 Building…
 Running build in Washington, D.C., USA (East) – iad1
 Build machine configuration: 2 cores, 8 GB
 Retrieving list of deployment files...
 Downloading 12526 deployment files...
-Restored build cache from previous deployment (LETwX6tqzMmxiuA4CTHyKTQL4oWw)
+Restored build cache from previous deployment (2mQL4xQBXvatHnFne99wbWGio4Jd)
 Running "vercel build"
 Vercel CLI 58.4.0
 Installing dependencies...
-up to date in 1s
+up to date in 980ms
 243 packages are looking for funding
 run `npm fund` for details
 Detected Next.js version: 16.2.11
@@ -59,93 +54,16 @@ App Route:
 ./next.config.ts
 ./src/lib/ai/sandbox.ts
 ./src/app/api/chat/route.ts
-✓ Compiled successfully in 24.1s
+✓ Compiled successfully in 21.0s
 Running TypeScript ...
-Finished TypeScript in 9.8s ...
+Finished TypeScript in 9.6s ...
 Collecting page data using 1 worker ...
 Generating static pages using 1 worker (0/31) ...
 Generating static pages using 1 worker (7/31)
 Generating static pages using 1 worker (15/31)
 Generating static pages using 1 worker (23/31)
-Failed to connect to MongoDB: MongooseServerSelectionError: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/
-at ignore-listed frames {
-errorLabelSet: Set(0) {},
-reason: TopologyDescription {
-type: 'ReplicaSetNoPrimary',
-servers: Map(3) {
-'ac-oxvveva-shard-00-00.egnadfo.mongodb.net:27017' => [ServerDescription],
-'ac-oxvveva-shard-00-01.egnadfo.mongodb.net:27017' => [ServerDescription],
-'ac-oxvveva-shard-00-02.egnadfo.mongodb.net:27017' => [ServerDescription]
-},
-stale: false,
-compatible: true,
-heartbeatFrequencyMS: 10000,
-localThresholdMS: 15,
-setName: 'atlas-srct1k-shard-0',
-maxElectionId: null,
-maxSetVersion: null,
-commonWireVersion: 0,
-logicalSessionTimeoutMinutes: null
-},
-code: undefined,
-[cause]: TopologyDescription {
-type: 'ReplicaSetNoPrimary',
-servers: Map(3) {
-'ac-oxvveva-shard-00-00.egnadfo.mongodb.net:27017' => [ServerDescription],
-'ac-oxvveva-shard-00-01.egnadfo.mongodb.net:27017' => [ServerDescription],
-'ac-oxvveva-shard-00-02.egnadfo.mongodb.net:27017' => [ServerDescription]
-},
-stale: false,
-compatible: true,
-heartbeatFrequencyMS: 10000,
-localThresholdMS: 15,
-setName: 'atlas-srct1k-shard-0',
-maxElectionId: null,
-maxSetVersion: null,
-commonWireVersion: 0,
-logicalSessionTimeoutMinutes: null
-}
-}
-Failed to connect to MongoDB: MongooseServerSelectionError: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/
-at ignore-listed frames {
-errorLabelSet: Set(0) {},
-reason: TopologyDescription {
-type: 'ReplicaSetNoPrimary',
-servers: Map(3) {
-'ac-oxvveva-shard-00-00.egnadfo.mongodb.net:27017' => [ServerDescription],
-'ac-oxvveva-shard-00-01.egnadfo.mongodb.net:27017' => [ServerDescription],
-'ac-oxvveva-shard-00-02.egnadfo.mongodb.net:27017' => [ServerDescription]
-},
-stale: false,
-compatible: true,
-heartbeatFrequencyMS: 10000,
-localThresholdMS: 15,
-setName: 'atlas-srct1k-shard-0',
-maxElectionId: null,
-maxSetVersion: null,
-commonWireVersion: 0,
-logicalSessionTimeoutMinutes: null
-},
-code: undefined,
-[cause]: TopologyDescription {
-type: 'ReplicaSetNoPrimary',
-servers: Map(3) {
-'ac-oxvveva-shard-00-00.egnadfo.mongodb.net:27017' => [ServerDescription],
-'ac-oxvveva-shard-00-01.egnadfo.mongodb.net:27017' => [ServerDescription],
-'ac-oxvveva-shard-00-02.egnadfo.mongodb.net:27017' => [ServerDescription]
-},
-stale: false,
-compatible: true,
-heartbeatFrequencyMS: 10000,
-localThresholdMS: 15,
-setName: 'atlas-srct1k-shard-0',
-maxElectionId: null,
-maxSetVersion: null,
-commonWireVersion: 0,
-logicalSessionTimeoutMinutes: null
-}
-}
-✓ Generating static pages using 1 worker (31/31) in 5.5s
+Connected to MongoDB
+✓ Generating static pages using 1 worker (31/31) in 4.9s
 Finalizing page optimization ...
 Running onBuildComplete from Vercel
 Route (app)                         Revalidate  Expire
@@ -191,16 +109,14 @@ Route (app)                         Revalidate  Expire
 ƒ Proxy (Middleware)
 ○  (Static)   prerendered as static content
 ƒ  (Dynamic)  server-rendered on demand
-Build Completed in /vercel/output [44s]
+Build Completed in /vercel/output [40s]
 Deploying outputs...
-Deployment completed
-Creating build cache...
-[2K[1A[2K[G▲ Production  https://eurowindowdoor-9g33f6640-eurowindows-projects.vercel.app
+[2K[1A[2K[G▲ Production  https://eurowindowdoor-13zu8jln1-eurowindows-projects.vercel.app
 Completing…
 ▲ Aliased     https://eurowindowdoor.com
 
 ✓ Ready in 2m
 
 Common next commands:
-- `vercel inspect eurowindowdoor-9g33f6640-eurowindows-projects.vercel.app --logs`
-- `vercel redeploy eurowindowdoor-9g33f6640-eurowindows-projects.vercel.app`
+- `vercel inspect eurowindowdoor-13zu8jln1-eurowindows-projects.vercel.app --logs`
+- `vercel redeploy eurowindowdoor-13zu8jln1-eurowindows-projects.vercel.app`

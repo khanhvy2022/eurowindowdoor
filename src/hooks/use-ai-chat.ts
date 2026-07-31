@@ -200,6 +200,20 @@ export function useAiChat(options: {
       // Cache successful response
       if (fullText) {
         CLIENT_QUERY_CACHE.set(prompt.toLowerCase(), fullText);
+      } else {
+        // Some upstream providers end a stream without emitting text while
+        // still returning HTTP 200. Never leave the customer with a blank bot
+        // message in that case.
+        const fallbackText = getInstantFallbackReply(prompt);
+        setMessages(prev =>
+          prev.map(m => m.id === assistantId ? { ...m, text: fallbackText } : m)
+        );
+        CLIENT_QUERY_CACHE.set(prompt.toLowerCase(), fallbackText);
+        setActiveModelInfo({
+          provider: 'instant-fallback',
+          model: 'empty-ai-response',
+          fallbackTriggered: true,
+        });
       }
 
       fetchHealthStats();
