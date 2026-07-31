@@ -1,11 +1,5 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
-}
-
 let cached = (global as any).mongoose;
 
 if (!cached) {
@@ -13,6 +7,13 @@ if (!cached) {
 }
 
 async function connectToDatabase() {
+  const MONGODB_URI = process.env.MONGODB_URI;
+
+  if (!MONGODB_URI) {
+    console.warn('[MongoDB Warning] MONGODB_URI environment variable is missing.');
+    return null;
+  }
+
   if (cached.conn) {
     return cached.conn;
   }
@@ -22,7 +23,7 @@ async function connectToDatabase() {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI as string, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       console.log('Connected to MongoDB');
       return mongoose;
     });
@@ -32,7 +33,8 @@ async function connectToDatabase() {
     cached.conn = await cached.promise;
   } catch (e) {
     cached.promise = null;
-    throw e;
+    console.error('Failed to connect to MongoDB:', e);
+    return null;
   }
 
   return cached.conn;
