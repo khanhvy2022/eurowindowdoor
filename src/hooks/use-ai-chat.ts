@@ -149,15 +149,18 @@ export function useAiChat(options: {
           try {
             const chunk = JSON.parse(dataStr);
 
-            // Handle different chunk types from AI SDK v4 UIMessageStream
-            if (chunk.type === 'text-delta' && chunk.delta) {
-              fullText += chunk.delta;
-              setMessages(prev =>
-                prev.map(m => m.id === assistantId ? { ...m, text: fullText } : m)
-              );
+            // Handle different chunk types from AI SDK v7 UIMessageStream
+            if (chunk.type === 'text-delta') {
+              const text = chunk.delta ?? chunk.textDelta ?? '';
+              if (text) {
+                fullText += text;
+                setMessages(prev =>
+                  prev.map(m => m.id === assistantId ? { ...m, text: fullText } : m)
+                );
+              }
             } else if (chunk.type === 'text-start') {
               // text stream starting
-            } else if (chunk.type === 'finish' || chunk.type === 'finish-step') {
+            } else if (chunk.type === 'text-end' || chunk.type === 'finish' || chunk.type === 'finish-step') {
               // done
             }
           } catch {

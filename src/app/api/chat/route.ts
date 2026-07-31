@@ -386,12 +386,13 @@ ${JSON.stringify(pricingAsia, null, 2)}
     // theo đúng giao thức AI SDK v7 UI Message Stream (SSE format)
     const friendlyMessage = "Hiện tại trợ lý đang bận không thể trả lời tin nhắn của quý khách ngay được, quý khách có thể liên hệ lại tôi sau hoặc liên hệ qua Zalo, gọi điện tới Mr. Thắng để được tư vấn thêm.";
     const textEncoder = new TextEncoder();
+    const partId = `text-fallback-${Date.now()}`;
     
-    // AI SDK v7 UI Message Stream SSE format
+    // AI SDK v7 UI Message Stream SSE format - must include text-start, text-delta (with delta key + id), text-end
     const sseData = [
-      `data: ${JSON.stringify({ type: 'start' })}\n\n`,
-      `data: ${JSON.stringify({ type: 'text-delta', textDelta: friendlyMessage })}\n\n`,
-      `data: ${JSON.stringify({ type: 'finish', finishReason: 'stop' })}\n\n`,
+      `data: ${JSON.stringify({ type: 'text-start', id: partId })}\n\n`,
+      `data: ${JSON.stringify({ type: 'text-delta', id: partId, delta: friendlyMessage })}\n\n`,
+      `data: ${JSON.stringify({ type: 'text-end', id: partId })}\n\n`,
       `data: [DONE]\n\n`,
     ].join('');
     
