@@ -372,7 +372,7 @@ ${JSON.stringify(pricingAsia, null, 2)}
       maxSteps: 5,
     });
 
-    return result.toDataStreamResponse({
+    return result.toUIMessageStreamResponse({
       headers: {
         'X-AI-Provider': provider,
         'X-AI-Model': modelName,
@@ -382,17 +382,25 @@ ${JSON.stringify(pricingAsia, null, 2)}
   } catch (error: any) {
     console.error('Error in chat API, invoking friendly fallback response:', error);
     
-    // Khi toàn bộ AI providers đều quá tải hoặc hết quota, trả về tin nhắn thân thiện theo định dạng Vercel AI SDK stream protocol
+    // Khi toàn bộ AI providers đều quá tải hoặc hết quota, trả về tin nhắn thân thiện
+    // theo đúng giao thức AI SDK v7 UI Message Stream (SSE format)
     const friendlyMessage = "Hiện tại trợ lý đang bận không thể trả lời tin nhắn của quý khách ngay được, quý khách có thể liên hệ lại tôi sau hoặc liên hệ qua Zalo, gọi điện tới Mr. Thắng để được tư vấn thêm.";
     const textEncoder = new TextEncoder();
-    // Gửi phản hồi theo đúng giao thức AI SDK (tiền tố 0: biểu diễn text chunk)
-    const formattedProtocolMsg = `0:${JSON.stringify(friendlyMessage)}\n`;
     
-    return new Response(textEncoder.encode(formattedProtocolMsg), {
+    // AI SDK v7 UI Message Stream SSE format
+    const sseData = [
+      `data: ${JSON.stringify({ type: 'start' })}\n\n`,
+      `data: ${JSON.stringify({ type: 'text-delta', textDelta: friendlyMessage })}\n\n`,
+      `data: ${JSON.stringify({ type: 'finish', finishReason: 'stop' })}\n\n`,
+      `data: [DONE]\n\n`,
+    ].join('');
+    
+    return new Response(textEncoder.encode(sseData), {
       status: 200,
       headers: {
-        'Content-Type': 'text/plain; charset=utf-8',
-        'x-vercel-ai-ui-stream': 'v1',
+        'Content-Type': 'text/event-stream; charset=utf-8',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
         'X-AI-Provider': 'fallback-error-handler',
         'X-AI-Model': 'friendly-fallback-msg',
         'X-AI-Fallback-Triggered': 'true'
