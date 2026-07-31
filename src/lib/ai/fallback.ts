@@ -46,7 +46,10 @@ export async function streamTextWithFallback(options: FallbackOptions) {
     }
 
     if (provider === 'gemini') {
-      // Valid Google Gemini API model IDs (latest)
+      // Models verified available via Gemini API (v1beta/models endpoint)
+      // Try newer models first as they have separate rate limits
+      targets.push({ provider: 'gemini', model: 'gemini-3.5-flash' });
+      targets.push({ provider: 'gemini', model: 'gemini-3.1-flash-lite' });
       targets.push({ provider: 'gemini', model: 'gemini-2.5-flash' });
       targets.push({ provider: 'gemini', model: 'gemini-2.5-flash-lite' });
       targets.push({ provider: 'gemini', model: 'gemini-2.0-flash' });
