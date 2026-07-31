@@ -201,7 +201,34 @@ export async function processAndStoreDocument(fileName: string, text: string) {
 }
 
 /**
- * Advanced Hybrid Retrieval: Vector + Knowledge Graph + BM25 + Reranking Engine.
+ * Nạp từng phần của Knowledge Pack riêng biệt vào Vector Store (FAQ, Decision Tree, Pattern, Overview...)
+ */
+export async function processAndStoreKnowledgePackComponents(pack: any) {
+  if (!pack || !pack.files) return;
+
+  const packSections: { type: string; title: string; text: string }[] = [
+    { type: 'faq', title: `[FAQ] ${pack.doc_title}`, text: pack.files['faq.md'] || '' },
+    { type: 'decision_tree', title: `[DECISION_TREE] ${pack.doc_title}`, text: pack.files['decision_tree.md'] || '' },
+    { type: 'pattern', title: `[PATTERN] ${pack.doc_title}`, text: pack.files['patterns.md'] || '' },
+    { type: 'overview', title: `[OVERVIEW] ${pack.doc_title}`, text: pack.files['overview.md'] || '' },
+    { type: 'summary', title: `[SUMMARY] ${pack.doc_title}`, text: pack.files['summary.md'] || '' },
+    { type: 'comparison', title: `[COMPARISON] ${pack.doc_title}`, text: pack.files['comparison.md'] || '' },
+  ];
+
+  for (const sec of packSections) {
+    if (sec.text && sec.text.trim().length > 50) {
+      try {
+        await processAndStoreDocument(`${sec.title}`, sec.text);
+      } catch (err) {
+        console.warn(`Failed to store Knowledge Pack section ${sec.type}:`, err);
+      }
+    }
+  }
+}
+
+/**
+ * Advanced Hybrid Retrieval: Vector + Knowledge Graph + BM25 + Knowledge Pack Hierarchy + Reranking Engine.
+ * Enforces Priority: FAQ ➔ Decision Tree ➔ Pattern ➔ Overview ➔ Summary ➔ Chunk
  */
 export async function retrieveRelevantContext(query: string, matchCount = 5): Promise<string> {
   const candidateList: CandidateChunk[] = [];
@@ -212,7 +239,7 @@ export async function retrieveRelevantContext(query: string, matchCount = 5): Pr
     if (graphContext) {
       candidateList.push({
         content: graphContext,
-        score: 0.95,
+        score: 0.98,
         source: 'graph',
       });
     }
@@ -245,11 +272,19 @@ export async function retrieveRelevantContext(query: string, matchCount = 5): Pr
 
       if (!error && rawData && rawData.length > 0) {
         rawData.forEach((chunk: any) => {
+          let baseScore = chunk.similarity || 0.6;
+          // Apply Knowledge Pack Hierarchy Priority Boosts
+          if (chunk.content?.includes('[FAQ]')) baseScore += 0.20;
+          else if (chunk.content?.includes('[DECISION_TREE]')) baseScore += 0.15;
+          else if (chunk.content?.includes('[PATTERN]')) baseScore += 0.12;
+          else if (chunk.content?.includes('[OVERVIEW]')) baseScore += 0.08;
+          else if (chunk.content?.includes('[SUMMARY]')) baseScore += 0.05;
+
           candidateList.push({
             id: chunk.id,
             document_id: chunk.document_id,
             content: chunk.content,
-            score: chunk.similarity || 0.6,
+            score: Math.min(baseScore, 0.99),
             source: 'vector',
           });
         });
@@ -275,11 +310,15 @@ export async function retrieveRelevantContext(query: string, matchCount = 5): Pr
           .toArray();
 
         matches.forEach((chunk: any) => {
+          let baseScore = 0.5;
+          if (chunk.content?.includes('[FAQ]')) baseScore += 0.20;
+          else if (chunk.content?.includes('[DECISION_TREE]')) baseScore += 0.15;
+
           candidateList.push({
             id: chunk.id || chunk._id?.toString(),
             document_id: chunk.document_id,
             content: chunk.content,
-            score: 0.5,
+            score: baseScore,
             source: 'bm25',
           });
         });
@@ -293,7 +332,8 @@ export async function retrieveRelevantContext(query: string, matchCount = 5): Pr
     return '';
   }
 
-  // 4. Execute Reranker Stage to filter noise and select top-N contexts
+  // 4. Sort and execute Reranker Stage based on Hierarchy Boosted Scores
+  candidateList.sort((a, b) => b.score - a.score);
   const rerankedResults = rerankCandidates(query, candidateList, matchCount);
 
   return rerankedResults.map(item => item.content).join('\n\n');

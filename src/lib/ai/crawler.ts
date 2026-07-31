@@ -93,6 +93,16 @@ export async function runCrawlPipeline(customTargets?: CrawlTarget[]): Promise<C
       const fileName = `[Website] ${title} (${target.url})`;
       const docId = await processAndStoreDocument(fileName, text);
 
+      // Auto-trigger Knowledge Compiler in background (Non-blocking)
+      try {
+        const { compileKnowledgePack, ENABLE_KNOWLEDGE_COMPILER } = await import('@/lib/ai/knowledge-compiler/compiler');
+        if (ENABLE_KNOWLEDGE_COMPILER) {
+          compileKnowledgePack(text, title, `Crawl4AI: ${target.url}`).catch(err => {
+            console.warn('[Crawl4AI Compiler Background Error]:', err);
+          });
+        }
+      } catch (e) {}
+
       results.push({
         url: target.url,
         title,

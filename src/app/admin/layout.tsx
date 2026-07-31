@@ -35,6 +35,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       active: pathname.includes('/nap-tai-lieu'),
     },
     {
+      label: '📦 Knowledge Compiler (Packs)',
+      href: '/admin/knowledge',
+      active: pathname.includes('/knowledge'),
+    },
+    {
       label: '📝 Quản lý Bài viết',
       href: '/admin/bai-viet',
       active: pathname.includes('/bai-viet'),

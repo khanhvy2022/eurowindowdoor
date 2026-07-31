@@ -107,6 +107,52 @@ export function queryKnowledgeGraph(query: string): string {
       }
     });
   });
-
   return graphContextLines.join('\n');
 }
+
+/**
+ * Dynamic Knowledge Graph Extractor: Registers entities & edges from a Knowledge Pack.
+ */
+export function registerKnowledgePackInGraph(pack: any) {
+  if (!pack || !pack.metadata) return;
+
+  const docNodeId = `doc_${pack.id}`;
+  const docNode: GraphNode = {
+    id: docNodeId,
+    type: 'ProductSeries',
+    name: pack.doc_title,
+    attributes: {
+      series: pack.metadata.series,
+      chunk_count: pack.metadata.chunk_count,
+      confidence: pack.metadata.confidence,
+    },
+  };
+
+  // Avoid duplicates
+  if (!KNOWLEDGE_NODES.some(n => n.id === docNodeId)) {
+    KNOWLEDGE_NODES.push(docNode);
+  }
+
+  // Register Glossary Terms as Graph Nodes
+  if (pack.glossary && Array.isArray(pack.glossary)) {
+    pack.glossary.forEach((g: any) => {
+      const termId = `term_${g.term.toLowerCase().replace(/\s+/g, '_')}`;
+      if (!KNOWLEDGE_NODES.some(n => n.id === termId)) {
+        KNOWLEDGE_NODES.push({
+          id: termId,
+          type: 'Property',
+          name: g.term,
+          attributes: { definition: g.definition, importance: g.importance },
+        });
+        KNOWLEDGE_EDGES.push({
+          source: docNodeId,
+          target: termId,
+          relation: 'has_property',
+        });
+      }
+    });
+  }
+
+  console.log(`[Knowledge Graph] Registered ${pack.doc_title} into Knowledge Graph Index.`);
+}
+
