@@ -52,7 +52,8 @@ export function classifyTask(messages: any[]): 'coding' | 'reasoning' | 'general
  * Returns the preferred provider sequence based on the task classification.
  */
 export function getRoutingSequence(task: 'coding' | 'reasoning' | 'general'): ProviderName[] {
-  return ['openrouter', 'gemini', 'deepseek', 'grok'];
+  // Prioritize Gemini (gemini-flash-latest) as verified 200 OK, with OpenRouter as backup
+  return ['gemini', 'openrouter', 'deepseek', 'grok'];
 }
 
 /**

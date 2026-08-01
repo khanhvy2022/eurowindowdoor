@@ -47,8 +47,7 @@ export async function streamTextWithFallback(options: FallbackOptions) {
     }
 
     if (provider === 'gemini') {
-      targets.push({ provider: 'gemini', model: 'gemini-2.0-flash' });
-      targets.push({ provider: 'gemini', model: 'gemini-1.5-flash' });
+      targets.push({ provider: 'gemini', model: 'gemini-flash-latest' });
     } else if (provider === 'openrouter') {
       targets.push({ provider: 'openrouter', model: 'openrouter/auto' });
     } else if (provider === 'deepseek') {
@@ -74,21 +73,20 @@ export async function streamTextWithFallback(options: FallbackOptions) {
       
       const modelInstance = getProviderModel(provider, modelId);
       
-      // streamText() initiates the request but does NOT block waiting for the full response.
-      // Return immediately — do NOT await finishReason here as it blocks until stream completes!
       const result = streamText({
         model: modelInstance,
         messages,
         system,
         temperature,
         maxRetries: 0, // No retries — we handle fallback ourselves
-        maxTokens: 4000,
+        maxTokens: 1500,
         tools,
         stopWhen: stepCountIs(maxSteps || 5),
         onFinish: options.onFinish,
         onError: (event: any) => {
           const { error } = event;
           console.error(`[AI Fallback System] Async Stream Error từ model ${modelId}:`, error);
+          triggerCooldown(provider, `Stream error (${modelId}): ${error?.message || error}`, 3 * 60 * 1000);
           const fs = require('fs');
           const path = require('path');
           const logDir = path.join(process.cwd(), 'sandbox', 'logs');

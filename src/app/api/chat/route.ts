@@ -236,10 +236,10 @@ export async function POST(req: Request) {
         if (process.env.ENABLE_CHAT_RAG !== 'false') {
           try {
             const { retrieveRelevantContext } = await import('@/lib/rag');
-            // Timeout safely for Serverless execution
+            // Timeout safely for fast execution (2s max)
             context = await withTimeout(
               retrieveRelevantContext(contextualizedQuery, 5),
-              6_000,
+              2_000,
               'Knowledge retrieval'
             );
             responseSource = 'HybridGraphRAG';

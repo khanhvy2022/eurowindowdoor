@@ -189,10 +189,14 @@ export function ChatInput({ input = '', setInput, handleSubmit, isLoading, isAdm
         
         <textarea
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => {
+            setInput(e.target.value);
+            e.target.style.height = 'auto';
+            e.target.style.height = `${Math.min(e.target.scrollHeight, 128)}px`;
+          }}
           onKeyDown={handleKeyDown}
           placeholder="Hỏi tôi về cửa Eurowindow..."
-          className="flex-1 bg-transparent border-none outline-none resize-none px-2 md:px-4 py-2 md:py-3 max-h-32 text-sm md:text-base text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400"
+          className="flex-1 bg-transparent border-none outline-none resize-none px-2 md:px-4 py-2 md:py-3 max-h-32 text-sm md:text-base text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 leading-relaxed"
           rows={1}
           style={{ minHeight: '40px' }}
         />
@@ -200,7 +204,7 @@ export function ChatInput({ input = '', setInput, handleSubmit, isLoading, isAdm
         <button
           type="submit"
           disabled={isLoading || isUploading || (!(input || '').trim() && !file)}
-          className="p-2 md:p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
+          className="p-2 md:p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shrink-0 active:scale-95 shadow-sm"
         >
           {isLoading ? (
             <Loader2 className="w-4 h-4 md:w-5 md:h-5 animate-spin" />

@@ -41,9 +41,9 @@ export async function analyzeAndContextualize(
   // Check if query needs pronoun rewriting ("nó", "loại này", "đó")
   const needsRewriting = /(nó|loại này|cái này|đó|kia|thế nào)/i.test(cleanText) && messages.length > 2;
 
-  // If we have an obvious intent and no pronoun disambiguation needed, return INSTANTLY (0ms)
-  if (fastIntent && !needsRewriting) {
-    return { intent: fastIntent, contextualizedQuery: latestQuery };
+  // If we have a fast matched intent or query is short/direct, return INSTANTLY (0ms latency)
+  if (fastIntent || !needsRewriting) {
+    return { intent: fastIntent || 'general', contextualizedQuery: latestQuery };
   }
 
   // Extract recent conversation history (last 4 turns)
@@ -86,9 +86,9 @@ CÂU HỎI CUỐI:
 "${latestQuery}"
 `;
 
-    // Use fast openrouter model or fallback
-    const { object } = await generateObject({
-      model: getProviderModel('openrouter', 'openrouter/auto'),
+    // Timeout intent classification at 1200ms to guarantee zero delay for streaming
+    const classifyPromise = generateObject({
+      model: getProviderModel('gemini', 'gemini-2.0-flash'),
       schema: z.object({
         intent: z.enum(['showroom', 'technical', 'quote', 'warranty', 'company_info', 'general']),
         contextualizedQuery: z.string().describe('Câu hỏi đã được bổ sung ngữ cảnh'),
@@ -97,6 +97,11 @@ CÂU HỎI CUỐI:
       temperature: 0.1,
     });
 
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('Orchestrator timeout')), 1200)
+    );
+
+    const { object } = await Promise.race([classifyPromise, timeoutPromise]);
     console.log(`[Orchestrator] Intent: ${object.intent} | Rewritten: "${object.contextualizedQuery}"`);
     return object;
   } catch (error) {

@@ -83,10 +83,22 @@ export function ChatLayout({ isAdmin = false }: { isAdmin?: boolean }) {
   });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const [showScrollBottom, setShowScrollBottom] = useState(false);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleScroll = () => {
+    if (!messagesContainerRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = messagesContainerRef.current;
+    setShowScrollBottom(scrollHeight - scrollTop - clientHeight > 100);
+  };
 
   // Auto scroll to bottom when new messages arrive
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    scrollToBottom();
   }, [messages]);
 
   const handleSubmit = (e?: React.FormEvent<HTMLFormElement>, data?: { fileName?: string, documentId?: string }) => {
@@ -226,7 +238,7 @@ export function ChatLayout({ isAdmin = false }: { isAdmin?: boolean }) {
   };
 
   return (
-    <div className="flex h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 overflow-hidden font-sans">
+    <div className="flex h-[100dvh] max-h-[100dvh] bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 overflow-hidden font-sans">
       {/* Sidebar - Desktop */}
       <aside className="hidden md:flex flex-col w-72 bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800 p-4 shrink-0 overflow-y-auto">
         <div className="flex items-center gap-3 mb-6 px-2 justify-between">
@@ -270,9 +282,9 @@ export function ChatLayout({ isAdmin = false }: { isAdmin?: boolean }) {
       </aside>
 
       {/* Main Chat Area */}
-      <main className="flex-1 flex flex-col relative h-full">
+      <main className="flex-1 flex flex-col relative h-full min-h-0">
         {/* Header (Mobile only) */}
-        <header className="md:hidden flex items-center justify-between p-3 border-b border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md z-30">
+        <header className="md:hidden flex items-center justify-between p-3 border-b border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md z-30 shrink-0">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
               <Bot className="w-5 h-5 text-white" />
@@ -325,10 +337,14 @@ export function ChatLayout({ isAdmin = false }: { isAdmin?: boolean }) {
         )}
 
         {/* Messages list */}
-        <div className="flex-1 overflow-y-auto p-3 md:p-8 scroll-smooth">
+        <div 
+          ref={messagesContainerRef}
+          onScroll={handleScroll}
+          className="flex-1 overflow-y-auto p-3 md:p-8 scroll-smooth relative"
+        >
           <div className="max-w-3xl mx-auto">
             {messages.length === 0 ? (
-              <div className="h-full flex flex-col items-center justify-center text-center mt-16 md:mt-32 space-y-3 md:space-y-4 px-4">
+              <div className="h-full flex flex-col items-center justify-center text-center mt-12 md:mt-24 space-y-3 md:space-y-4 px-4">
                 <div className="w-12 h-12 md:w-16 md:h-16 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-xl md:rounded-2xl flex items-center justify-center">
                   <Bot className="w-6 h-6 md:w-8 md:h-8" />
                 </div>
@@ -367,6 +383,17 @@ export function ChatLayout({ isAdmin = false }: { isAdmin?: boolean }) {
             <div ref={messagesEndRef} />
           </div>
         </div>
+
+        {/* Floating Scroll To Bottom Button */}
+        {showScrollBottom && (
+          <button
+            onClick={scrollToBottom}
+            className="absolute bottom-24 md:bottom-28 right-6 z-20 p-2.5 bg-blue-600 text-white rounded-full shadow-xl hover:bg-blue-700 transition-all flex items-center justify-center animate-bounce"
+            title="Cuộn xuống tin nhắn mới nhất"
+          >
+            <ChevronDown className="w-5 h-5" />
+          </button>
+        )}
 
         {/* Input Area */}
         <div className="p-3 md:p-6 bg-gradient-to-t from-zinc-50 via-zinc-50 to-transparent dark:from-zinc-950 dark:via-zinc-950 z-10">

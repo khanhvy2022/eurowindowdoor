@@ -46,6 +46,20 @@ export const FloatingContact: React.FC = () => {
   });
 
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [showScrollBottom, setShowScrollBottom] = useState(false);
+
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleScroll = () => {
+    if (!chatContainerRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
+    const isFarFromBottom = scrollHeight - scrollTop - clientHeight > 100;
+    setShowScrollBottom(isFarFromBottom);
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 600);
@@ -70,7 +84,7 @@ export const FloatingContact: React.FC = () => {
 
   useEffect(() => {
     if (activeTab === 'ai') {
-      chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      scrollToBottom();
     }
   }, [messages, activeTab]);
 
@@ -187,60 +201,65 @@ export const FloatingContact: React.FC = () => {
           className="fixed inset-0 z-[60] bg-slate-950/60 backdrop-blur-sm flex flex-col justify-end sm:justify-center sm:items-center p-0 sm:p-4"
           onClick={(e) => { if (e.target === e.currentTarget) setModalOpen(false); }}
         >
-          <div className="modal-in bg-white w-full sm:max-w-xl h-[92dvh] max-h-[92vh] sm:h-[650px] sm:max-h-[85vh] sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden flex flex-col transition-all">
+          <div className="modal-in bg-white w-full h-[100dvh] max-h-[100dvh] sm:h-[650px] sm:max-h-[85vh] sm:max-w-xl rounded-none sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col transition-all relative">
 
             {/* Header */}
-            <div className="relative px-6 pt-5 pb-4 text-white flex-shrink-0" style={{ background: 'linear-gradient(135deg,#005ba7 0%,#1a6fd8 100%)' }}>
+            <div className="relative px-4 sm:px-6 pt-3.5 sm:pt-5 pb-3 sm:pb-4 text-white flex-shrink-0" style={{ background: 'linear-gradient(135deg,#005ba7 0%,#1a6fd8 100%)' }}>
               <button
                 onClick={() => setModalOpen(false)}
-                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center transition-colors"
+                className="absolute top-3.5 sm:top-4 right-3.5 sm:right-4 w-8 h-8 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center transition-colors"
+                aria-label="Đóng"
               >
                 <CloseIcon />
               </button>
 
-              <div className="flex items-center gap-2 mb-1">
-                <span className="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-emerald-400 text-slate-900 tracking-wider">Hỗ trợ 24/7</span>
-                <span className="text-[11px] text-blue-100 font-medium">Phản hồi tức thì</span>
+              <div className="flex items-center gap-2 mb-0.5 sm:mb-1">
+                <span className="px-2 py-0.5 rounded text-[9px] sm:text-[10px] font-black uppercase bg-emerald-400 text-slate-900 tracking-wider">Hỗ trợ 24/7</span>
+                <span className="text-[10px] sm:text-[11px] text-blue-100 font-medium">Phản hồi tức thì</span>
               </div>
-              <h3 className="text-lg font-black">Tư Vấn & Báo Giá Eurowindow</h3>
+              <h3 className="text-base sm:text-lg font-black pr-8">Tư Vấn & Báo Giá Eurowindow</h3>
 
               {/* Tabs */}
-              <div className="flex gap-2 mt-3 pt-2 border-t border-white/15">
+              <div className="flex gap-2 mt-2.5 sm:mt-3 pt-2 border-t border-white/15">
                 <button
                   onClick={() => setActiveTab('ai')}
-                  className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors ${
+                  className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors flex items-center justify-center gap-1 ${
                     activeTab === 'ai' ? 'bg-white text-[#005ba7]' : 'bg-white/10 text-white hover:bg-white/20'
                   }`}
                 >
-                  💬 Chatbot Báo Giá
+                  <span>💬</span> <span>Chatbot AI Báo Giá</span>
                 </button>
                 <button
                   onClick={() => setActiveTab('form')}
-                  className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors ${
+                  className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors flex items-center justify-center gap-1 ${
                     activeTab === 'form' ? 'bg-white text-[#005ba7]' : 'bg-white/10 text-white hover:bg-white/20'
                   }`}
                 >
-                  📞 Để Lại SĐT Tư Vấn
+                  <span>📞</span> <span>Để Lại SĐT Tư Vấn</span>
                 </button>
               </div>
             </div>
 
             {/* Tab 1: Chatbot */}
             {activeTab === 'ai' && (
-              <div className="flex-1 flex flex-col min-h-0 bg-slate-50">
+              <div className="flex-1 flex flex-col min-h-0 bg-slate-50 relative">
                 {/* Messages Body */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-3 text-xs">
+                <div 
+                  ref={chatContainerRef}
+                  onScroll={handleScroll}
+                  className="flex-1 overflow-y-auto p-3.5 sm:p-4 space-y-3 text-xs scroll-smooth"
+                >
                   
                   {/* Default Welcome */}
                   <div className="flex gap-2.5 items-start">
                     <div className="w-7 h-7 rounded-full bg-[#005ba7] text-white flex items-center justify-center text-[10px] font-black shrink-0">
                       EW
                     </div>
-                    <div className="bg-white p-3.5 rounded-2xl rounded-tl-none border border-slate-200/80 shadow-sm max-w-[85%] text-slate-800 space-y-2">
+                    <div className="bg-white p-3.5 rounded-2xl rounded-tl-none border border-slate-200/80 shadow-sm max-w-[88%] sm:max-w-[85%] text-slate-800 space-y-2">
                       <p className="font-semibold text-[#005ba7]">
                         Xin chào! Tôi là Trợ lý Eurowindow.
                       </p>
-                      <p>
+                      <p className="leading-relaxed">
                         Tôi có thể tư vấn thông số kỹ thuật, cách âm cách nhiệt và tính báo giá cho các dòng cửa nhôm EA55, EA60i, cửa nhựa Kommerling... Bạn muốn báo giá sản phẩm nào?
                       </p>
                     </div>
@@ -248,28 +267,28 @@ export const FloatingContact: React.FC = () => {
 
                   {/* Suggestion Chips */}
                   {messages.length === 0 && (
-                    <div className="grid grid-cols-2 gap-2 pt-2 px-1">
+                    <div className="grid grid-cols-2 gap-2 pt-2 px-0.5">
                       <button
                         onClick={() => handleSendAiMessage('Báo giá cửa nhôm EA55')}
-                        className="p-2.5 bg-white hover:bg-blue-50 border border-slate-200 hover:border-[#005ba7] rounded-xl text-left font-medium text-slate-700 hover:text-[#005ba7] transition-all text-[11px]"
+                        className="p-2.5 bg-white hover:bg-blue-50 border border-slate-200 hover:border-[#005ba7] rounded-xl text-left font-medium text-slate-700 hover:text-[#005ba7] transition-all text-[11px] shadow-sm active:scale-98"
                       >
                         🚪 Báo giá Cửa nhôm EA55
                       </button>
                       <button
                         onClick={() => handleSendAiMessage('Báo giá cửa nhôm EA60i cầu cách nhiệt')}
-                        className="p-2.5 bg-white hover:bg-blue-50 border border-slate-200 hover:border-[#005ba7] rounded-xl text-left font-medium text-slate-700 hover:text-[#005ba7] transition-all text-[11px]"
+                        className="p-2.5 bg-white hover:bg-blue-50 border border-slate-200 hover:border-[#005ba7] rounded-xl text-left font-medium text-slate-700 hover:text-[#005ba7] transition-all text-[11px] shadow-sm active:scale-98"
                       >
                         🛡️ Báo giá Cửa nhôm EA60i
                       </button>
                       <button
                         onClick={() => handleSendAiMessage('Báo giá cửa nhựa uPVC Kommerling cách âm')}
-                        className="p-2.5 bg-white hover:bg-blue-50 border border-slate-200 hover:border-[#005ba7] rounded-xl text-left font-medium text-slate-700 hover:text-[#005ba7] transition-all text-[11px]"
+                        className="p-2.5 bg-white hover:bg-blue-50 border border-slate-200 hover:border-[#005ba7] rounded-xl text-left font-medium text-slate-700 hover:text-[#005ba7] transition-all text-[11px] shadow-sm active:scale-98"
                       >
                         🔇 Cửa nhựa uPVC Kommerling
                       </button>
                       <button
                         onClick={() => handleSendAiMessage('Tư vấn chọn kính Low-E cản nhiệt và kính hộp')}
-                        className="p-2.5 bg-white hover:bg-blue-50 border border-slate-200 hover:border-[#005ba7] rounded-xl text-left font-medium text-slate-700 hover:text-[#005ba7] transition-all text-[11px]"
+                        className="p-2.5 bg-white hover:bg-blue-50 border border-slate-200 hover:border-[#005ba7] rounded-xl text-left font-medium text-slate-700 hover:text-[#005ba7] transition-all text-[11px] shadow-sm active:scale-98"
                       >
                         ⚡ Kính Low-E cản nhiệt
                       </button>
@@ -278,7 +297,6 @@ export const FloatingContact: React.FC = () => {
 
                   {/* Chat History */}
                   {messages.map((msg: any, idx: number) => {
-                    // Extract text content safely across AI SDK 3.x and 4.x
                     let text = '';
                     if (typeof msg.content === 'string' && msg.content.trim()) {
                       text = msg.content;
@@ -298,14 +316,14 @@ export const FloatingContact: React.FC = () => {
                         }`}
                       >
                         {msg.role !== 'user' && (
-                          <div className="w-7 h-7 rounded-full bg-[#005ba7] text-white flex items-center justify-center text-[10px] font-black shrink-0">
+                          <div className="w-7 h-7 rounded-full bg-[#005ba7] text-white flex items-center justify-center text-[10px] font-black shrink-0 mt-0.5">
                             EW
                           </div>
                         )}
                         <div
-                          className={`p-3.5 rounded-2xl max-w-[85%] ${
+                          className={`p-3.5 rounded-2xl max-w-[88%] sm:max-w-[85%] ${
                             msg.role === 'user'
-                              ? 'bg-[#005ba7] text-white rounded-tr-none shadow-md font-medium whitespace-pre-wrap'
+                              ? 'bg-[#005ba7] text-white rounded-tr-none shadow-md font-medium whitespace-pre-wrap leading-relaxed'
                               : 'bg-white text-slate-800 rounded-tl-none border border-slate-200/80 shadow-sm prose prose-xs max-w-none prose-p:leading-relaxed prose-strong:text-[#005ba7]'
                           }`}
                         >
@@ -320,18 +338,18 @@ export const FloatingContact: React.FC = () => {
                   })}
 
                   {isLoading && (
-                    <div className="flex items-center text-slate-400 italic text-xs pl-9" aria-label="Đang trả lời">
+                    <div className="flex items-center text-slate-500 italic text-xs pl-9 py-1" aria-label="Đang trả lời">
                       <span className="w-2 h-2 bg-[#005ba7] rounded-full animate-ping" />
-                      <span className="ml-1.5">...</span>
+                      <span className="ml-1.5 font-medium">...</span>
                     </div>
                   )}
 
                   {error && (
-                    <div className="p-3 my-2 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 flex items-center justify-between">
+                    <div className="p-3 my-2 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 flex items-center justify-between shadow-sm">
                       <span>Có lỗi kết nối hệ thống. Vui lòng thử lại.</span>
                       <button
                         onClick={handleRetry}
-                        className="px-2.5 py-1 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 text-[11px]"
+                        className="px-2.5 py-1 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 text-[11px] shrink-0 ml-2"
                       >
                         Thử lại
                       </button>
@@ -341,31 +359,63 @@ export const FloatingContact: React.FC = () => {
                   <div ref={chatEndRef} />
                 </div>
 
-                {/* Input Bar */}
-                <div className="p-3 bg-white border-t border-slate-200 flex gap-2 items-center">
-                  <input
-                    type="text"
+                {/* Floating Scroll To Bottom Button */}
+                {showScrollBottom && (
+                  <button
+                    onClick={scrollToBottom}
+                    className="absolute bottom-16 right-4 z-20 p-2 bg-[#005ba7] text-white rounded-full shadow-lg hover:bg-[#004077] transition-all flex items-center justify-center animate-bounce"
+                    title="Cuộn xuống tin nhắn mới nhất"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                  </button>
+                )}
+
+                {/* Input Bar - Mobile Optimized Textarea */}
+                <div className="p-2.5 sm:p-3 bg-white border-t border-slate-200 flex gap-2 items-end shrink-0 shadow-lg">
+                  <textarea
+                    ref={textareaRef}
+                    rows={1}
                     value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    onChange={(e) => {
+                      setInput(e.target.value);
+                      e.target.style.height = 'auto';
+                      e.target.style.height = `${Math.min(e.target.scrollHeight, 110)}px`;
+                    }}
+                    onFocus={() => {
+                      setTimeout(scrollToBottom, 200);
+                    }}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
+                      if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
                         handleSendAiMessage();
+                        if (textareaRef.current) {
+                          textareaRef.current.style.height = 'auto';
+                        }
                       }
                     }}
-                    placeholder="Nhập câu hỏi báo giá hoặc thông số kỹ thuật..."
-                    className="flex-1 px-4 py-2.5 bg-slate-100 border border-slate-200 rounded-full text-xs outline-none focus:bg-white focus:border-[#005ba7] focus:ring-1 focus:ring-[#005ba7] text-slate-800"
+                    placeholder="Nhập câu hỏi báo giá hoặc thông số..."
+                    className="flex-1 px-4 py-2.5 bg-slate-100 border border-slate-200 rounded-2xl text-xs outline-none focus:bg-white focus:border-[#005ba7] focus:ring-1 focus:ring-[#005ba7] text-slate-800 resize-none leading-relaxed max-h-28 overflow-y-auto"
                   />
                   <button
-                    onClick={() => handleSendAiMessage()}
+                    onClick={() => {
+                      handleSendAiMessage();
+                      if (textareaRef.current) {
+                        textareaRef.current.style.height = 'auto';
+                      }
+                    }}
                     disabled={isLoading || !(input || '').trim()}
-                    className="px-4 py-2.5 bg-[#005ba7] hover:bg-[#004077] disabled:opacity-40 text-white text-xs font-bold rounded-full transition-all flex items-center gap-1 shrink-0"
+                    className="w-10 h-10 bg-[#005ba7] hover:bg-[#004077] disabled:opacity-40 text-white rounded-full transition-all flex items-center justify-center shrink-0 shadow-md active:scale-95"
+                    title="Gửi tin nhắn"
                   >
-                    <span>Gửi</span>
+                    <svg className="w-4 h-4 translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
                   </button>
                 </div>
 
-                <div className="px-4 py-1.5 bg-slate-100 border-t border-slate-200/60 flex items-center justify-between text-[10px] text-slate-500">
+                <div className="px-3 py-1.5 bg-slate-100 border-t border-slate-200/60 flex items-center justify-between text-[10px] text-slate-500 shrink-0">
                   <span>Cần tư vấn toàn màn hình?</span>
                   <Link href="/chat" className="text-[#005ba7] font-bold hover:underline">
                     Mở Full Screen Chat →
@@ -376,7 +426,7 @@ export const FloatingContact: React.FC = () => {
 
             {/* Tab 2: Form */}
             {activeTab === 'form' && (
-              <form onSubmit={handleFormSubmit} className="p-6 space-y-4 flex-1 overflow-y-auto">
+              <form onSubmit={handleFormSubmit} className="p-4 sm:p-6 space-y-4 flex-1 overflow-y-auto">
                 <div>
                   <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">
                     {t('float_label_name')}
@@ -422,7 +472,7 @@ export const FloatingContact: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all shadow-lg hover:shadow-blue-600/40"
+                  className="w-full py-3 text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all shadow-lg hover:shadow-blue-600/40 active:scale-98"
                   style={{ background: 'linear-gradient(135deg,#005ba7 0%,#1a6fd8 100%)' }}
                 >
                   {isSubmitting ? 'ĐANG GỬI...' : t('float_submit')}
@@ -443,3 +493,4 @@ export const FloatingContact: React.FC = () => {
     </>
   );
 };
+
