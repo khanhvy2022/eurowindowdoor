@@ -108,7 +108,7 @@ export function ChatInput({ input = '', setInput, handleSubmit, isLoading, isAdm
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      if (!input.trim() && !file) return;
+      if (!(input || '').trim() && !file) return;
       handleSubmit(undefined, { fileName: file?.name, documentId: documentId || undefined });
       setFile(null);
       setDocumentId(null);
@@ -157,7 +157,7 @@ export function ChatInput({ input = '', setInput, handleSubmit, isLoading, isAdm
       <form 
         onSubmit={(e) => {
           e.preventDefault();
-          if (!input.trim() && !file) {
+          if (!(input || '').trim() && !file) {
             return;
           }
           handleSubmit(e, { fileName: file?.name, documentId: documentId || undefined });
@@ -199,7 +199,7 @@ export function ChatInput({ input = '', setInput, handleSubmit, isLoading, isAdm
 
         <button
           type="submit"
-          disabled={isLoading || isUploading || (!input.trim() && !file)}
+          disabled={isLoading || isUploading || (!(input || '').trim() && !file)}
           className="p-2 md:p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
         >
           {isLoading ? (

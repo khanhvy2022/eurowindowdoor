@@ -43,6 +43,64 @@ function calculateLexicalDensityScore(query: string, content: string): number {
 }
 
 /**
+ * Reranks candidate chunks using Cohere / Jina Cross-Encoder API if configured,
+ * falling back to lexical + vector + domain heuristic scoring.
+ */
+export async function rerankCandidatesAsync(
+  query: string,
+  candidates: CandidateChunk[],
+  topN = 5
+): Promise<CandidateChunk[]> {
+  if (!candidates || candidates.length === 0) return [];
+
+  const useCrossEncoder = process.env.ENABLE_CROSS_ENCODER_RERANK === 'true';
+  const cohereApiKey = process.env.COHERE_API_KEY;
+  const jinaApiKey = process.env.JINA_API_KEY;
+
+  if (useCrossEncoder && (cohereApiKey || jinaApiKey)) {
+    try {
+      if (cohereApiKey) {
+        const response = await fetch('https://api.cohere.com/v1/rerank', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${cohereApiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: 'rerank-multilingual-v3.0',
+            query,
+            documents: candidates.map(c => c.content),
+            top_n: Math.min(topN, candidates.length),
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.results && Array.isArray(data.results)) {
+            const reordered: CandidateChunk[] = [];
+            for (const r of data.results) {
+              const original = candidates[r.index];
+              if (original) {
+                reordered.push({
+                  ...original,
+                  score: r.relevance_score,
+                });
+              }
+            }
+            if (reordered.length > 0) return reordered;
+          }
+        }
+      }
+    } catch (err) {
+      console.warn('[Reranker] Cross-encoder API call failed, falling back to heuristic reranking:', err);
+    }
+  }
+
+  // Fallback to sync heuristic reranker
+  return rerankCandidates(query, candidates, topN);
+}
+
+/**
  * Reranks candidate chunks by combining semantic vector score, lexical density, and source weight.
  */
 export function rerankCandidates(
@@ -77,7 +135,7 @@ export function rerankCandidates(
   });
 
   // Sort descending by finalScore
-  scoredCandidates.sort((a, b) => b.finalScore - a.finalScore);
+  scoredCandidates.sort((a, b) => (b.finalScore ?? 0) - (a.finalScore ?? 0));
 
   // Deduplicate highly similar content snippets
   const uniqueResults: CandidateChunk[] = [];
@@ -94,3 +152,4 @@ export function rerankCandidates(
 
   return uniqueResults;
 }
+

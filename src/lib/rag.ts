@@ -232,6 +232,7 @@ export async function processAndStoreKnowledgePackComponents(pack: any) {
  */
 export async function retrieveRelevantContext(query: string, matchCount = 5): Promise<string> {
   const candidateList: CandidateChunk[] = [];
+  const minScoreThreshold = 0.55; // Filtering low-relevance noise
 
   // 1. Knowledge Graph Entity Traversal
   try {
@@ -280,13 +281,15 @@ export async function retrieveRelevantContext(query: string, matchCount = 5): Pr
           else if (chunk.content?.includes('[OVERVIEW]')) baseScore += 0.08;
           else if (chunk.content?.includes('[SUMMARY]')) baseScore += 0.05;
 
-          candidateList.push({
-            id: chunk.id,
-            document_id: chunk.document_id,
-            content: chunk.content,
-            score: Math.min(baseScore, 0.99),
-            source: 'vector',
-          });
+          if (baseScore >= minScoreThreshold) {
+            candidateList.push({
+              id: chunk.id,
+              document_id: chunk.document_id,
+              content: chunk.content,
+              score: Math.min(baseScore, 0.99),
+              source: 'vector',
+            });
+          }
         });
       }
     } catch (supaErr) {
@@ -314,13 +317,15 @@ export async function retrieveRelevantContext(query: string, matchCount = 5): Pr
           if (chunk.content?.includes('[FAQ]')) baseScore += 0.20;
           else if (chunk.content?.includes('[DECISION_TREE]')) baseScore += 0.15;
 
-          candidateList.push({
-            id: chunk.id || chunk._id?.toString(),
-            document_id: chunk.document_id,
-            content: chunk.content,
-            score: baseScore,
-            source: 'bm25',
-          });
+          if (baseScore >= minScoreThreshold) {
+            candidateList.push({
+              id: chunk.id || chunk._id?.toString(),
+              document_id: chunk.document_id,
+              content: chunk.content,
+              score: baseScore,
+              source: 'bm25',
+            });
+          }
         });
       }
     }
@@ -332,9 +337,16 @@ export async function retrieveRelevantContext(query: string, matchCount = 5): Pr
     return '';
   }
 
-  // 4. Sort and execute Reranker Stage based on Hierarchy Boosted Scores
-  candidateList.sort((a, b) => b.score - a.score);
-  const rerankedResults = rerankCandidates(query, candidateList, matchCount);
+  // 4. Reranking Stage
+  const { rerankCandidatesAsync } = await import('@/lib/ai/reranker');
+  candidateList.sort((a, b) => (b.score || 0) - (a.score || 0));
+  const rerankedResults = await rerankCandidatesAsync(query, candidateList, matchCount);
 
-  return rerankedResults.map(item => item.content).join('\n\n');
+  const rawJoinedText = rerankedResults.map(item => item.content).join('\n\n');
+
+  // 5. Context Compression
+  const { compressContext } = await import('@/lib/ai/context-compressor');
+  const compressed = compressContext(query, rawJoinedText);
+  return compressed.compressedText;
 }
+

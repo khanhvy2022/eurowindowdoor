@@ -1,4 +1,3 @@
-// @ts-nocheck
 'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
@@ -94,7 +93,7 @@ export function ChatLayout({ isAdmin = false }: { isAdmin?: boolean }) {
     if (e) e.preventDefault();
     
     // Determine content to send
-    const content = input.trim() || (data?.fileName ? `Đã đính kèm file: ${data?.fileName}` : '');
+    const content = (input || '').trim() || (data?.fileName ? `Đã đính kèm file: ${data?.fileName}` : '');
     if (!content) return;
     
     sendMessage(content, data?.documentId ? { documentId: data.documentId } : undefined);

@@ -61,29 +61,46 @@ export function htmlToCleanProse(html: string): { title: string; text: string } 
 export async function runCrawlPipeline(customTargets?: CrawlTarget[]): Promise<CrawlResult[]> {
   const targets = customTargets && customTargets.length > 0 ? customTargets : OFFICIAL_TARGETS;
   const results: CrawlResult[] = [];
+  const { crawl4AIClient } = await import('@/lib/ai/crawl4ai-client');
 
   for (const target of targets) {
     try {
-      console.log(`[Crawl4AI Engine] Fetching: ${target.url}...`);
-      const response = await fetch(target.url, {
-        headers: {
-          'User-Agent': 'EurowindowAI-Crawler/2.0 (+https://eurowindow.com.vn)',
-          'Accept': 'text/html,application/xhtml+xml',
-        },
-        signal: AbortSignal.timeout(10000),
-      });
+      console.log(`[Crawl4AI Engine] Processing: ${target.url}...`);
+      let title = '';
+      let text = '';
 
-      if (!response.ok) {
-        throw new Error(`HTTP Status ${response.status}`);
+      if (crawl4AIClient.isConfigured()) {
+        const c4aResult = await crawl4AIClient.crawlUrl(target.url);
+        if (c4aResult && c4aResult.success && c4aResult.markdown) {
+          title = c4aResult.metadata?.title || target.url;
+          text = c4aResult.markdown;
+        }
       }
 
-      const html = await response.text();
-      const { title, text } = htmlToCleanProse(html);
+      // Native fallback if Crawl4AI disabled or returned empty
+      if (!text) {
+        const response = await fetch(target.url, {
+          headers: {
+            'User-Agent': 'EurowindowAI-Crawler/2.0 (+https://eurowindow.com.vn)',
+            'Accept': 'text/html,application/xhtml+xml',
+          },
+          signal: AbortSignal.timeout(10000),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP Status ${response.status}`);
+        }
+
+        const html = await response.text();
+        const parsed = htmlToCleanProse(html);
+        title = parsed.title;
+        text = parsed.text;
+      }
 
       if (!text || text.length < 100) {
         results.push({
           url: target.url,
-          title,
+          title: title || target.url,
           status: 'skipped',
           error: 'Nội dung trang web quá ngắn hoặc rỗng',
         });

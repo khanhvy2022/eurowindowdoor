@@ -11,6 +11,8 @@ export interface FallbackOptions {
   preferredModel?: string; // e.g. "gemini:gemini-2.0-flash"
   tools?: Record<string, any>;
   maxSteps?: number;
+  onFinish?: (event: any) => Promise<void> | void;
+  onError?: (event: any) => Promise<void> | void;
 }
 
 interface TargetConfig {
@@ -45,28 +47,10 @@ export async function streamTextWithFallback(options: FallbackOptions) {
     }
 
     if (provider === 'gemini') {
-      // Stable production models first. A stream only exposes provider errors
-      // asynchronously, so an unavailable first model prevents this fallback
-      // loop from reaching later candidates.
-      targets.push({ provider: 'gemini', model: 'gemini-2.5-flash' });
-      targets.push({ provider: 'gemini', model: 'gemini-2.5-flash-lite' });
       targets.push({ provider: 'gemini', model: 'gemini-2.0-flash' });
-      targets.push({ provider: 'gemini', model: 'gemini-2.0-flash-lite' });
+      targets.push({ provider: 'gemini', model: 'gemini-1.5-flash' });
     } else if (provider === 'openrouter') {
-      // Use openrouter/free router which auto-selects available free models
       targets.push({ provider: 'openrouter', model: 'openrouter/auto' });
-      // Also try some specific models known to be free
-      if (task === 'coding') {
-        targets.push({ provider: 'openrouter', model: 'deepseek/deepseek-chat-v3-0324:free' });
-        targets.push({ provider: 'openrouter', model: 'google/gemma-3-27b-it:free' });
-      } else if (task === 'reasoning') {
-        targets.push({ provider: 'openrouter', model: 'deepseek/deepseek-r1-0528:free' });
-        targets.push({ provider: 'openrouter', model: 'deepseek/deepseek-chat-v3-0324:free' });
-      } else {
-        targets.push({ provider: 'openrouter', model: 'deepseek/deepseek-chat-v3-0324:free' });
-        targets.push({ provider: 'openrouter', model: 'google/gemma-3-27b-it:free' });
-        targets.push({ provider: 'openrouter', model: 'meta-llama/llama-4-scout:free' });
-      }
     } else if (provider === 'deepseek') {
       targets.push({ provider: 'deepseek', model: 'deepseek-chat' });
     } else if (provider === 'grok') {
@@ -101,6 +85,19 @@ export async function streamTextWithFallback(options: FallbackOptions) {
         maxTokens: 4000,
         tools,
         stopWhen: stepCountIs(maxSteps || 5),
+        onFinish: options.onFinish,
+        onError: (event: any) => {
+          const { error } = event;
+          console.error(`[AI Fallback System] Async Stream Error từ model ${modelId}:`, error);
+          const fs = require('fs');
+          const path = require('path');
+          const logDir = path.join(process.cwd(), 'sandbox', 'logs');
+          if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true });
+          fs.appendFileSync(path.join(logDir, 'stream_error.log'), `[${new Date().toISOString()}] ${modelId} - ${error instanceof Error ? error.stack : String(error)}\n`);
+          if (options.onError) {
+            options.onError(event);
+          }
+        },
       } as any);
 
       // Record success optimistically — stream has been initiated without sync error

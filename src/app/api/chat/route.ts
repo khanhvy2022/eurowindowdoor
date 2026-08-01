@@ -8,19 +8,19 @@ import connectToDatabase from '@/lib/db';
 import mongoose from 'mongoose';
 import { syncDatabaseToSandbox } from '@/lib/ai/sandbox';
 import { bashTool, bashBatchTool } from '@/lib/ai/tools/shell';
+
+// --- Enterprise V2 Architecture ---
+import { analyzeAndContextualize } from '@/lib/ai/v2/orchestrator';
+import { logTransaction, validateResponse } from '@/lib/ai/v2/observability';
+
+// Showroom DB
+import { showroomsData } from '@/data/showrooms';
+
+// Pricing Engine
 import { 
-  pricing, 
-  pricingEA60i, 
-  pricingKommerling, 
-  pricingAsia,
-  doorTypes,
-  doorTypesEA60i,
-  doorTypesKommerling,
-  doorTypesAsia,
-  glassTypes,
-  glassTypesEA60i,
-  glassTypesKommerling,
-  glassTypesAsia,
+  pricing, pricingEA60i, pricingKommerling, pricingAsia,
+  doorTypes, doorTypesEA60i, doorTypesKommerling, doorTypesAsia,
+  glassTypes, glassTypesEA60i, glassTypesKommerling, glassTypesAsia,
   hardwareTypes
 } from '@/app/bao-gia/pricing';
 
@@ -38,19 +38,19 @@ function withTimeout<T>(operation: Promise<T>, timeoutMs: number, label: string)
   }) as Promise<T>;
 }
 
-const SYSTEM_PROMPT = `Bạn là chuyên gia tư vấn cửa Eurowindow cao cấp. 
-Nhiệm vụ của bạn là tư vấn cho khách hàng về các dòng sản phẩm cửa của Eurowindow như cửa nhôm, cửa nhựa uPVC, cửa gỗ, vách kính lớn, và các phụ kiện đi kèm.
+const SYSTEM_PROMPT = `Bạn là chuyên gia tư vấn giải pháp cửa Eurowindow cao cấp. 
+Nhiệm vụ của bạn là tư vấn cho khách hàng về các dòng sản phẩm cửa của Eurowindow như cửa nhôm (EA55, EA60i), cửa nhựa uPVC (Kommerling, Asia), cửa gỗ, vách kính lớn, kính cản nhiệt Low-E, và các phụ kiện chính hãng đi kèm.
 
 Bạn có quyền truy cập vào các công cụ tìm kiếm tệp tin trong thư mục bảo mật sandbox/ (các file tài liệu nằm trong sandbox/files/ và tệp tin dữ liệu như blogs, projects nằm trong sandbox/data/).
 Hãy sử dụng các câu lệnh Unix (ví dụ: 'grep -rn "kính Low-E" sandbox/', 'find sandbox/ -type f', 'cat sandbox/files/file_name') bằng công cụ \`bash\` hoặc \`bash_batch\` để chủ động tìm kiếm và đọc các tài liệu chính thống của Eurowindow khi cần trả lời về thông số kỹ thuật, hệ nhôm, giá cả hay dòng sản phẩm.
 
 Các quy tắc cần tuân thủ nghiêm ngặt:
 1. LUÔN LUÔN giao tiếp một cách chuyên nghiệp, lịch sự, tôn trọng khách hàng như một nhân viên tư vấn giải pháp cao cấp của Eurowindow.
-2. Trả lời ngắn gọn, đúng trọng tâm câu hỏi của khách hàng, tuyệt đối KHÔNG viết lan man hay giả định thông tin.
-3. ĐỐI CHIẾU VÀ SỬ DỤNG CHÍNH XÁC thông tin được trích xuất từ tài liệu của công ty qua công cụ để trả lời các thông số kỹ thuật (độ dày profile, chỉ số cách âm dB, hệ phụ kiện, kính hộp, kính Low-E, v.v.).
-4. NẾU THÔNG TIN KHÔNG CÓ TRONG TÀI LIỆU HOẶC KHÔNG BẢO ĐẢM ĐỘ CHÍNH XÁC, hãy lịch sự xin lỗi khách hàng và đề xuất họ để lại số điện thoại/email để chuyên viên kỹ thuật trực tiếp liên hệ hỗ trợ. TUYỆT ĐỐI KHÔNG tự bịa đặt hay suy đoán thông số kỹ thuật hoặc chính sách bán hàng.
-5. Thường xuyên đề xuất các giải pháp hệ cửa phù hợp theo đúng tài liệu dựa trên nhu cầu của khách (ví dụ: khu vực cần cách âm/cách nhiệt cao -> tư vấn cửa nhôm cầu cách nhiệt kết hợp kính hộp).
-6. Định dạng câu trả lời rõ ràng bằng Markdown (dùng bullet points, in đậm các thuật ngữ quan trọng) để khách hàng dễ theo dõi.
+2. Trả lời ngắn gọn, đúng trọng tâm câu hỏi của khách hàng, tuyệt đối KHÔNG viết lan man hay suy đoán thông tin.
+3. ĐỐI CHIẾU VÀ SỬ DỤNG CHÍNH XÁC thông tin được trích xuất từ tài liệu của công ty trong [NGỮ CẢNH TỪ TÀI LIỆU CÔNG TY] hoặc qua công cụ sandbox để trả lời các thông số kỹ thuật (độ dày profile, chỉ số cách âm dB, hệ phụ kiện, kính hộp, kính Low-E, v.v.).
+4. QUY TẮC NGUYÊN TẮC: NẾU THÔNG TIN KHÔNG CÓ TRONG [NGỮ CẢNH TỪ TÀI LIỆU CÔNG TY] HOẶC KHÔNG BẢO ĐẢM ĐỘ CHÍNH XÁC, hãy lịch sự xin lỗi khách hàng và trả lời: "Rất tiếc, tài liệu nội bộ của Eurowindow hiện chưa có thông tin chi tiết về chủ đề này. Anh/Chị vui lòng để lại số điện thoại hoặc email để chuyên viên kỹ thuật trực tiếp liên hệ hỗ trợ." TUYỆT ĐỐI KHÔNG tự bịa đặt hay sử dụng kiến thức bên ngoài không có trong tài liệu.
+5. Thường xuyên đề xuất các giải pháp hệ cửa phù hợp theo đúng tài liệu dựa trên nhu cầu của khách (ví dụ: khu vực cần cách âm/cách nhiệt cao -> tư vấn cửa nhôm cầu cách nhiệt EA60i kết hợp kính hộp Low-E).
+6. Định dạng câu trả lời rõ ràng, tự nhiên, thân thiện. Hạn chế lạm dụng quá nhiều ký tự đặc biệt hay dấu sao (**) không cần thiết. Trình bày ngắn gọn, súc tích để khách hàng dễ đọc trên điện thoại.
 `;
 
 /**
@@ -67,31 +67,21 @@ async function extractAndSaveLead(messages: any[]) {
       if (!m) return '';
       if (typeof m.content === 'string') return m.content;
       if (Array.isArray(m.content)) {
-        return m.content.map((p: any) => {
-          if (typeof p === 'string') return p;
-          return p.text || '';
-        }).join(' ');
+        return m.content.map((p: any) => p.text || '').join(' ');
       }
       if (m.parts && Array.isArray(m.parts)) {
-        return m.parts.map((p: any) => {
-          if (typeof p === 'string') return p;
-          return p.text || '';
-        }).join(' ');
+        return m.parts.map((p: any) => p.text || '').join(' ');
       }
       return '';
     }).join('\n');
 
-    // Regex phát hiện số điện thoại tại Việt Nam (chấp nhận khoảng trắng, dấu chấm, dấu gạch ngang)
-    // Bắt đầu bằng 0 hoặc +84, sau đó là 3, 5, 7, 8, 9 và các chữ số tiếp theo
     const phoneRegex = /(?:\+84|0)\s*[35789]\d(?:\s*[\s\.\-]?\s*\d){7}\b/g;
     const phoneMatches = combinedText.match(phoneRegex);
 
     if (phoneMatches && phoneMatches.length > 0) {
-      // Làm sạch số điện thoại bằng cách loại bỏ các khoảng trắng và dấu ngăn cách
       const rawPhone = phoneMatches[0];
       const phoneNumber = rawPhone.replace(/[^\d\+]/g, '');
 
-      // Tìm tên có thể có của khách hàng dựa trên các cấu trúc thông thường
       const nameRegex = /(?:tên\s+(?:tôi|em|mình)\s+là|tên\s+là|tôi\s+là|gọi\s+tôi\s+là|xưng\s+hô\s+là|anh|chị)\s+([A-ZÀ-ỹ][a-zà-ỹ]*(\s+[A-ZÀ-ỹ][a-zà-ỹ]*){0,3})/i;
       const nameMatch = combinedText.match(nameRegex);
       let customerName = '';
@@ -99,7 +89,6 @@ async function extractAndSaveLead(messages: any[]) {
         customerName = nameMatch[1].trim();
       }
 
-      // Tìm địa chỉ
       const addressKeywords = ['địa chỉ', 'ở', 'tại', 'giao tới', 'giao qua', 'quận', 'huyện', 'tỉnh', 'thành phố', 'số nhà'];
       let address = '';
       const addressRegex = /(?:địa\s+chỉ\s+(?:là|ở|tại)|ở\s+tại|ở|giao\s+(?:tới|qua))\s+([^,\.\n\?]+(?:,\s*[^,\.\n\?]+)*)/i;
@@ -117,26 +106,27 @@ async function extractAndSaveLead(messages: any[]) {
         }
       }
 
-      // Lưu/Cập nhật thông tin khách hàng vào MongoDB
       await connectToDatabase();
       const db = mongoose.connection.db;
-      await db.collection('leads').updateOne(
-        { phone: phoneNumber },
-        {
-          $set: {
-            phone: phoneNumber,
-            name: customerName || undefined,
-            address: address || undefined,
-            rawText: combinedText,
-            updatedAt: new Date()
+      if (db) {
+        await db.collection('leads').updateOne(
+          { phone: phoneNumber },
+          {
+            $set: {
+              phone: phoneNumber,
+              name: customerName || undefined,
+              address: address || undefined,
+              rawText: combinedText,
+              updatedAt: new Date()
+            },
+            $setOnInsert: {
+              createdAt: new Date()
+            }
           },
-          $setOnInsert: {
-            createdAt: new Date()
-          }
-        },
-        { upsert: true }
-      );
-      console.log(`[Lead Capture] Saved lead: Phone=${phoneNumber}, Name=${customerName}, Address=${address}`);
+          { upsert: true }
+        );
+        console.log(`[Lead Capture] Saved lead: Phone=${phoneNumber}, Name=${customerName}, Address=${address}`);
+      }
     }
   } catch (err) {
     console.error('[Lead Capture Error]', err);
@@ -144,54 +134,22 @@ async function extractAndSaveLead(messages: any[]) {
 }
 
 export async function POST(req: Request) {
+  const startTime = Date.now();
+
   try {
     const { messages, data, documentId: bodyDocumentId, model: chosenModel } = await req.json();
 
-    // Đồng bộ tài liệu sang sandbox (chỉ chạy ở môi trường phát triển/local để tránh lỗi hệ thống file trên Vercel)
     if (process.env.NODE_ENV === 'development' || !process.env.VERCEL) {
       syncDatabaseToSandbox().catch(err => console.error('[Sandbox Sync Error]', err));
     }
 
-    // Thu thập lead nếu khách hàng để lại thông tin (dùng await để đảm bảo lưu thành công trên Serverless)
-    await extractAndSaveLead(messages).catch(err => console.error('[API Lead Error]', err));
+    // Run lead extraction asynchronously in background without blocking response stream
+    extractAndSaveLead(messages).catch(err => console.error('[API Lead Error]', err));
 
-    // Lấy tin nhắn cuối cùng của người dùng để search context
     const latestMessage = messages[messages.length - 1];
-    let context = '';
-    let targetFileName = '';
-
-    // Try to get document context from request
-    const documentId = bodyDocumentId || (Array.isArray(data) ? data[0]?.documentId : data?.documentId);
-
-    // 1. If a specific document is requested, load it
-    if (documentId) {
-      // Get specific document by ID
-      const doc = getDocument(documentId);
-      if (doc) {
-        context = doc.content;
-        targetFileName = doc.fileName;
-      } else {
-        // Fallback to MongoDB for specific document content
-        try {
-          await connectToDatabase();
-      const db = mongoose.connection.db;
-          const mongoDoc = await db.collection('documents').findOne({ id: documentId });
-          if (mongoDoc) {
-            targetFileName = mongoDoc.file_name;
-            const chunks = await db.collection('document_chunks')
-              .find({ document_id: documentId })
-              .toArray();
-            if (chunks && chunks.length > 0) {
-              context = chunks.map((c: any) => c.content).join('\n\n');
-            }
-          }
-        } catch (dbErr) {
-          console.error('Error fetching specific document from MongoDB fallback:', dbErr);
-        }
-      }
-    } else if (latestMessage) {
-      // 2. General Chat Mode: Always use semantic/keyword RAG search across ALL documents
-      let searchContent = '';
+    let searchContent = '';
+    
+    if (latestMessage) {
       if (latestMessage.parts) {
         searchContent = latestMessage.parts
           .filter((p: any) => p.type === 'text')
@@ -200,57 +158,57 @@ export async function POST(req: Request) {
       } else if (typeof latestMessage.content === 'string') {
         searchContent = latestMessage.content;
       }
+    }
 
-      // RAG is optional for the public chat. It can involve external embedding
-      // and database requests, which must not consume the serverless response
-      // window before the model has a chance to answer.
-      if (searchContent && process.env.ENABLE_CHAT_RAG !== 'false') {
+    // 1. Context & Intent Orchestration
+    const { intent, contextualizedQuery } = await analyzeAndContextualize(messages, searchContent);
+
+    // 2. Gateway Router Logic
+    let context = '';
+    let targetFileName = '';
+    let responseSource = 'LLM';
+    let retrievalHits = 0;
+
+    const documentId = bodyDocumentId || (Array.isArray(data) ? data[0]?.documentId : data?.documentId);
+
+    // If explicit document provided, override routing to use that document
+    if (documentId) {
+      const doc = getDocument(documentId);
+      if (doc) {
+        context = doc.content;
+        targetFileName = doc.fileName;
+        responseSource = 'DocumentStore';
+        retrievalHits = 1;
+      } else {
         try {
-          const { retrieveRelevantContext } = await import('@/lib/rag');
-          // Retrieval is supplementary. Do not let a slow embedding, Supabase,
-          // or MongoDB request prevent the chatbot from answering.
-          context = await withTimeout(
-            retrieveRelevantContext(searchContent, 5),
-            4_000,
-            'Knowledge retrieval'
-          );
-        } catch (ragError) {
-          console.log('RAG search failed:', (ragError as Error).message);
+          await connectToDatabase();
+          const db = mongoose.connection.db;
+          if (db) {
+            const mongoDoc = await db.collection('documents').findOne({ id: documentId });
+            if (mongoDoc) {
+              targetFileName = mongoDoc.file_name;
+              const chunks = await db.collection('document_chunks')
+                .find({ document_id: documentId })
+                .toArray();
+              if (chunks && chunks.length > 0) {
+                context = chunks.map((c: any) => c.content).join('\n\n');
+                responseSource = 'MongoDBStore';
+                retrievalHits = chunks.length;
+              }
+            }
+          }
+        } catch (dbErr) {
+          console.error('Error fetching specific document from MongoDB fallback:', dbErr);
         }
       }
-    }
-    
-    // Tự động phát hiện yêu cầu báo giá để nạp ngữ cảnh bảng giá từ mã nguồn dự án
-    let isPricingRequest = false;
-    if (latestMessage) {
-      let contentStr = '';
-      if (typeof latestMessage.content === 'string') {
-        contentStr = latestMessage.content;
-      } else if (Array.isArray(latestMessage.content)) {
-        contentStr = latestMessage.content.map((p: any) => p.text || '').join(' ');
-      } else if (latestMessage.parts) {
-        contentStr = latestMessage.parts.map((p: any) => p.text || '').join(' ');
-      }
-      
-      const cleanContent = contentStr.toLowerCase();
-      // Nhận diện rộng các từ khóa liên quan đến giá, báo giá, tiền, chi phí, hoặc các phép tính
-      const pricingKeywords = [
-        'giá', 'gia', 'báo', 'bao', 'phí', 'phi', 'tiền', 'tien', 
-        'đơn', 'don', 'tính', 'tinh', 'nhiêu', 'nhieu', 'tổng', 'tong',
-        'bao nhiêu', 'bao nhieu', 'hết bao', 'het bao', 'bao nhiêu tiền', 'bao nhieu tien'
-      ];
-      if (
-        pricingKeywords.some(kw => cleanContent.includes(kw)) ||
-        cleanContent.includes('đơn giá') ||
-        cleanContent.includes('tính giá') ||
-        cleanContent.includes('giá cả')
-      ) {
-        isPricingRequest = true;
-      }
-    }
-
-    if (isPricingRequest) {
-      try {
+    } else {
+      // Execute the 5-branch router logic based on Intent
+      if (intent === 'showroom') {
+        context = `[DANH SÁCH SHOWROOM EUROWINDOW]\n${JSON.stringify(showroomsData, null, 2)}`;
+        responseSource = 'ShowroomDB';
+        retrievalHits = showroomsData.length;
+      } 
+      else if (intent === 'quote') {
         const pricingGuide = `
 [TÀI LIỆU HƯỚNG DẪN TÍNH BÁO GIÁ SƠ BỘ]
 - Diện tích cửa (m2) = Chiều rộng (m) * Chiều cao (m)
@@ -258,62 +216,53 @@ export async function POST(req: Request) {
 - Thành tiền 1 bộ cửa = Diện tích cửa tính giá * (Đơn giá cửa cơ bản/m2 + Đơn giá kính phụ trội/m2 + Đơn giá phụ kiện cửa/m2)
 - Tổng chi phí = Thành tiền 1 bộ * Số lượng bộ
 
-[BẢNG TRA CỨU TỪ ĐỒNG NGHĨA & TÊN GỌI KHÁCH HÀNG (Sử dụng bảng này để khớp từ khóa viết sai chính tả, viết tắt hoặc ngôn từ tự nhiên của khách hàng sang Mã Khóa gốc)]
-- Các loại cửa Hệ nhôm EA55:
-${JSON.stringify(doorTypes, null, 2)}
+[BẢNG TRA CỨU TỪ ĐỒNG NGHĨA & TÊN GỌI KHÁCH HÀNG]
+- Các loại cửa Hệ nhôm EA55: ${JSON.stringify(doorTypes, null, 2)}
+- Các loại cửa Hệ nhôm EA60i: ${JSON.stringify(doorTypesEA60i, null, 2)}
+- Các loại cửa Hệ nhựa Kommerling: ${JSON.stringify(doorTypesKommerling, null, 2)}
+- Các loại cửa Hệ nhựa Asia: ${JSON.stringify(doorTypesAsia, null, 2)}
 
-- Các loại cửa Hệ nhôm EA60i:
-${JSON.stringify(doorTypesEA60i, null, 2)}
-
-- Các loại cửa Hệ nhựa Kommerling:
-${JSON.stringify(doorTypesKommerling, null, 2)}
-
-- Các loại cửa Hệ nhựa Asia:
-${JSON.stringify(doorTypesAsia, null, 2)}
-
-- Phân loại kính Hệ nhôm EA55:
-${JSON.stringify(glassTypes, null, 2)}
-
-- Phân loại kính Hệ nhôm EA60i:
-${JSON.stringify(glassTypesEA60i, null, 2)}
-
-- Phân loại kính Hệ nhựa Kommerling:
-${JSON.stringify(glassTypesKommerling, null, 2)}
-
-- Phân loại kính Hệ nhựa Asia:
-${JSON.stringify(glassTypesAsia, null, 2)}
-
-- Các hãng phụ kiện đi kèm:
-${JSON.stringify(hardwareTypes, null, 2)}
-
-[BẢNG GIÁ VÀ HỆ CỬA EUROWINDOW CHI TIẾT (Đơn giá cơ bản và phụ trội để tính toán)]
-- Bảng giá Hệ nhôm EA55 (nhôm không cầu cách nhiệt):
-${JSON.stringify(pricing, null, 2)}
-
-- Bảng giá Hệ nhôm EA60i (nhôm có cầu cách nhiệt cao cấp):
-${JSON.stringify(pricingEA60i, null, 2)}
-
-- Bảng giá Hệ nhựa Kommerling uPVC (nhựa châu Âu cao cấp):
-${JSON.stringify(pricingKommerling, null, 2)}
-
-- Bảng giá Hệ nhựa Asia uPVC (nhựa kinh tế):
-${JSON.stringify(pricingAsia, null, 2)}
+[BẢNG GIÁ VÀ HỆ CỬA EUROWINDOW CHI TIẾT]
+- Bảng giá Hệ nhôm EA55 (nhôm không cầu cách nhiệt): ${JSON.stringify(pricing, null, 2)}
+- Bảng giá Hệ nhôm EA60i (nhôm có cầu cách nhiệt cao cấp): ${JSON.stringify(pricingEA60i, null, 2)}
+- Bảng giá Hệ nhựa Kommerling uPVC: ${JSON.stringify(pricingKommerling, null, 2)}
+- Bảng giá Hệ nhựa Asia uPVC: ${JSON.stringify(pricingAsia, null, 2)}
 `;
-        context = pricingGuide + "\n\n" + context;
-      } catch (err) {
-        console.error('Error injecting pricing data to context:', err);
+        context = pricingGuide;
+        responseSource = 'PricingEngine';
+        retrievalHits = 1;
+      } 
+      else if (intent === 'technical' || intent === 'warranty' || intent === 'company_info') {
+        if (process.env.ENABLE_CHAT_RAG !== 'false') {
+          try {
+            const { retrieveRelevantContext } = await import('@/lib/rag');
+            // Timeout safely for Serverless execution
+            context = await withTimeout(
+              retrieveRelevantContext(contextualizedQuery, 5),
+              6_000,
+              'Knowledge retrieval'
+            );
+            responseSource = 'HybridGraphRAG';
+            retrievalHits = context ? 1 : 0;
+          } catch (ragError) {
+            console.log('RAG search timeout/failed:', (ragError as Error).message);
+          }
+        }
+      } 
+      else {
+        // intent === 'general'
+        responseSource = 'GeneralLLM';
+        retrievalHits = 0;
       }
     }
 
-    // 3. Absolute Fallback: If still no context found, load the latest uploaded document
-    if (!context) {
+    if (!context && !documentId && (intent === 'technical' || intent === 'warranty')) {
       const latestDoc = getLatestDocument();
       if (latestDoc) {
         context = latestDoc.content;
       }
     }
 
-    // Tối ưu hóa độ dài của context
     context = optimizeDocumentContext(context, 25000);
 
     let systemPromptWithContext = context 
@@ -325,7 +274,6 @@ ${JSON.stringify(pricingAsia, null, 2)}
       systemPromptWithContext += `\n\n[YÊU CẦU QUAN TRỌNG]\nNgười dùng đã chỉ định tài liệu cụ thể: "${targetFileName}". Bạn CHỈ được tìm kiếm và truy vấn thông tin trong tệp tin "sandbox/files/${sanitizedName}". TUYỆT ĐỐI KHÔNG được sử dụng các công cụ tìm kiếm trên các tệp tin khác.`;
     }
 
-    // Convert UI messages (with parts) to model messages for streamText
     const modelMessages = [];
     for (const msg of messages) {
       if (msg.parts) {
@@ -341,13 +289,9 @@ ${JSON.stringify(pricingAsia, null, 2)}
       }
     }
 
-    // Tối ưu hóa chuỗi hội thoại (history truncation & local summary)
     const optimizedMessages = optimizeMessages(modelMessages);
-
-    // Xác định loại tác vụ tự động
     const task = classifyTask(optimizedMessages);
 
-    // Xây dựng chuỗi ưu tiên nhà cung cấp
     let sequence: ProviderName[] = [];
     if (chosenModel && chosenModel !== 'auto') {
       const primaryProvider = chosenModel.split(':')[0] as ProviderName;
@@ -356,7 +300,7 @@ ${JSON.stringify(pricingAsia, null, 2)}
       sequence = getRoutingSequence(task);
     }
 
-    // Thực thi streaming với cơ chế tự động chuyển đổi fallback
+    // 3. Response Generation with Context Guard & Observability Logging
     const { result, provider, modelName, fallbackTriggered } = await streamTextWithFallback({
       sequence,
       task,
@@ -369,6 +313,54 @@ ${JSON.stringify(pricingAsia, null, 2)}
         bash_batch: bashBatchTool,
       },
       maxSteps: 5,
+      onFinish: async (event) => {
+        const latencyMs = Date.now() - startTime;
+        
+        // Context Guard & Response Validator
+        await validateResponse(event.text, intent);
+        
+        // Observability 
+        await logTransaction({
+          sessionId: 'session-' + Date.now(), // Real app would pull from req or context
+          user_question: searchContent,
+          intent,
+          selected_route: intent, // Map branch
+          retrieval_hits: retrievalHits,
+          prompt_sent_to_llm: systemPromptWithContext,
+          llm_raw_response: event.text,
+          fallback_used: fallbackTriggered,
+          fallback_reason: fallbackTriggered ? 'Multi-provider fallback triggered during streamText' : undefined,
+          response_source: responseSource,
+          latencyMs,
+          promptTokens: event.usage?.promptTokens || 0,
+          completionTokens: event.usage?.completionTokens || 0,
+          totalTokens: event.usage?.totalTokens || 0,
+          model: modelName,
+          provider: provider
+        });
+      },
+      onError: async (event) => {
+        const latencyMs = Date.now() - startTime;
+        console.error('[Route] Async stream failed, logging observability...', event.error);
+        await logTransaction({
+          sessionId: 'session-' + Date.now(),
+          user_question: searchContent,
+          intent,
+          selected_route: intent,
+          retrieval_hits: retrievalHits,
+          prompt_sent_to_llm: systemPromptWithContext,
+          llm_raw_response: `[Stream Error] ${String(event.error)}`,
+          fallback_used: fallbackTriggered,
+          fallback_reason: 'Stream failed asynchronously',
+          response_source: responseSource,
+          latencyMs,
+          promptTokens: 0,
+          completionTokens: 0,
+          totalTokens: 0,
+          model: modelName,
+          provider: provider
+        });
+      }
     });
 
     return result.toUIMessageStreamResponse({
@@ -376,31 +368,43 @@ ${JSON.stringify(pricingAsia, null, 2)}
         'X-AI-Provider': provider,
         'X-AI-Model': modelName,
         'X-AI-Fallback-Triggered': fallbackTriggered ? 'true' : 'false',
+        'X-AI-Intent': intent
       },
     });
   } catch (error: any) {
     console.error('Error in chat API, invoking friendly fallback response:', error);
     
-    // Khi toàn bộ AI providers đều quá tải hoặc hết quota, trả về tin nhắn thân thiện
-    // theo đúng giao thức AI SDK v7 UI Message Stream (SSE format)
+    // Log fatal fallback
+    await logTransaction({
+      sessionId: 'session-' + Date.now(),
+      user_question: "Unknown/Crash",
+      intent: 'general', // Default fallback intent
+      selected_route: 'crash',
+      retrieval_hits: 0,
+      prompt_sent_to_llm: '',
+      llm_raw_response: '',
+      fallback_used: true,
+      fallback_reason: `API Route Crash: ${error.message}`,
+      response_source: 'HardcodedFallback',
+      latencyMs: Date.now() - startTime,
+      promptTokens: 0,
+      completionTokens: 0,
+      totalTokens: 0,
+      model: 'error',
+      provider: 'error'
+    });
+    
+    // Friendly fallback
     const friendlyMessage = "Hiện tại trợ lý đang bận không thể trả lời tin nhắn của quý khách ngay được, quý khách có thể liên hệ lại tôi sau hoặc liên hệ qua Zalo, gọi điện tới Mr. Thắng để được tư vấn thêm.";
     const textEncoder = new TextEncoder();
     
-    const partId = `text-fallback-${Date.now()}`;
-    const sseData = [
-      `data: ${JSON.stringify({ type: 'text-start', id: partId })}\n\n`,
-      `data: ${JSON.stringify({ type: 'text-delta', id: partId, delta: friendlyMessage })}\n\n`,
-      `data: ${JSON.stringify({ type: 'text-end', id: partId })}\n\n`,
-      `data: ${JSON.stringify({ type: 'finish', finishReason: 'stop' })}\n\n`,
-      `data: [DONE]\n\n`,
-    ].join('');
+    // Gửi phản hồi theo đúng giao thức AI SDK (tiền tố 0: biểu diễn text chunk)
+    const formattedProtocolMsg = `0:${JSON.stringify(friendlyMessage)}\n`;
     
-    return new Response(textEncoder.encode(sseData), {
+    return new Response(textEncoder.encode(formattedProtocolMsg), {
       status: 200,
       headers: {
-        'Content-Type': 'text/event-stream; charset=utf-8',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
+        'Content-Type': 'text/plain; charset=utf-8',
         'X-AI-Provider': 'fallback-error-handler',
         'X-AI-Model': 'friendly-fallback-msg',
         'X-AI-Fallback-Triggered': 'true'
@@ -408,4 +412,3 @@ ${JSON.stringify(pricingAsia, null, 2)}
     });
   }
 }
-

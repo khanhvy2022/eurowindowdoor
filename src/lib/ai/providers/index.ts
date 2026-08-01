@@ -14,8 +14,8 @@ export interface ProviderModelConfig {
 // Default models mapped for each provider
 export const DEFAULT_MODELS: Record<ProviderName, string> = {
   grok: 'grok-2-1212',
-  gemini: 'gemini-3.5-flash',
-  openrouter: 'deepseek/deepseek-chat-v3-0324:free',
+  gemini: 'gemini-2.0-flash',
+  openrouter: 'openrouter/auto',
   deepseek: 'deepseek-chat',
 };
 

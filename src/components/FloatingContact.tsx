@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { submitToGoogleForms } from '@/utils/googleForms';
 import { useAiChat } from '@/hooks/use-ai-chat';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const PhoneIcon = () => (
   <svg viewBox="0 0 24 24" fill="white" className="w-6 h-6">
@@ -37,6 +39,8 @@ export const FloatingContact: React.FC = () => {
     setInput,
     isLoading,
     sendMessage,
+    error,
+    handleRetry,
   } = useAiChat({
     selectedModel: 'auto',
   });
@@ -180,10 +184,10 @@ export const FloatingContact: React.FC = () => {
       {/* ── Consultation & Chatbot Modal ── */}
       {modalOpen && (
         <div
-          className="fixed inset-0 z-[60] bg-slate-950/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4"
+          className="fixed inset-0 z-[60] bg-slate-950/60 backdrop-blur-sm flex flex-col justify-end sm:justify-center sm:items-center p-0 sm:p-4"
           onClick={(e) => { if (e.target === e.currentTarget) setModalOpen(false); }}
         >
-          <div className="modal-in bg-white w-full sm:max-w-xl h-[85vh] sm:h-[650px] sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden flex flex-col">
+          <div className="modal-in bg-white w-full sm:max-w-xl h-[92dvh] max-h-[92vh] sm:h-[650px] sm:max-h-[85vh] sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden flex flex-col transition-all">
 
             {/* Header */}
             <div className="relative px-6 pt-5 pb-4 text-white flex-shrink-0" style={{ background: 'linear-gradient(135deg,#005ba7 0%,#1a6fd8 100%)' }}>
@@ -299,13 +303,17 @@ export const FloatingContact: React.FC = () => {
                           </div>
                         )}
                         <div
-                          className={`p-3.5 rounded-2xl max-w-[85%] whitespace-pre-wrap ${
+                          className={`p-3.5 rounded-2xl max-w-[85%] ${
                             msg.role === 'user'
-                              ? 'bg-[#005ba7] text-white rounded-tr-none shadow-md font-medium'
-                              : 'bg-white text-slate-800 rounded-tl-none border border-slate-200/80 shadow-sm'
+                              ? 'bg-[#005ba7] text-white rounded-tr-none shadow-md font-medium whitespace-pre-wrap'
+                              : 'bg-white text-slate-800 rounded-tl-none border border-slate-200/80 shadow-sm prose prose-xs max-w-none prose-p:leading-relaxed prose-strong:text-[#005ba7]'
                           }`}
                         >
-                          {text}
+                          {msg.role === 'user' ? (
+                            text
+                          ) : (
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
+                          )}
                         </div>
                       </div>
                     );
@@ -315,6 +323,18 @@ export const FloatingContact: React.FC = () => {
                     <div className="flex items-center text-slate-400 italic text-xs pl-9" aria-label="Đang trả lời">
                       <span className="w-2 h-2 bg-[#005ba7] rounded-full animate-ping" />
                       <span className="ml-1.5">...</span>
+                    </div>
+                  )}
+
+                  {error && (
+                    <div className="p-3 my-2 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 flex items-center justify-between">
+                      <span>Có lỗi kết nối hệ thống. Vui lòng thử lại.</span>
+                      <button
+                        onClick={handleRetry}
+                        className="px-2.5 py-1 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 text-[11px]"
+                      >
+                        Thử lại
+                      </button>
                     </div>
                   )}
 
@@ -338,7 +358,7 @@ export const FloatingContact: React.FC = () => {
                   />
                   <button
                     onClick={() => handleSendAiMessage()}
-                    disabled={isLoading || !input.trim()}
+                    disabled={isLoading || !(input || '').trim()}
                     className="px-4 py-2.5 bg-[#005ba7] hover:bg-[#004077] disabled:opacity-40 text-white text-xs font-bold rounded-full transition-all flex items-center gap-1 shrink-0"
                   >
                     <span>Gửi</span>

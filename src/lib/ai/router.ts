@@ -52,8 +52,7 @@ export function classifyTask(messages: any[]): 'coding' | 'reasoning' | 'general
  * Returns the preferred provider sequence based on the task classification.
  */
 export function getRoutingSequence(task: 'coding' | 'reasoning' | 'general'): ProviderName[] {
-  // Ưu tiên Gemini (3.x models hoạt động tốt), OpenRouter làm dự phòng
-  return ['gemini', 'openrouter', 'deepseek', 'grok'];
+  return ['openrouter', 'gemini', 'deepseek', 'grok'];
 }
 
 /**
@@ -89,10 +88,8 @@ export function optimizeMessages(messages: any[]): any[] {
   // If we have 10 or fewer messages, return them as is
   if (optimized.length <= 10) return optimized;
 
-  // 2. Truncate & Summarize old messages locally to save tokens
-  // Keep the system prompt if present, or any initial message
-  // And keep the last 6 messages of history (highly optimized for speed and token conservation)
-  const keepCount = 6;
+  // Keep the last 10 messages intact to preserve multi-turn context and entity references
+  const keepCount = 10;
   const systemMessages = optimized.filter(msg => msg.role === 'system');
   const nonSystemMessages = optimized.filter(msg => msg.role !== 'system');
 
@@ -103,9 +100,8 @@ export function optimizeMessages(messages: any[]): any[] {
   const oldMessages = nonSystemMessages.slice(0, nonSystemMessages.length - keepCount);
   const recentMessages = nonSystemMessages.slice(nonSystemMessages.length - keepCount);
 
-  // Locally summarize/compress the old messages into a single system instruction
-  // to preserve context while using minimal tokens
-  let summaryText = '[Hội thoại trước đó được tóm tắt để tối ưu hiệu suất:\n';
+  // Preserve key context points from older turns
+  let summaryText = '[Bối cảnh hội thoại trước đó:\n';
   oldMessages.forEach(msg => {
     let msgText = '';
     if (typeof msg.content === 'string') {
@@ -114,9 +110,9 @@ export function optimizeMessages(messages: any[]): any[] {
       msgText = msg.content.map((p: any) => p.text || '').join('');
     }
     
-    // Truncate message content to 60 characters for summary outline
-    const truncatedMsg = msgText.length > 60 ? `${msgText.slice(0, 60)}...` : msgText;
-    summaryText += `- ${msg.role === 'user' ? 'Khách' : 'AI'}: ${truncatedMsg}\n`;
+    // Retain up to 250 characters per older turn to preserve technical specs & product names
+    const truncatedMsg = msgText.length > 250 ? `${msgText.slice(0, 250)}...` : msgText;
+    summaryText += `- ${msg.role === 'user' ? 'Khách' : 'Trợ lý'}: ${truncatedMsg}\n`;
   });
   summaryText += ']';
 
