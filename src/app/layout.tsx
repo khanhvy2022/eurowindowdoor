@@ -3,6 +3,7 @@ import Script from 'next/script';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { LanguageProvider } from '@/context/LanguageContext';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 const jakarta = Plus_Jakarta_Sans({ 
   subsets: ['latin', 'vietnamese'],
   display: 'swap',
@@ -213,6 +214,7 @@ export default function RootLayout({
         <LanguageProvider>
           {children}
         </LanguageProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
