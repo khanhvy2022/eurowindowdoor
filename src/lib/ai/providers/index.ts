@@ -13,7 +13,7 @@ export interface ProviderModelConfig {
 
 // Default models mapped for each provider
 export const DEFAULT_MODELS: Record<ProviderName, string> = {
-  gemini: 'gemini-flash-latest',
+  gemini: 'gemini-flash-lite-latest',
   openrouter: 'openrouter/auto',
   groq: 'llama-3.3-70b-versatile',
   cloudflare: '@cf/meta/llama-3.3-70b-instruct-fp8-fast',

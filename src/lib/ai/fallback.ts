@@ -41,8 +41,8 @@ export async function streamTextWithFallback(options: FallbackOptions) {
     }
 
     if (provider === 'gemini') {
+      targets.push({ provider: 'gemini', model: 'gemini-flash-lite-latest' });
       targets.push({ provider: 'gemini', model: 'gemini-flash-latest' });
-      targets.push({ provider: 'gemini', model: 'gemini-2.0-flash-lite' });
     } else if (provider === 'groq') {
       targets.push({ provider: 'groq', model: 'llama-3.3-70b-versatile' });
       targets.push({ provider: 'groq', model: 'mixtral-8x7b-32768' });
