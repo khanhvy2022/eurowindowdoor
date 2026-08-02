@@ -1,6 +1,7 @@
 import { generateObject } from 'ai';
 import { z } from 'zod';
 import { getProviderModel } from '../providers';
+import { resolveDynamicGeminiModel } from '../gemini-discovery';
 
 export type UserIntent = 'showroom' | 'technical' | 'quote' | 'warranty' | 'general' | 'company_info';
 
@@ -86,9 +87,11 @@ CÂU HỎI CUỐI:
 "${latestQuery}"
 `;
 
-    // Timeout intent classification at 1200ms to guarantee zero delay for streaming
+    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY || '';
+    const dynamicModel = await resolveDynamicGeminiModel(apiKey);
+
     const classifyPromise = generateObject({
-      model: getProviderModel('gemini', 'gemini-2.0-flash'),
+      model: getProviderModel('gemini', dynamicModel),
       schema: z.object({
         intent: z.enum(['showroom', 'technical', 'quote', 'warranty', 'company_info', 'general']),
         contextualizedQuery: z.string().describe('Câu hỏi đã được bổ sung ngữ cảnh'),
