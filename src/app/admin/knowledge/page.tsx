@@ -181,6 +181,12 @@ export default function AdminKnowledgeCompilerPage() {
           <span className={`px-3 py-1 rounded-full text-xs font-bold ${compilerEnabled ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}`}>
             {compilerEnabled ? '● Compiler Active' : '○ Compiler Disabled'}
           </span>
+          <a
+            href="/admin/knowledge/debug"
+            className="px-3.5 py-2 bg-blue-600 text-white text-xs font-bold rounded-lg hover:bg-blue-700 shadow-xs flex items-center gap-1.5"
+          >
+            📊 Debug Retrieval & Router
+          </a>
           <button
             onClick={fetchPacks}
             className="px-3.5 py-2 bg-white border border-gray-300 text-gray-700 text-xs font-bold rounded-lg hover:bg-gray-50 shadow-xs"

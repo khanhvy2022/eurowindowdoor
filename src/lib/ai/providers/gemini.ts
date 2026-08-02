@@ -1,7 +1,8 @@
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
+import { keyPool } from '../key-pool';
 
 export function getGeminiProvider() {
-  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+  const apiKey = keyPool.getKey('gemini');
   if (!apiKey) return null;
   return createGoogleGenerativeAI({ apiKey });
 }

@@ -1,7 +1,8 @@
 import { createOpenAI } from '@ai-sdk/openai';
+import { keyPool } from '../key-pool';
 
 export function getOpenRouterProvider() {
-  const apiKey = process.env.OPENROUTER_API_KEY;
+  const apiKey = keyPool.getKey('openrouter');
   if (!apiKey) return null;
   return createOpenAI({
     apiKey,

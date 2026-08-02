@@ -235,15 +235,32 @@ export async function POST(req: Request) {
       else if (intent === 'technical' || intent === 'warranty' || intent === 'company_info') {
         if (process.env.ENABLE_CHAT_RAG !== 'false') {
           try {
-            const { retrieveRelevantContext } = await import('@/lib/rag');
-            // Timeout safely for fast execution (2s max)
-            context = await withTimeout(
-              retrieveRelevantContext(contextualizedQuery, 5),
-              2_000,
+            const { retrieveRelevantContextWithDetails } = await import('@/lib/rag');
+            const details = await withTimeout(
+              retrieveRelevantContextWithDetails(contextualizedQuery, 8),
+              3_000,
               'Knowledge retrieval'
             );
-            responseSource = 'HybridGraphRAG';
-            retrievalHits = context ? 1 : 0;
+            context = details.compressedText;
+            responseSource = 'EnterpriseHybridRAG';
+            retrievalHits = details.top8Candidates.length;
+
+            // Save last debug info for Admin Debug Instrumentation
+            (globalThis as any).lastRagDebugInfo = {
+              timestamp: new Date().toISOString(),
+              query: searchContent,
+              contextualizedQuery,
+              intent,
+              confidenceScore: details.confidenceScore,
+              isLowConfidence: details.isLowConfidence,
+              expandedQueries: details.expandedQueries,
+              top20Candidates: details.top20Candidates,
+              top8Candidates: details.top8Candidates,
+            };
+
+            if (details.isLowConfidence && !context) {
+              context = '[CẢNH BÁO KHÔNG ĐỦ DỮ LIỆU]: Không tìm thấy đoạn tài liệu nào đạt độ tin cậy >= 0.75.';
+            }
           } catch (ragError) {
             console.log('RAG search timeout/failed:', (ragError as Error).message);
           }

@@ -22,6 +22,47 @@ export function chunkText(text: string, chunkSize = 800, overlap = 100): string[
 }
 
 /**
+ * Enterprise Query Expansion Engine
+ */
+export function expandQuery(query: string): string[] {
+  const clean = (query || '').toLowerCase().trim();
+  const terms = new Set<string>([clean]);
+
+  if (clean.includes('cửa gỗ') || clean.includes('gỗ')) {
+    terms.add('cửa gỗ công nghiệp');
+    terms.add('cửa gỗ HDF');
+    terms.add('cửa gỗ MDF');
+    terms.add('wood door');
+    terms.add('catalogue cửa gỗ');
+  }
+  if (clean.includes('nhôm') || clean.includes('ea55') || clean.includes('ea60i')) {
+    terms.add('cửa nhôm EA55');
+    terms.add('cửa nhôm EA60i');
+    terms.add('cầu cách nhiệt');
+    terms.add('profile nhôm');
+  }
+  if (clean.includes('nhựa') || clean.includes('upvc') || clean.includes('kommerling') || clean.includes('asia')) {
+    terms.add('cửa nhựa uPVC');
+    terms.add('Kommerling');
+    terms.add('Asia');
+    terms.add('cửa nhựa lõi thép');
+  }
+  if (clean.includes('kính') || clean.includes('low-e')) {
+    terms.add('kính Low-E');
+    terms.add('kính hộp');
+    terms.add('kính dán an toàn');
+    terms.add('kính cường lực');
+  }
+  if (clean.includes('giá') || clean.includes('báo giá')) {
+    terms.add('bảng giá');
+    terms.add('đơn giá m2');
+    terms.add('chi phí cửa');
+  }
+
+  return Array.from(terms);
+}
+
+/**
  * Siêu Tốc: Tạo embeddings song song cho các chunks (Không chờ vô lý, tự động retry khi gặp Rate Limit)
  */
 async function generateEmbeddings(chunks: string[]): Promise<number[][]> {
@@ -68,7 +109,6 @@ async function generateEmbeddings(chunks: string[]): Promise<number[][]> {
  * Xử Lý Nạp Siêu Tốc & Tự Động Khử Trùng Lặp 100% (Deduplication & Fast Ingestion Engine)
  */
 export async function processAndStoreDocument(fileName: string, text: string) {
-  // 1. Làm sạch văn bản & Khóa chống trùng (SHA256 Hash)
   const ytPlaceholder = "###OFFICIAL_YOUTUBE###";
   let cleanText = text.replace(/https?:\/\/(www\.)?youtube\.com\/@Eurowindow/gi, ytPlaceholder);
   cleanText = cleanText.replace(/(https?:\/\/[^\s,;.!?"')]+|www\.[^\s,;.!?"')]+)/gi, '');
@@ -76,7 +116,7 @@ export async function processAndStoreDocument(fileName: string, text: string) {
 
   const contentHash = crypto.createHash('sha256').update(cleanText).digest('hex');
 
-  // 2. Chống Trùng Lặp Cấp Tài Liệu: Xóa tài liệu trùng tên hoặc trùng nội dung cũ
+  // Deduplication
   if (supabaseAdmin) {
     try {
       const { data: existingDoc } = await supabaseAdmin
@@ -110,15 +150,12 @@ export async function processAndStoreDocument(fileName: string, text: string) {
     }
   } catch (e) {}
 
-  // 3. Phân đoạn & Khử trùng lặp cấp Chunk
   const rawChunks = chunkText(cleanText);
-  // Loại bỏ các đoạn trùng lặp tuyệt đối trong cùng 1 file
   const chunks = Array.from(new Set(rawChunks));
 
   let docId = '';
   let useMongoDB = false;
 
-  // 4. Lưu vào Supabase
   if (supabaseAdmin) {
     try {
       const { data: document, error: docError } = await supabaseAdmin
@@ -132,8 +169,6 @@ export async function processAndStoreDocument(fileName: string, text: string) {
       }
 
       docId = document.id;
-
-      // Nạp embeddings siêu tốc
       const allEmbeddings = await generateEmbeddings(chunks);
 
       const chunksData = chunks.map((content, i) => ({
@@ -162,7 +197,6 @@ export async function processAndStoreDocument(fileName: string, text: string) {
     useMongoDB = true;
   }
 
-  // 5. Dự phòng lưu vào MongoDB
   if (useMongoDB) {
     try {
       await connectToDatabase();
@@ -179,7 +213,6 @@ export async function processAndStoreDocument(fileName: string, text: string) {
       };
 
       await db.collection('documents').insertOne(newDoc);
-
       const allEmbeddings = await generateEmbeddings(chunks);
       await db.collection('document_chunks').createIndex({ content: "text" }).catch(() => {});
 
@@ -200,9 +233,6 @@ export async function processAndStoreDocument(fileName: string, text: string) {
   }
 }
 
-/**
- * Nạp từng phần của Knowledge Pack riêng biệt vào Vector Store (FAQ, Decision Tree, Pattern, Overview...)
- */
 export async function processAndStoreKnowledgePackComponents(pack: any) {
   if (!pack || !pack.files) return;
 
@@ -226,15 +256,29 @@ export async function processAndStoreKnowledgePackComponents(pack: any) {
   }
 }
 
-/**
- * Advanced Hybrid Retrieval: Vector + Knowledge Graph + BM25 + Knowledge Pack Hierarchy + Reranking Engine.
- * Enforces Priority: FAQ ➔ Decision Tree ➔ Pattern ➔ Overview ➔ Summary ➔ Chunk
- */
-export async function retrieveRelevantContext(query: string, matchCount = 5): Promise<string> {
-  const candidateList: CandidateChunk[] = [];
-  const minScoreThreshold = 0.55; // Filtering low-relevance noise
+export interface RetrievalResultDetails {
+  compressedText: string;
+  confidenceScore: number;
+  isLowConfidence: boolean;
+  expandedQueries: string[];
+  top20Candidates: CandidateChunk[];
+  top8Candidates: CandidateChunk[];
+}
 
-  // 1. Knowledge Graph Entity Traversal
+/**
+ * Enterprise Multi-Stage Hybrid Retrieval: Vector + Knowledge Graph + BM25 + Query Expansion + Reranking Engine.
+ * Top 20 Candidates ➔ Reranker ➔ Top 8 Context Block
+ */
+export async function retrieveRelevantContextWithDetails(
+  query: string,
+  topK = 8
+): Promise<RetrievalResultDetails> {
+  const candidateList: CandidateChunk[] = [];
+  const minScoreThreshold = 0.40;
+
+  const expandedQueries = expandQuery(query);
+
+  // 1. Knowledge Graph Traversal
   try {
     const graphContext = queryKnowledgeGraph(query);
     if (graphContext) {
@@ -248,7 +292,7 @@ export async function retrieveRelevantContext(query: string, matchCount = 5): Pr
     console.warn('Knowledge Graph query failed:', err);
   }
 
-  // 2. Vector Search (Supabase / Gemini Embeddings)
+  // 2. Vector Search (Supabase)
   let embedding: number[] = [];
   let embedFailed = false;
 
@@ -268,18 +312,14 @@ export async function retrieveRelevantContext(query: string, matchCount = 5): Pr
       const embeddingString = `[${embedding.join(',')}]`;
       const { data: rawData, error } = await supabaseAdmin.rpc('match_document_chunks', {
         query_embedding: embeddingString,
-        match_count: matchCount * 3,
+        match_count: 20,
       });
 
       if (!error && rawData && rawData.length > 0) {
         rawData.forEach((chunk: any) => {
           let baseScore = chunk.similarity || 0.6;
-          // Apply Knowledge Pack Hierarchy Priority Boosts
-          if (chunk.content?.includes('[FAQ]')) baseScore += 0.20;
-          else if (chunk.content?.includes('[DECISION_TREE]')) baseScore += 0.15;
-          else if (chunk.content?.includes('[PATTERN]')) baseScore += 0.12;
-          else if (chunk.content?.includes('[OVERVIEW]')) baseScore += 0.08;
-          else if (chunk.content?.includes('[SUMMARY]')) baseScore += 0.05;
+          if (chunk.content?.includes('[FAQ]')) baseScore += 0.15;
+          else if (chunk.content?.includes('[DECISION_TREE]')) baseScore += 0.10;
 
           if (baseScore >= minScoreThreshold) {
             candidateList.push({
@@ -297,35 +337,37 @@ export async function retrieveRelevantContext(query: string, matchCount = 5): Pr
     }
   }
 
-  // 3. Fallback / Complementary Lexical Keyword Search (MongoDB)
+  // 3. BM25 / Keyword Search (MongoDB) across expanded queries
   try {
     await connectToDatabase();
     const db = mongoose.connection.db;
     if (db) {
       const stopWords = new Set(['có', 'không', 'nhé', 'cho', 'tôi', 'là', 'gì', 'ở', 'tại', 'được', 'nào', 'mấy', 'bao', 'nhiêu', 'với', 'và', 'của', 'để', 'này', 'đó', 'kia', 'thế', 'nào']);
-      const keywords = query.toLowerCase().split(/[\s,;.!?]+/).filter(w => w.length > 1 && !stopWords.has(w));
+      const allKeywords = new Set<string>();
+      expandedQueries.forEach(eq => {
+        eq.split(/[\s,;.!?]+/).forEach(w => {
+          if (w.length > 1 && !stopWords.has(w)) allKeywords.add(w);
+        });
+      });
 
-      if (keywords.length > 0) {
-        const regexPatterns = keywords.map(w => new RegExp(w, 'i'));
+      if (allKeywords.size > 0) {
+        const regexPatterns = Array.from(allKeywords).map(w => new RegExp(w, 'i'));
         const matches = await db.collection('document_chunks')
           .find({ content: { $in: regexPatterns } })
-          .limit(matchCount * 2)
+          .limit(20)
           .toArray();
 
         matches.forEach((chunk: any) => {
-          let baseScore = 0.5;
-          if (chunk.content?.includes('[FAQ]')) baseScore += 0.20;
-          else if (chunk.content?.includes('[DECISION_TREE]')) baseScore += 0.15;
+          let baseScore = 0.55;
+          if (chunk.content?.includes('[FAQ]')) baseScore += 0.15;
 
-          if (baseScore >= minScoreThreshold) {
-            candidateList.push({
-              id: chunk.id || chunk._id?.toString(),
-              document_id: chunk.document_id,
-              content: chunk.content,
-              score: baseScore,
-              source: 'bm25',
-            });
-          }
+          candidateList.push({
+            id: chunk.id || chunk._id?.toString(),
+            document_id: chunk.document_id,
+            content: chunk.content,
+            score: baseScore,
+            source: 'bm25',
+          });
         });
       }
     }
@@ -333,20 +375,56 @@ export async function retrieveRelevantContext(query: string, matchCount = 5): Pr
     console.warn('MongoDB Keyword Search failed:', mongoErr);
   }
 
-  if (candidateList.length === 0) {
-    return '';
+  // Deduplicate candidateList by content hash / snippet
+  const seenContents = new Set<string>();
+  const uniqueCandidates: CandidateChunk[] = [];
+
+  for (const cand of candidateList) {
+    const snippet = cand.content.trim().slice(0, 100);
+    if (!seenContents.has(snippet)) {
+      seenContents.add(snippet);
+      uniqueCandidates.push(cand);
+    }
   }
 
-  // 4. Reranking Stage
-  const { rerankCandidatesAsync } = await import('@/lib/ai/reranker');
-  candidateList.sort((a, b) => (b.score || 0) - (a.score || 0));
-  const rerankedResults = await rerankCandidatesAsync(query, candidateList, matchCount);
+  uniqueCandidates.sort((a, b) => (b.score || 0) - (a.score || 0));
+  const top20Candidates = uniqueCandidates.slice(0, 20);
 
-  const rawJoinedText = rerankedResults.map(item => item.content).join('\n\n');
+  if (top20Candidates.length === 0) {
+    return {
+      compressedText: '',
+      confidenceScore: 0,
+      isLowConfidence: true,
+      expandedQueries,
+      top20Candidates: [],
+      top8Candidates: [],
+    };
+  }
+
+  // 4. Reranker Stage (Top 20 -> Top 8)
+  const { rerankCandidatesAsync } = await import('@/lib/ai/reranker');
+  const top8Candidates = await rerankCandidatesAsync(query, top20Candidates, topK);
+
+  const highestScore = Math.max(...top8Candidates.map(c => c.score || 0), 0);
+  const isLowConfidence = highestScore < 0.75;
+
+  const rawJoinedText = top8Candidates.map(item => item.content).join('\n\n');
 
   // 5. Context Compression
   const { compressContext } = await import('@/lib/ai/context-compressor');
   const compressed = compressContext(query, rawJoinedText);
-  return compressed.compressedText;
+
+  return {
+    compressedText: compressed.compressedText,
+    confidenceScore: Math.round(highestScore * 100) / 100,
+    isLowConfidence,
+    expandedQueries,
+    top20Candidates,
+    top8Candidates,
+  };
 }
 
+export async function retrieveRelevantContext(query: string, matchCount = 5): Promise<string> {
+  const details = await retrieveRelevantContextWithDetails(query, matchCount);
+  return details.compressedText;
+}
