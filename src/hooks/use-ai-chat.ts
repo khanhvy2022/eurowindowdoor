@@ -29,12 +29,9 @@ export function useAiChat(options: {
     fallbackTriggered: boolean;
   } | null>(null);
 
-  // Use ref to track the last user prompt submitted, for caching purposes
   const lastPromptRef = useRef<string>('');
-  // Prevent double submissions
   const submissionLockRef = useRef<boolean>(false);
 
-  // Fetch health data function
   const fetchHealthStats = async () => {
     setIsHealthLoading(true);
     try {
@@ -52,14 +49,12 @@ export function useAiChat(options: {
     }
   };
 
-  // Poll health status every 20 seconds
   useEffect(() => {
     fetchHealthStats();
     const interval = setInterval(fetchHealthStats, 20000);
     return () => clearInterval(interval);
   }, []);
 
-  // Configure Vercel AI SDK useChat
   const chat = useChat({
     api: '/api/chat',
     body: {
@@ -67,6 +62,7 @@ export function useAiChat(options: {
       ...(documentId ? { documentId } : {}),
     },
     onResponse: (response: Response) => {
+      submissionLockRef.current = false;
       const provider = response.headers.get('X-AI-Provider') || '';
       const modelName = response.headers.get('X-AI-Model') || '';
       const fallbackTriggered = response.headers.get('X-AI-Fallback-Triggered') === 'true';
@@ -103,7 +99,6 @@ export function useAiChat(options: {
   const isLoading = status === 'submitted' || status === 'streaming';
   const [input, setInput] = useState('');
 
-  // Custom submit handler supporting debounce and caching
   const sendMessage = async (
     textToSend?: string,
     data?: { documentId?: string }
@@ -112,8 +107,8 @@ export function useAiChat(options: {
     const cleanPrompt = prompt.trim();
     if (!cleanPrompt) return;
 
-    if (isLoading || submissionLockRef.current) {
-      console.warn('Chat request is currently locked or loading. Ignoring duplicate click.');
+    if (isLoading) {
+      console.warn('[useAiChat] Request currently loading. Waiting for current stream.');
       return;
     }
 
@@ -165,13 +160,15 @@ export function useAiChat(options: {
       }
     } catch (err) {
       console.error('Failed to send message:', err);
+    } finally {
+      // Release lock so user can send next message smoothly
       submissionLockRef.current = false;
     }
   };
 
   const handleRetry = () => {
     if (messages.length === 0) return;
-    submissionLockRef.current = true;
+    submissionLockRef.current = false;
     if (reload) {
       reload();
     }
