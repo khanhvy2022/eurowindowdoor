@@ -11,6 +11,18 @@ export default function SeoDashboardPage() {
   const [gscData, setGscData] = useState<SearchConsoleData | undefined>();
   const [siteHealth, setSiteHealth] = useState<SiteHealthResult | undefined>();
 
+  interface PageSpeedData {
+    performance: number;
+    accessibility: number;
+    bestPractices: number;
+    seo: number;
+    lcp: string;
+    fcp: string;
+    cls: string;
+  }
+
+  const [pageSpeed, setPageSpeed] = useState<PageSpeedData | null>(null);
+
   useEffect(() => {
     async function loadDashboard() {
       try {
@@ -20,6 +32,7 @@ export default function SeoDashboardPage() {
           setSeoScore(data.seoScore);
           setGscData(data.searchConsole);
           setSiteHealth(data.siteHealth);
+          setPageSpeed(data.pageSpeed);
         }
       } catch (err) {
         console.error('Failed to load SEO dashboard data:', err);
@@ -43,30 +56,78 @@ export default function SeoDashboardPage() {
       {/* Top Score Overview */}
       <SeoScoreCard score={seoScore} />
 
-      {/* Metrics Summary Grid */}
-      {gscData && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-1">
-            <span className="text-xs text-gray-500 font-bold uppercase">Total Clicks</span>
-            <div className="text-2xl font-black text-[#005ba7]">{gscData.summary.clicks.toLocaleString()}</div>
+      {/* Real Google PageSpeed Insights & Core Web Vitals Panel */}
+      {pageSpeed && (
+        <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+              <span>⚡</span> Google PageSpeed & Core Web Vitals (Real-time)
+            </h3>
+            <span className="text-xs bg-emerald-100 text-emerald-800 font-medium px-2.5 py-0.5 rounded-full">
+              Live API
+            </span>
           </div>
-          <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-1">
-            <span className="text-xs text-gray-500 font-bold uppercase">Total Impressions</span>
-            <div className="text-2xl font-black text-purple-600">{gscData.summary.impressions.toLocaleString()}</div>
-          </div>
-          <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-1">
-            <span className="text-xs text-gray-500 font-bold uppercase">Average CTR</span>
-            <div className="text-2xl font-black text-emerald-600">{(gscData.summary.ctr * 100).toFixed(1)}%</div>
-          </div>
-          <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-1">
-            <span className="text-xs text-gray-500 font-bold uppercase">Average Position</span>
-            <div className="text-2xl font-black text-amber-600">{gscData.summary.position}</div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+            <div className="p-3 bg-gray-50 rounded-xl">
+              <span className="text-xs text-gray-500 font-semibold block">Performance</span>
+              <span className="text-xl font-black text-[#005ba7]">{pageSpeed.performance}/100</span>
+            </div>
+            <div className="p-3 bg-gray-50 rounded-xl">
+              <span className="text-xs text-gray-500 font-semibold block">Accessibility</span>
+              <span className="text-xl font-black text-purple-600">{pageSpeed.accessibility}/100</span>
+            </div>
+            <div className="p-3 bg-gray-50 rounded-xl">
+              <span className="text-xs text-gray-500 font-semibold block">LCP (Load Speed)</span>
+              <span className="text-xl font-black text-emerald-600">{pageSpeed.lcp}</span>
+            </div>
+            <div className="p-3 bg-gray-50 rounded-xl">
+              <span className="text-xs text-gray-500 font-semibold block">CLS (Shift)</span>
+              <span className="text-xl font-black text-amber-600">{pageSpeed.cls}</span>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Metrics Chart */}
-      {gscData?.byDate && <MetricsChart data={gscData.byDate} />}
+      {/* Google Search Console Status */}
+      {gscData && !gscData.isLiveData && (
+        <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-start gap-3">
+          <span className="text-lg">🔒</span>
+          <div className="text-xs text-amber-900 space-y-1">
+            <div className="font-bold">Google Search Console API chưa kết nối (OAuth 2.0 / Service Account)</div>
+            <div>
+              Hệ thống đã ẩn toàn bộ số liệu thống kê Clicks & Impressions mẫu để bảo đảm tính chính xác.
+              Vui lòng bổ sung <code className="bg-amber-100 px-1 rounded">GOOGLE_SEARCH_CONSOLE_CLIENT_EMAIL</code> và <code className="bg-amber-100 px-1 rounded">GOOGLE_SEARCH_CONSOLE_PRIVATE_KEY</code> trong <code className="bg-amber-100 px-1 rounded">.env.local</code> để đồng bộ dữ liệu Search Console thực tế.
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Metrics Summary Grid (Only if Live Data) */}
+      {gscData && gscData.isLiveData && gscData.summary.impressions > 0 && (
+        <>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-1">
+              <span className="text-xs text-gray-500 font-bold uppercase">Total Clicks</span>
+              <div className="text-2xl font-black text-[#005ba7]">{gscData.summary.clicks.toLocaleString()}</div>
+            </div>
+            <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-1">
+              <span className="text-xs text-gray-500 font-bold uppercase">Total Impressions</span>
+              <div className="text-2xl font-black text-purple-600">{gscData.summary.impressions.toLocaleString()}</div>
+            </div>
+            <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-1">
+              <span className="text-xs text-gray-500 font-bold uppercase">Average CTR</span>
+              <div className="text-2xl font-black text-emerald-600">{(gscData.summary.ctr * 100).toFixed(1)}%</div>
+            </div>
+            <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-1">
+              <span className="text-xs text-gray-500 font-bold uppercase">Average Position</span>
+              <div className="text-2xl font-black text-amber-600">{gscData.summary.position}</div>
+            </div>
+          </div>
+
+          {gscData.byDate && gscData.byDate.length > 0 && <MetricsChart data={gscData.byDate} />}
+        </>
+      )}
 
       {/* Site Health & Top Queries Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -74,7 +135,7 @@ export default function SeoDashboardPage() {
         {siteHealth && (
           <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4">
             <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-              <span>🩺</span> Site Health Snapshot
+              <span>🩺</span> Real-time Site Health Snapshot
             </h3>
             <div className="space-y-3 text-xs">
               <div className="flex justify-between items-center p-2.5 bg-gray-50 rounded-xl">
@@ -99,8 +160,8 @@ export default function SeoDashboardPage() {
           </div>
         )}
 
-        {/* Top Queries Preview */}
-        {gscData?.topQueries && (
+        {/* Top Queries Preview (Only when live) */}
+        {gscData?.isLiveData && gscData.topQueries && gscData.topQueries.length > 0 && (
           <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4">
             <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
               <span>🔥</span> Top Search Queries

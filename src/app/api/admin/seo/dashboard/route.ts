@@ -7,6 +7,8 @@ import { aggregateSeoScore } from '@/lib/seo/score';
 import connectToDatabase from '@/lib/db';
 import mongoose from 'mongoose';
 
+import { fetchPageSpeedData } from '@/lib/seo/pagespeed';
+
 export async function GET(req: NextRequest) {
   const token = req.cookies.get('admin_token')?.value;
   if (!token || !(await verifyToken(token))) {
@@ -16,14 +18,16 @@ export async function GET(req: NextRequest) {
   try {
     const domain = 'eurowindow.com.vn';
 
-    // Parallel: site health + GSC data
-    const [healthResult, gscData] = await Promise.allSettled([
+    // Parallel: site health + GSC data + live PageSpeed
+    const [healthResult, gscData, pageSpeedResult] = await Promise.allSettled([
       checkSiteHealth(domain),
       getSearchConsoleData(domain, 28),
+      fetchPageSpeedData(`https://${domain}`),
     ]);
 
-    const health = healthResult.status === 'fulfilled' ? healthResult.value : null;
-    const gsc    = gscData.status === 'fulfilled' ? gscData.value : null;
+    const health    = healthResult.status === 'fulfilled' ? healthResult.value : null;
+    const gsc       = gscData.status === 'fulfilled' ? gscData.value : null;
+    const pageSpeed = pageSpeedResult.status === 'fulfilled' ? pageSpeedResult.value : null;
 
     // Get latest audit from DB
     let latestAudit: any = null;
@@ -36,19 +40,33 @@ export async function GET(req: NextRequest) {
       }
     } catch { /* non-critical */ }
 
-    const technicalScore = latestAudit?.score ?? 65;
+    const technicalScore = latestAudit?.score ?? 75;
+    const performanceScore = pageSpeed?.performance ?? 70;
+    const accessibilityScore = pageSpeed?.accessibility ?? 80;
+    const contentScore = pageSpeed?.seo ?? 80;
+    const mobileScore = pageSpeed?.performance ? Math.min(100, pageSpeed.performance + 5) : 70;
+
     const seoScore = aggregateSeoScore({
-      technical:    technicalScore,
-      content:      68,
-      performance:  72,
-      mobile:       70,
-      accessibility: 75,
+      technical: technicalScore,
+      content: contentScore,
+      performance: performanceScore,
+      mobile: mobileScore,
+      accessibility: accessibilityScore,
     });
 
     return NextResponse.json({
       seoScore,
       siteHealth: health,
       searchConsole: gsc,
+      pageSpeed: pageSpeed ? {
+        performance: pageSpeed.performance,
+        accessibility: pageSpeed.accessibility,
+        bestPractices: pageSpeed.bestPractices,
+        seo: pageSpeed.seo,
+        lcp: pageSpeed.lcp,
+        fcp: pageSpeed.fcp,
+        cls: pageSpeed.cls,
+      } : null,
       latestAudit: latestAudit
         ? { url: latestAudit.url, score: latestAudit.score, auditedAt: latestAudit.auditedAt }
         : null,
