@@ -44,10 +44,10 @@ export function classifyTask(messages: any[]): 'coding' | 'reasoning' | 'general
 }
 
 /**
- * Multi-Provider Failover Sequence: Gemini ➔ Groq ➔ OpenRouter ➔ DeepSeek ➔ Grok
+ * Primary Failover Sequence: Gemini (Main) ➔ OpenRouter ➔ DeepSeek ➔ Grok
  */
 export function getRoutingSequence(task: 'coding' | 'reasoning' | 'general'): ProviderName[] {
-  return ['gemini', 'groq', 'openrouter', 'deepseek', 'grok'];
+  return ['gemini', 'openrouter', 'deepseek', 'grok'];
 }
 
 export function optimizeMessages(messages: any[], maxTokens = 12000): any[] {
