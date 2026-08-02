@@ -29,6 +29,7 @@ if (!globalRef.providerHealthRegistry) {
     gemini: DEFAULT_HEALTH(),
     openrouter: DEFAULT_HEALTH(),
     deepseek: DEFAULT_HEALTH(),
+    groq: DEFAULT_HEALTH(),
   };
 }
 

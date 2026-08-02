@@ -1,12 +1,8 @@
 import { ProviderName } from './providers';
 
-/**
- * Classifies the conversation task based on message content.
- */
 export function classifyTask(messages: any[]): 'coding' | 'reasoning' | 'general' {
   if (messages.length === 0) return 'general';
   
-  // Look at the latest message
   const lastMessage = messages[messages.length - 1];
   let content = '';
 
@@ -26,7 +22,6 @@ export function classifyTask(messages: any[]): 'coding' | 'reasoning' | 'general
 
   const cleanContent = content.toLowerCase();
 
-  // Keyword check lists
   const codingKeywords = [
     'code', 'coding', 'lập trình', 'function', 'html', 'css', 'javascript', 'js',
     'typescript', 'ts', 'python', 'database', 'sql', 'api', 'hàm', 'biến', 'class',
@@ -49,93 +44,23 @@ export function classifyTask(messages: any[]): 'coding' | 'reasoning' | 'general
 }
 
 /**
- * Returns the preferred provider sequence based on the task classification.
+ * Multi-Provider Failover Sequence: Gemini ➔ Groq ➔ OpenRouter ➔ DeepSeek ➔ Grok
  */
 export function getRoutingSequence(task: 'coding' | 'reasoning' | 'general'): ProviderName[] {
-  // Prioritize Gemini (gemini-flash-latest) as verified 200 OK, with OpenRouter as backup
-  return ['gemini', 'openrouter', 'deepseek', 'grok'];
+  return ['gemini', 'groq', 'openrouter', 'deepseek', 'grok'];
 }
 
-/**
- * Token Optimization: Sanitizes, consolidates, and truncates message history.
- */
-export function optimizeMessages(messages: any[]): any[] {
-  if (messages.length <= 1) return messages;
+export function optimizeMessages(messages: any[], maxTokens = 12000): any[] {
+  if (!messages || messages.length === 0) return [];
+  if (messages.length <= 6) return messages;
 
-  const optimized: any[] = [];
-  
-  // 1. Remove duplicate adjacent prompts
-  let lastText = '';
-  for (const msg of messages) {
-    let currentText = '';
-    if (typeof msg.content === 'string') {
-      currentText = msg.content;
-    } else if (Array.isArray(msg.content)) {
-      currentText = msg.content.map((p: any) => p.text || '').join('');
-    }
-    
-    if (currentText.trim() === '') {
-      continue; // Skip empty messages
-    }
-
-    if (currentText.trim() === lastText.trim()) {
-      continue; // Skip consecutive duplicates
-    }
-
-    optimized.push(msg);
-    lastText = currentText;
-  }
-
-  // If we have 10 or fewer messages, return them as is
-  if (optimized.length <= 10) return optimized;
-
-  // Keep the last 10 messages intact to preserve multi-turn context and entity references
-  const keepCount = 10;
-  const systemMessages = optimized.filter(msg => msg.role === 'system');
-  const nonSystemMessages = optimized.filter(msg => msg.role !== 'system');
-
-  if (nonSystemMessages.length <= keepCount) {
-    return [...systemMessages, ...nonSystemMessages];
-  }
-
-  const oldMessages = nonSystemMessages.slice(0, nonSystemMessages.length - keepCount);
-  const recentMessages = nonSystemMessages.slice(nonSystemMessages.length - keepCount);
-
-  // Preserve key context points from older turns
-  let summaryText = '[Bối cảnh hội thoại trước đó:\n';
-  oldMessages.forEach(msg => {
-    let msgText = '';
-    if (typeof msg.content === 'string') {
-      msgText = msg.content;
-    } else if (Array.isArray(msg.content)) {
-      msgText = msg.content.map((p: any) => p.text || '').join('');
-    }
-    
-    // Retain up to 250 characters per older turn to preserve technical specs & product names
-    const truncatedMsg = msgText.length > 250 ? `${msgText.slice(0, 250)}...` : msgText;
-    summaryText += `- ${msg.role === 'user' ? 'Khách' : 'Trợ lý'}: ${truncatedMsg}\n`;
-  });
-  summaryText += ']';
-
-  const summaryMessage = {
-    role: 'system',
-    content: summaryText,
-  };
-
-  return [
-    ...systemMessages,
-    summaryMessage,
-    ...recentMessages
-  ];
+  const systemOrFirst = messages[0];
+  const recentMessages = messages.slice(-5);
+  return [systemOrFirst, ...recentMessages];
 }
 
-/**
- * Token Optimization: Restricts corporate document context length to prevent quota spikes.
- */
-export function optimizeDocumentContext(context: string, maxChars = 4500): string {
+export function optimizeDocumentContext(context: string, maxChars = 25000): string {
   if (!context) return '';
   if (context.length <= maxChars) return context;
-  
-  // Cut to maxChars and append a warning to let the model know context was trimmed.
-  return context.substring(0, maxChars) + '\n\n[Lưu ý: Tài liệu tham khảo đã được cắt bớt để tối ưu tốc độ xử lý]';
+  return context.slice(0, maxChars) + '\n\n[Dữ liệu đã được tối ưu cắt bớt]';
 }

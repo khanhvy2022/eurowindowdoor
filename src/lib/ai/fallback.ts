@@ -8,7 +8,7 @@ export interface FallbackOptions {
   messages: any[];
   system: string;
   temperature?: number;
-  preferredModel?: string; // e.g. "gemini:gemini-2.0-flash"
+  preferredModel?: string; // e.g. "gemini:gemini-flash-latest"
   tools?: Record<string, any>;
   maxSteps?: number;
   onFinish?: (event: any) => Promise<void> | void;
@@ -21,8 +21,7 @@ interface TargetConfig {
 }
 
 /**
- * Executes a streaming chat request using the fallback sequence.
- * AI SDK v7: streamText() is synchronous but quota/rate errors manifest inside the stream.
+ * Executes a streaming chat request using the multi-provider & multi-model fallback sequence.
  */
 export async function streamTextWithFallback(options: FallbackOptions) {
   const { sequence, task, messages, system, temperature = 0.7, preferredModel, tools, maxSteps } = options;
@@ -30,17 +29,12 @@ export async function streamTextWithFallback(options: FallbackOptions) {
   let lastError: any = null;
   const attemptedProviders: ProviderName[] = [];
 
-  // Filter sequence to find healthy providers first
   const healthySequence = sequence.filter(isProviderHealthy);
-  
-  // If all preferred providers are in cooldown, try all of them anyway as a last resort
   const finalSequence = healthySequence.length > 0 ? healthySequence : sequence;
 
-  // Expand the provider list into specific models to try sequentially
   const targets: TargetConfig[] = [];
   
   for (const provider of finalSequence) {
-    // If the user forced a specific model, prioritize it
     if (preferredModel && preferredModel.startsWith(`${provider}:`)) {
       targets.push({ provider, model: preferredModel.split(':')[1] });
       continue;
@@ -48,8 +42,13 @@ export async function streamTextWithFallback(options: FallbackOptions) {
 
     if (provider === 'gemini') {
       targets.push({ provider: 'gemini', model: 'gemini-flash-latest' });
+      targets.push({ provider: 'gemini', model: 'gemini-2.0-flash-lite' });
+    } else if (provider === 'groq') {
+      targets.push({ provider: 'groq', model: 'llama-3.3-70b-versatile' });
+      targets.push({ provider: 'groq', model: 'mixtral-8x7b-32768' });
     } else if (provider === 'openrouter') {
       targets.push({ provider: 'openrouter', model: 'openrouter/auto' });
+      targets.push({ provider: 'openrouter', model: 'meta-llama/llama-3.3-70b-instruct:free' });
     } else if (provider === 'deepseek') {
       targets.push({ provider: 'deepseek', model: 'deepseek-chat' });
     } else if (provider === 'grok') {
@@ -69,7 +68,7 @@ export async function streamTextWithFallback(options: FallbackOptions) {
     }
 
     try {
-      console.log(`[AI Fallback System] Đang thử kết nối: ${provider} (Mô hình: ${modelId}) cho tác vụ ${task}`);
+      console.log(`[AI Fallback System] Đang kết nối: ${provider} (${modelId}) cho tác vụ ${task}`);
       
       const modelInstance = getProviderModel(provider, modelId);
       
@@ -78,29 +77,23 @@ export async function streamTextWithFallback(options: FallbackOptions) {
         messages,
         system,
         temperature,
-        maxRetries: 0, // No retries — we handle fallback ourselves
+        maxRetries: 0,
         maxTokens: 1500,
         tools,
         stopWhen: stepCountIs(maxSteps || 5),
         onFinish: options.onFinish,
         onError: (event: any) => {
           const { error } = event;
-          console.error(`[AI Fallback System] Async Stream Error từ model ${modelId}:`, error);
+          console.error(`[AI Fallback System] Stream Error từ ${provider} (${modelId}):`, error);
           triggerCooldown(provider, `Stream error (${modelId}): ${error?.message || error}`, 3 * 60 * 1000);
-          const fs = require('fs');
-          const path = require('path');
-          const logDir = path.join(process.cwd(), 'sandbox', 'logs');
-          if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true });
-          fs.appendFileSync(path.join(logDir, 'stream_error.log'), `[${new Date().toISOString()}] ${modelId} - ${error instanceof Error ? error.stack : String(error)}\n`);
           if (options.onError) {
             options.onError(event);
           }
         },
       } as any);
 
-      // Record success optimistically — stream has been initiated without sync error
       recordSuccess(provider, 0);
-      console.log(`[AI Fallback System] Stream khởi tạo thành công: ${provider} (${modelId})`);
+      console.log(`[AI Fallback System] Kết nối thành công: ${provider} (${modelId})`);
 
       return {
         result,
@@ -111,7 +104,7 @@ export async function streamTextWithFallback(options: FallbackOptions) {
       };
     } catch (err: any) {
       const errorMsg = err.message || String(err);
-      console.error(`[AI Fallback System] Lỗi từ model ${modelId} (${provider}): ${errorMsg}`);
+      console.error(`[AI Fallback System] Lỗi từ ${provider} (${modelId}): ${errorMsg}`);
       
       const errLower = errorMsg.toLowerCase();
       const isQuotaOrLimit =
@@ -125,16 +118,15 @@ export async function streamTextWithFallback(options: FallbackOptions) {
         errLower.includes('exceeded');
 
       if (isQuotaOrLimit) {
-        triggerCooldown(provider, `Model ${modelId} lỗi: ${errorMsg}`, 5 * 60 * 1000); // 5 min
+        triggerCooldown(provider, `Model ${modelId} quota error: ${errorMsg}`, 5 * 60 * 1000);
       } else {
-        triggerCooldown(provider, `Model ${modelId} lỗi: ${errorMsg}`, 30 * 1000); // 30s
+        triggerCooldown(provider, `Model ${modelId} error: ${errorMsg}`, 30 * 1000);
       }
       
       lastError = err;
     }
   }
 
-  // All models in expanded targets list failed — throw to let route handler deal with it
   throw new Error(
     `Tất cả các mô hình AI trong chuỗi fallback đều gặp lỗi. Lỗi cuối cùng: ${lastError?.message || lastError}`
   );
