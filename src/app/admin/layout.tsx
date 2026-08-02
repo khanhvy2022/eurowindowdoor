@@ -45,6 +45,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       active: pathname.includes('/bai-viet'),
     },
     {
+      label: '🚀 AI SEO Platform',
+      href: '/admin/seo/dashboard',
+      active: pathname.includes('/admin/seo'),
+    },
+    {
       label: '💬 Thử Nghiệm Chatbot AI',
       href: '/chat',
       active: pathname === '/chat',
