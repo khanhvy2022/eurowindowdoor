@@ -380,7 +380,7 @@ export async function POST(req: Request) {
       }
     });
 
-    return result.toUIMessageStreamResponse({
+    return result.toDataStreamResponse({
       headers: {
         'X-AI-Provider': provider,
         'X-AI-Model': modelName,
