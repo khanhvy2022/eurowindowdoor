@@ -41,14 +41,22 @@ export default function SeoSearchConsolePage() {
           <p className="text-xs text-gray-500">Phân tích hiệu suất tìm kiếm tự nhiên: Clicks, Impressions, CTR, Position</p>
         </div>
         <span className="px-3 py-1 bg-purple-50 text-purple-700 rounded-xl text-xs font-bold border border-purple-100">
-          Property: eurowindow.com.vn
+          Property: eurowindowdoor.com
         </span>
       </div>
 
-      {data?.byDate && <MetricsChart data={data.byDate} title="Hiệu suất tìm kiếm (28 ngày)" />}
+      {!data?.isLiveData && (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-xs text-amber-950">
+          <p className="font-bold">Chưa có dữ liệu Google Search Console thực</p>
+          <p className="mt-1">Thiết lập service account và cấp quyền cho property {data?.siteUrl || 'sc-domain:eurowindowdoor.com'}. Trang này không hiển thị dữ liệu mẫu.</p>
+          {data?.error ? <p className="mt-1 font-medium">Lý do: {data.error}</p> : null}
+        </div>
+      )}
+
+      {data?.isLiveData && <MetricsChart data={data.byDate} title="Hiệu suất tìm kiếm (28 ngày)" />}
 
       {/* Top Pages Table */}
-      {data?.topPages && (
+      {data?.isLiveData && data.topPages.length > 0 && (
         <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4">
           <h3 className="text-sm font-bold text-gray-900">Top Trang Có Lượt Truy Cập Cao Nhất</h3>
           <div className="overflow-x-auto">

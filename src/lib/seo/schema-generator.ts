@@ -11,8 +11,8 @@ import type { SchemaType, SchemaGeneratorInput, SchemaGeneratorResult } from './
 const EUROWINDOW_ORG = {
   '@type': 'Organization',
   name: 'Eurowindow',
-  url: 'https://eurowindow.com.vn',
-  logo: 'https://eurowindow.com.vn/logo.png',
+  url: 'https://eurowindowdoor.com',
+  logo: 'https://eurowindowdoor.com/logo.png',
   sameAs: [
     'https://www.facebook.com/eurowindow.official',
     'https://www.youtube.com/@Eurowindow',
@@ -87,12 +87,12 @@ function buildArticle(data: Record<string, unknown>) {
     author: {
       '@type': 'Organization',
       name: 'Eurowindow',
-      url: 'https://eurowindow.com.vn',
+      url: 'https://eurowindowdoor.com',
     },
     publisher: {
       '@type': 'Organization',
       name: 'Eurowindow',
-      logo: { '@type': 'ImageObject', url: 'https://eurowindow.com.vn/logo.png' },
+      logo: { '@type': 'ImageObject', url: 'https://eurowindowdoor.com/logo.png' },
     },
     datePublished: data.datePublished ?? new Date().toISOString(),
     dateModified: data.dateModified ?? new Date().toISOString(),
@@ -163,12 +163,12 @@ function buildWebSite() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'Eurowindow',
-    url: 'https://eurowindow.com.vn',
+    url: 'https://eurowindowdoor.com',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: 'https://eurowindow.com.vn/search?q={search_term_string}',
+        urlTemplate: 'https://eurowindowdoor.com/search?q={search_term_string}',
       },
       'query-input': 'required name=search_term_string',
     },

@@ -56,14 +56,7 @@ export default function SeoCompetitorPage() {
         <div className="space-y-6">
           <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between">
             <h3 className="text-sm font-bold text-gray-900">Báo Cáo Đối Thủ: {result.domain}</h3>
-            <div className="flex gap-3 text-xs">
-              <span className="px-3 py-1 bg-blue-50 text-[#005ba7] font-bold rounded-lg border border-blue-100">
-                Technical Score: {result.technicalScore}
-              </span>
-              <span className="px-3 py-1 bg-purple-50 text-purple-700 font-bold rounded-lg border border-purple-100">
-                Content Score: {result.contentScore}
-              </span>
-            </div>
+            <span className="text-xs text-gray-500">Không ước lượng điểm kỹ thuật, nội dung hoặc traffic khi chưa có phép đo độc lập.</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

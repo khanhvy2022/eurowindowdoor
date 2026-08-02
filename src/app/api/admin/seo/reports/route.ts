@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/auth';
 import { generateReport, reportToCsv } from '@/lib/seo/report';
 import { aggregateSeoScore } from '@/lib/seo/score';
+import { fetchPageSpeedData } from '@/lib/seo/pagespeed';
 import type { ReportType } from '@/lib/seo/types';
 import connectToDatabase from '@/lib/db';
 import mongoose from 'mongoose';
@@ -14,8 +15,24 @@ export async function POST(req: NextRequest) {
 
   const { type = 'monthly', format = 'json' } = await req.json();
 
+  let latestAudit: { score?: number } | null = null;
+  try {
+    await connectToDatabase();
+    latestAudit = await mongoose.connection.db?.collection('seo_audits')
+      .findOne({}, { sort: { auditedAt: -1 }, projection: { score: 1 } }) as { score?: number } | null ?? null;
+  } catch { /* handled below */ }
+  const pageSpeed = await fetchPageSpeedData('https://eurowindowdoor.com');
+  if (typeof latestAudit?.score !== 'number' || !pageSpeed) {
+    return NextResponse.json({
+      error: 'Chưa đủ dữ liệu thực để xuất báo cáo. Hãy chạy Technical Audit và kiểm tra kết nối Google PageSpeed trước.',
+    }, { status: 409 });
+  }
   const seoScore = aggregateSeoScore({
-    technical: 65, content: 68, performance: 72, mobile: 70, accessibility: 75,
+    technical: latestAudit.score,
+    content: pageSpeed.seo,
+    performance: pageSpeed.performance,
+    mobile: pageSpeed.performance,
+    accessibility: pageSpeed.accessibility,
   });
 
   const report = await generateReport(type as ReportType, seoScore);
@@ -56,7 +73,7 @@ export async function GET(req: NextRequest) {
       .limit(20)
       .toArray();
     return NextResponse.json(reports);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json({ error: error instanceof Error ? error.message : 'Report request failed' }, { status: 500 });
   }
 }

@@ -53,8 +53,13 @@ export default function SeoDashboardPage() {
 
   return (
     <div className="space-y-6">
-      {/* Top Score Overview */}
-      <SeoScoreCard score={seoScore} />
+      {/* Composite score is shown only after every required source has been measured. */}
+      {seoScore ? <SeoScoreCard score={seoScore} /> : (
+        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-700">
+          <p className="font-bold text-slate-900">Chưa có SEO Score tổng hợp</p>
+          <p className="mt-1 text-xs">Cần một Technical Audit đã lưu và kết quả Google PageSpeed hợp lệ. Hệ thống không tự điền điểm ước lượng.</p>
+        </div>
+      )}
 
       {/* Real Google PageSpeed Insights & Core Web Vitals Panel */}
       {pageSpeed && (
@@ -96,8 +101,8 @@ export default function SeoDashboardPage() {
           <div className="text-xs text-amber-900 space-y-1">
             <div className="font-bold">Google Search Console API chưa kết nối (OAuth 2.0 / Service Account)</div>
             <div>
-              Hệ thống đã ẩn toàn bộ số liệu thống kê Clicks & Impressions mẫu để bảo đảm tính chính xác.
-              Vui lòng bổ sung <code className="bg-amber-100 px-1 rounded">GOOGLE_SEARCH_CONSOLE_CLIENT_EMAIL</code> và <code className="bg-amber-100 px-1 rounded">GOOGLE_SEARCH_CONSOLE_PRIVATE_KEY</code> trong <code className="bg-amber-100 px-1 rounded">.env.local</code> để đồng bộ dữ liệu Search Console thực tế.
+              Không có số liệu ước lượng nào được hiển thị. Bổ sung <code className="bg-amber-100 px-1 rounded">GOOGLE_SEARCH_CONSOLE_CLIENT_EMAIL</code>, <code className="bg-amber-100 px-1 rounded">GOOGLE_SEARCH_CONSOLE_PRIVATE_KEY</code> và <code className="bg-amber-100 px-1 rounded">GOOGLE_SEARCH_CONSOLE_SITE_URL</code> trong <code className="bg-amber-100 px-1 rounded">.env.local</code>, rồi cấp quyền đọc property cho service account.
+              {gscData.error ? <span className="block mt-1 font-medium">Lý do: {gscData.error}</span> : null}
             </div>
           </div>
         </div>

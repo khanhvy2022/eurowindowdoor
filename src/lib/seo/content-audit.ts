@@ -70,15 +70,7 @@ ${contentSnippet}
     console.warn('[Content Audit] JSON parse failed:', parseErr);
   }
 
-  // Fallback defaults
-  return {
-    scores: {
-      eeat: 50, helpfulness: 50, readability: 60, semanticSeo: 50,
-      intentMatch: 50, spamRisk: 10, topicalAuthority: 50, freshness: 50,
-    },
-    issues: [],
-    suggestions: [],
-  };
+  throw new Error('Content Audit response could not be verified; no fallback score is displayed.');
 }
 
 export async function auditContent(content: string, url = ''): Promise<ContentAuditResult> {

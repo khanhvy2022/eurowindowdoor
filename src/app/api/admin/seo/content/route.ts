@@ -9,6 +9,10 @@ export async function POST(req: NextRequest) {
   }
   const { content, url } = await req.json();
   if (!content) return NextResponse.json({ error: 'content required' }, { status: 400 });
-  const result = await auditContent(content, url);
-  return NextResponse.json(result);
+  try {
+    const result = await auditContent(content, url);
+    return NextResponse.json(result);
+  } catch (error) {
+    return NextResponse.json({ error: error instanceof Error ? error.message : 'Content Audit failed' }, { status: 503 });
+  }
 }

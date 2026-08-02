@@ -3,7 +3,9 @@
  * Checks: SSL, sitemap, robots, canonical issues, basic link health
  */
 
-import type { SiteHealthResult, BrokenLink, RedirectChain, CanonicalIssue } from './types';
+import type { SiteHealthResult, RedirectChain } from './types';
+
+type SitemapCheck = { found: boolean; url?: string; urlCount?: number };
 
 async function checkUrl(
   url: string,
@@ -82,7 +84,7 @@ export async function checkSiteHealth(domain: string): Promise<SiteHealthResult>
     checkUrl(base, true),
   ]);
 
-  const sitemap = sitemapResult.status === 'fulfilled'
+  const sitemap: SitemapCheck = sitemapResult.status === 'fulfilled'
     ? sitemapResult.value
     : { found: false };
 
@@ -90,8 +92,9 @@ export async function checkSiteHealth(domain: string): Promise<SiteHealthResult>
     ? robotsResult.value
     : { found: false, allowsIndexing: true, hasSitemap: false };
 
-  // SSL check via HTTPS attempt
-  const sslValid = base.startsWith('https');
+  // HTTPS is valid only when the real request succeeds; a URL prefix is not proof.
+  const mainPage = mainPageCheck.status === 'fulfilled' ? mainPageCheck.value : null;
+  const sslValid = base.startsWith('https') && Boolean(mainPage && mainPage.status >= 200 && mainPage.status < 400);
 
   // Check sample pages for redirect chains
   const sampleUrls = [
@@ -121,9 +124,9 @@ export async function checkSiteHealth(domain: string): Promise<SiteHealthResult>
     domain,
     ssl: { valid: sslValid },
     sitemap: {
-      found: (sitemap as any).found ?? false,
-      url: (sitemap as any).url,
-      urlCount: (sitemap as any).urlCount,
+      found: sitemap.found,
+      url: sitemap.url,
+      urlCount: sitemap.urlCount,
     },
     robots: {
       found: robots.found ?? false,
@@ -133,7 +136,6 @@ export async function checkSiteHealth(domain: string): Promise<SiteHealthResult>
     brokenLinks: [],
     redirectChains,
     canonicalIssues: [],
-    indexStatus: { indexed: 0, notIndexed: 0, errors: 0, warnings: 0 },
     checkedAt: new Date(),
   };
 }

@@ -8,6 +8,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   const days = parseInt(req.nextUrl.searchParams.get('days') || '28');
-  const result = await getSearchConsoleData('eurowindow.com.vn', days);
+  const result = await getSearchConsoleData('eurowindowdoor.com', days);
   return NextResponse.json(result);
 }

@@ -111,7 +111,7 @@ async function testWithOpenRouter(brand: string, query: string): Promise<string>
 
 export async function analyzeGeoVisibility(
   brand = 'Eurowindow',
-  domain = 'eurowindow.com.vn',
+  domain = 'eurowindowdoor.com',
 ): Promise<GeoAnalysisResult> {
   const query = GEO_QUERIES[Math.floor(Math.random() * GEO_QUERIES.length)];
 

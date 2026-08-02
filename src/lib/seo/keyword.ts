@@ -6,7 +6,7 @@
 import { generateText } from 'ai';
 import { google } from '@ai-sdk/google';
 import { expandQuery } from '@/lib/rag';
-import type { KeywordResearchResult, KeywordCluster, Keyword, SearchIntent } from './types';
+import type { KeywordResearchResult, KeywordCluster, Keyword } from './types';
 
 interface AiKeywordResponse {
   clusters: KeywordCluster[];
@@ -34,8 +34,6 @@ Schema:
     "keywords": [{
       "keyword": "...",
       "intent": "informational|commercial|transactional|navigational",
-      "volume": 0-10000,
-      "difficulty": 0-100,
       "cluster": "..."
     }]
   }],
@@ -69,7 +67,7 @@ Tạo:
 
 export async function researchKeywords(
   seed: string,
-  domain = 'eurowindow.com.vn',
+  domain = 'eurowindowdoor.com',
 ): Promise<KeywordResearchResult> {
   const expandedSeeds = expandQuery(seed);
   const aiResult = await generateKeywordsWithAi(seed, domain, expandedSeeds);

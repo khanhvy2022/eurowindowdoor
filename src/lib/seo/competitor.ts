@@ -18,9 +18,13 @@ export async function analyzeCompetitor(domain: string): Promise<CompetitorAnaly
 
   const pageContent = crawlResults
     .filter(r => r.status === 'fulfilled')
-    .map(r => (r as PromiseFulfilledResult<any>).value.markdown || '')
+    .map(r => (r as PromiseFulfilledResult<{ markdown?: string }>).value.markdown || '')
     .join('\n\n')
     .slice(0, 4000);
+
+  if (!pageContent) {
+    throw new Error('Competitor crawl returned no content; refusing to generate an ungrounded analysis.');
+  }
 
   const { text } = await generateText({
     model: google('gemini-2.0-flash-exp'),
@@ -32,9 +36,7 @@ Schema:
   "weaknesses": ["..."],
   "opportunities": ["..."],
   "schemaUsed": ["Organization", "Product"],
-  "technicalScore": 0-100,
-  "contentScore": 0-100,
-  "topPages": [{"url": "...", "estimatedTraffic": 0, "keywords": ["..."]}],
+  "topPages": [{"url": "...", "keywords": ["..."]}],
   "keywordGaps": [{"keyword": "...", "intent": "informational", "cluster": "..."}],
   "contentGaps": ["..."]
 }`,
@@ -65,8 +67,6 @@ Phân tích:
         contentGaps: data.contentGaps || [],
         schemaUsed: (data.schemaUsed || []) as SchemaType[],
         topPages: data.topPages || [],
-        technicalScore: data.technicalScore || 50,
-        contentScore: data.contentScore || 50,
         analyzedAt: new Date(),
       };
     }
@@ -83,8 +83,8 @@ Phân tích:
     contentGaps: [],
     schemaUsed: [],
     topPages: [],
-    technicalScore: 50,
-    contentScore: 50,
+    technicalScore: undefined,
+    contentScore: undefined,
     analyzedAt: new Date(),
   };
 }

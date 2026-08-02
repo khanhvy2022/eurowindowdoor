@@ -249,7 +249,8 @@ export interface SiteHealthResult {
   brokenLinks: BrokenLink[];
   redirectChains: RedirectChain[];
   canonicalIssues: CanonicalIssue[];
-  indexStatus: IndexStatus;
+  /** Index coverage needs URL Inspection / GSC data and is omitted until available. */
+  indexStatus?: IndexStatus;
   checkedAt: Date;
 }
 
@@ -323,9 +324,11 @@ export interface SearchConsoleData {
   topPages: Array<SearchConsoleMetrics & { page: string }>;
   topCountries: Array<SearchConsoleMetrics & { country: string }>;
   topDevices: Array<SearchConsoleMetrics & { device: string }>;
-  indexCoverage: IndexStatus;
   fetchedAt: Date;
   isLiveData: boolean;
+  connectionStatus: 'connected' | 'not_configured' | 'error';
+  siteUrl?: string;
+  error?: string;
 }
 
 // ─── Competitor Analysis ───────────────────────────────────────────────────────
@@ -338,9 +341,11 @@ export interface CompetitorAnalysis {
   keywordGaps: Keyword[];
   contentGaps: string[];
   schemaUsed: SchemaType[];
-  topPages: Array<{ url: string; estimatedTraffic?: number; keywords?: string[] }>;
-  technicalScore: number;
-  contentScore: number;
+  /** Discovered pages only. Traffic requires a licensed third-party data source. */
+  topPages: Array<{ url: string; keywords?: string[] }>;
+  /** Omitted because an LLM comparison is not a measured technical audit. */
+  technicalScore?: number;
+  contentScore?: number;
   analyzedAt: Date;
 }
 

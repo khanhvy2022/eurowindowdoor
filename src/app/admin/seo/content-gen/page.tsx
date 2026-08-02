@@ -97,7 +97,7 @@ export default function SeoContentGenPage() {
                 {result.metaTitle}
               </div>
               <div className="text-emerald-700 font-medium">
-                https://eurowindow.com.vn/{result.slug}
+                https://eurowindowdoor.com/{result.slug}
               </div>
               <div className="text-gray-600">
                 {result.metaDescription}

@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 
 const SeoKeywordSchema = new Schema({
   seed:        { type: String, required: true, index: true },
-  domain:      { type: String, default: 'eurowindow.com.vn' },
+  domain:      { type: String, default: 'eurowindowdoor.com' },
   clusters:    [Schema.Types.Mixed],
   questions:   [Schema.Types.Mixed],
   gaps:        [Schema.Types.Mixed],

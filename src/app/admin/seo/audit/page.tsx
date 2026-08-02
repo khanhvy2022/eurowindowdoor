@@ -5,7 +5,7 @@ import AuditChecklist from '@/components/seo/AuditChecklist';
 import type { TechnicalAuditResult } from '@/lib/seo/types';
 
 export default function SeoAuditPage() {
-  const [url, setUrl] = useState('https://eurowindow.com.vn');
+  const [url, setUrl] = useState('https://eurowindowdoor.com');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<TechnicalAuditResult | null>(null);
 
@@ -40,7 +40,7 @@ export default function SeoAuditPage() {
             type="url"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            placeholder="Nhập URL cần kiểm tra (ví dụ: https://eurowindow.com.vn)"
+            placeholder="Nhập URL cần kiểm tra (ví dụ: https://eurowindowdoor.com)"
             required
             className="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#005ba7]"
           />

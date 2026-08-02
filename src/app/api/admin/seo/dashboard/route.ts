@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/auth';
-import { auditUrl } from '@/lib/seo/audit';
 import { checkSiteHealth } from '@/lib/seo/site-health';
 import { getSearchConsoleData } from '@/lib/seo/search-console';
 import { aggregateSeoScore } from '@/lib/seo/score';
@@ -16,7 +15,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const domain = 'eurowindow.com.vn';
+    const domain = 'eurowindowdoor.com';
 
     // Parallel: site health + GSC data + live PageSpeed
     const [healthResult, gscData, pageSpeedResult] = await Promise.allSettled([
@@ -30,29 +29,27 @@ export async function GET(req: NextRequest) {
     const pageSpeed = pageSpeedResult.status === 'fulfilled' ? pageSpeedResult.value : null;
 
     // Get latest audit from DB
-    let latestAudit: any = null;
+    let latestAudit: { url?: string; score?: number; auditedAt?: Date } | null = null;
     try {
       await connectToDatabase();
       const db = mongoose.connection.db;
       if (db) {
         latestAudit = await db.collection('seo_audits')
-          .findOne({}, { sort: { auditedAt: -1 } });
+          .findOne({}, { sort: { auditedAt: -1 } }) as { url?: string; score?: number; auditedAt?: Date } | null;
       }
     } catch { /* non-critical */ }
 
-    const technicalScore = latestAudit?.score ?? 75;
-    const performanceScore = pageSpeed?.performance ?? 70;
-    const accessibilityScore = pageSpeed?.accessibility ?? 80;
-    const contentScore = pageSpeed?.seo ?? 80;
-    const mobileScore = pageSpeed?.performance ? Math.min(100, pageSpeed.performance + 5) : 70;
-
-    const seoScore = aggregateSeoScore({
-      technical: technicalScore,
-      content: contentScore,
-      performance: performanceScore,
-      mobile: mobileScore,
-      accessibility: accessibilityScore,
-    });
+    // A composite score is meaningful only when each contributing measurement exists.
+    // Mobile is measured by the PageSpeed mobile strategy, not inferred from desktop data.
+    const seoScore = typeof latestAudit?.score === 'number' && pageSpeed
+      ? aggregateSeoScore({
+          technical: latestAudit.score,
+          content: pageSpeed.seo,
+          performance: pageSpeed.performance,
+          mobile: pageSpeed.performance,
+          accessibility: pageSpeed.accessibility,
+        })
+      : null;
 
     return NextResponse.json({
       seoScore,
@@ -70,9 +67,9 @@ export async function GET(req: NextRequest) {
       latestAudit: latestAudit
         ? { url: latestAudit.url, score: latestAudit.score, auditedAt: latestAudit.auditedAt }
         : null,
-      indexStatus: health?.indexStatus ?? gsc?.indexCoverage,
+      indexStatus: health?.indexStatus,
     });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json({ error: error instanceof Error ? error.message : 'Dashboard request failed' }, { status: 500 });
   }
 }
