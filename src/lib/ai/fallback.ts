@@ -1,6 +1,8 @@
 import { streamText, stepCountIs } from 'ai';
 import { getProviderModel, ProviderName } from './providers';
 import { recordSuccess, triggerCooldown, recordFallback, isProviderHealthy } from './health';
+import { keyPool } from './key-pool';
+import { resolveDynamicGeminiModel, reportBadGeminiModel } from './gemini-discovery';
 
 export interface FallbackOptions {
   sequence: ProviderName[];
@@ -8,7 +10,7 @@ export interface FallbackOptions {
   messages: any[];
   system: string;
   temperature?: number;
-  preferredModel?: string; // e.g. "gemini:gemini-flash-latest"
+  preferredModel?: string;
   tools?: Record<string, any>;
   maxSteps?: number;
   onFinish?: (event: any) => Promise<void> | void;
@@ -21,7 +23,7 @@ interface TargetConfig {
 }
 
 /**
- * Executes a streaming chat request using the multi-provider & multi-model fallback sequence.
+ * Executes a streaming chat request using Dynamic Model Discovery & Multi-Provider Fallback.
  */
 export async function streamTextWithFallback(options: FallbackOptions) {
   const { sequence, task, messages, system, temperature = 0.7, preferredModel, tools, maxSteps } = options;
@@ -41,8 +43,9 @@ export async function streamTextWithFallback(options: FallbackOptions) {
     }
 
     if (provider === 'gemini') {
-      targets.push({ provider: 'gemini', model: 'gemini-flash-lite-latest' });
-      targets.push({ provider: 'gemini', model: 'gemini-flash-latest' });
+      const apiKey = keyPool.getKey('gemini') || process.env.GOOGLE_GENERATIVE_AI_API_KEY || '';
+      const dynamicModel = await resolveDynamicGeminiModel(apiKey);
+      targets.push({ provider: 'gemini', model: dynamicModel });
     } else if (provider === 'groq') {
       targets.push({ provider: 'groq', model: 'llama-3.3-70b-versatile' });
       targets.push({ provider: 'groq', model: 'mixtral-8x7b-32768' });
@@ -65,7 +68,7 @@ export async function streamTextWithFallback(options: FallbackOptions) {
     }
 
     try {
-      console.log(`[AI Fallback System] Đang kết nối: ${provider} (${modelId}) cho tác vụ ${task}`);
+      console.log(`[AI Fallback System] Đang kết nối: ${provider} (Mô hình: ${modelId}) cho tác vụ ${task}`);
       
       const modelInstance = getProviderModel(provider, modelId);
       
@@ -82,6 +85,9 @@ export async function streamTextWithFallback(options: FallbackOptions) {
         onError: (event: any) => {
           const { error } = event;
           console.error(`[AI Fallback System] Stream Error từ ${provider} (${modelId}):`, error);
+          if (provider === 'gemini') {
+            reportBadGeminiModel(modelId, error?.message || String(error));
+          }
           triggerCooldown(provider, `Stream error (${modelId}): ${error?.message || error}`, 3 * 60 * 1000);
           if (options.onError) {
             options.onError(event);
@@ -103,6 +109,10 @@ export async function streamTextWithFallback(options: FallbackOptions) {
       const errorMsg = err.message || String(err);
       console.error(`[AI Fallback System] Lỗi từ ${provider} (${modelId}): ${errorMsg}`);
       
+      if (provider === 'gemini') {
+        reportBadGeminiModel(modelId, errorMsg);
+      }
+
       const errLower = errorMsg.toLowerCase();
       const isQuotaOrLimit =
         errLower.includes('quota') ||
@@ -112,10 +122,12 @@ export async function streamTextWithFallback(options: FallbackOptions) {
         errLower.includes('timeout') ||
         errLower.includes('fetch failed') ||
         errLower.includes('rate') ||
-        errLower.includes('exceeded');
+        errLower.includes('exceeded') ||
+        errLower.includes('404') ||
+        errLower.includes('not found');
 
       if (isQuotaOrLimit) {
-        triggerCooldown(provider, `Model ${modelId} quota error: ${errorMsg}`, 5 * 60 * 1000);
+        triggerCooldown(provider, `Model ${modelId} error: ${errorMsg}`, 5 * 60 * 1000);
       } else {
         triggerCooldown(provider, `Model ${modelId} error: ${errorMsg}`, 30 * 1000);
       }
