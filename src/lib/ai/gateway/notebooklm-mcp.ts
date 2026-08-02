@@ -1,7 +1,9 @@
 import connectToDatabase from '@/lib/db';
 import mongoose from 'mongoose';
-import { google } from '@ai-sdk/google';
 import { generateText } from 'ai';
+import { getProviderModel } from '../providers';
+import { keyPool } from '../key-pool';
+import { resolveDynamicGeminiModel } from '../gemini-discovery';
 
 export interface NotebookInfo {
   key: string;
@@ -41,7 +43,7 @@ export class NotebookLmMcpAdapter {
     notebookKey: string,
     query: string
   ): Promise<{ context: string; citations: any[] }> {
-    const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+    const apiKey = keyPool.getKey('gemini');
     if (!apiKey) {
       console.warn('[NotebookLmMcpAdapter] Google API Key is missing. Skipping NotebookLM query fallback.');
       return { context: '', citations: [] };
@@ -66,7 +68,7 @@ Trả về JSON:
 }`;
 
       const { text } = await generateText({
-        model: google('gemini-2.5-flash'),
+        model: getProviderModel('gemini', await resolveDynamicGeminiModel(apiKey)),
         prompt: prompt,
         temperature: 0.1,
       });

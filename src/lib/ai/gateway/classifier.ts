@@ -1,5 +1,7 @@
-import { google } from '@ai-sdk/google';
 import { generateText } from 'ai';
+import { getProviderModel } from '../providers';
+import { keyPool } from '../key-pool';
+import { resolveDynamicGeminiModel } from '../gemini-discovery';
 
 export type UserIntent =
   | 'product_consulting'
@@ -48,7 +50,7 @@ export async function classifyIntent(messages: any[]): Promise<UserIntent> {
   const cleanText = content.toLowerCase().trim();
 
   // Primary attempt: LLM-based classification
-  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+  const apiKey = keyPool.getKey('gemini');
   if (apiKey) {
     try {
       const prompt = `Bạn là hệ thống phân loại ý định (Intent Classifier) của Eurowindow AI.
@@ -69,7 +71,7 @@ Tin nhắn người dùng: "${content}"
 Chỉ xuất ra ĐÚNG 1 từ khóa ý định (ví dụ: 'product_consulting' hoặc 'house_design'), không viết thêm bất kỳ từ nào khác.`;
 
       const { text } = await generateText({
-        model: google('gemini-2.5-flash'),
+        model: getProviderModel('gemini', await resolveDynamicGeminiModel(apiKey)),
         prompt: prompt,
         temperature: 0.1,
       });

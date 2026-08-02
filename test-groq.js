@@ -1,0 +1,1 @@
+console.log(require('dotenv').config({path: '.env.local'})); const { createOpenAI } = require('@ai-sdk/openai'); const groq = createOpenAI({ apiKey: process.env.GROQ_API_KEY, baseURL: 'https://api.groq.com/openai/v1' }); groq.chat('llama-3.3-70b-versatile'); console.log('Groq initialized successfully');

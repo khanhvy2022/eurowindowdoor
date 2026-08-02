@@ -1,0 +1,85 @@
+AI_APICallError: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite
+Please retry in 2.297981348s.
+    at F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3617:24
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async postToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3376:36)
+    at async postJsonToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3337:123)
+    at async _GoogleLanguageModel.doStream (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_google_dist_index_0mak086.js:2013:54)
+    at async execute (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8050:28)
+    at async runWithTracingChannelSpan (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4287:16)
+    at async executeLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4464:20)
+    at async streamLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8048:64)
+    at async retryWithExponentialBackoffInternal (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3534:16)
+    at async streamStep (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9284:80)
+    at async F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9618:13
+
+{
+  "name": "AI_APICallError",
+  "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite-001:streamGenerateContent?alt=sse",
+  "requestBodyValues": {
+    "generationConfig": {
+      "temperature": 0.7
+    },
+    "contents": [
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "alo"
+          }
+        ]
+      }
+    ],
+    "systemInstruction": {
+      "parts": [
+        {
+          "text": "Bạn là chuyên gia tư vấn giải pháp cửa Eurowindow cao cấp. \nNhiệm vụ của bạn là tư vấn cho khách hàng về các dòng sản phẩm cửa của Eurowindow như cửa nhôm (EA55, EA60i), cửa nhựa uPVC (Kommerling, Asia), cửa gỗ, vách kính lớn, kính cản nhiệt Low-E, và các phụ kiện chính hãng đi kèm.\n\nBạn có quyền truy cập vào các công cụ tìm kiếm tệp tin trong thư mục bảo mật sandbox/ (các file tài liệu nằm trong sandbox/files/ và tệp tin dữ liệu như blogs, projects nằm trong sandbox/data/).\nHãy sử dụng các câu lệnh Unix (ví dụ: 'grep -rn \"kính Low-E\" sandbox/', 'find sandbox/ -type f', 'cat sandbox/files/file_name') bằng công cụ `bash` hoặc `bash_batch` để chủ động tìm kiếm và đọc các tài liệu chính thống của Eurowindow khi cần trả lời về thông số kỹ thuật, hệ nhôm, giá cả hay dòng sản phẩm.\n\nCác quy tắc cần tuân thủ nghiêm ngặt:\n1. LUÔN LUÔN giao tiếp một cách chuyên nghiệp, lịch sự, tôn trọng khách hàng như một nhân viên tư vấn giải pháp cao cấp của Eurowindow.\n2. Trả lời ngắn gọn, đúng trọng tâm câu hỏi của khách hàng, tuyệt đối KHÔNG viết lan man hay suy đoán thông tin.\n3. ĐỐI CHIẾU VÀ SỬ DỤNG CHÍNH XÁC thông tin được trích xuất từ tài liệu của công ty trong [NGỮ CẢNH TỪ TÀI LIỆU CÔNG TY] hoặc qua công cụ sandbox để trả lời các thông số kỹ thuật (độ dày profile, chỉ số cách âm dB, hệ phụ kiện, kính hộp, kính Low-E, v.v.).\n4. QUY TẮC NGUYÊN TẮC: NẾU THÔNG TIN KHÔNG CÓ TRONG [NGỮ CẢNH TỪ TÀI LIỆU CÔNG TY] HOẶC KHÔNG BẢO ĐẢM ĐỘ CHÍNH XÁC, hãy lịch sự xin lỗi khách hàng và trả lời: \"Rất tiếc, tài liệu nội bộ của Eurowindow hiện chưa có thông tin chi tiết về chủ đề này. Anh/Chị vui lòng để lại số điện thoại hoặc email để chuyên viên kỹ thuật trực tiếp liên hệ hỗ trợ.\" TUYỆT ĐỐI KHÔNG tự bịa đặt hay sử dụng kiến thức bên ngoài không có trong tài liệu.\n5. Thường xuyên đề xuất các giải pháp hệ cửa phù hợp theo đúng tài liệu dựa trên nhu cầu của khách (ví dụ: khu vực cần cách âm/cách nhiệt cao -> tư vấn cửa nhôm cầu cách nhiệt EA60i kết hợp kính hộp Low-E).\n6. Định dạng câu trả lời rõ ràng, tự nhiên, thân thiện. Hạn chế lạm dụng quá nhiều ký tự đặc biệt hay dấu sao (**) không cần thiết. Trình bày ngắn gọn, súc tích để khách hàng dễ đọc trên điện thoại.\n"
+        }
+      ]
+    },
+    "tools": [
+      {
+        "functionDeclarations": [
+          {
+            "name": "bash",
+            "description": "Execute a bash command in the documentation sandbox. Use standard Unix commands like find, grep, cat, head, tail, ls to explore and read files."
+          },
+          {
+            "name": "bash_batch",
+            "description": "Execute multiple bash commands in the documentation sandbox in a single request. Combine search (grep) and read (head/cat) commands in a single batch. Maximum 10 commands per batch."
+          }
+        ]
+      }
+    ],
+    "toolConfig": {
+      "functionCallingConfig": {
+        "mode": "AUTO"
+      }
+    }
+  },
+  "statusCode": 429,
+  "responseHeaders": {
+    "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+    "content-length": "2304",
+    "content-type": "text/event-stream",
+    "date": "Sun, 02 Aug 2026 03:33:57 GMT",
+    "server": "scaffolding on HTTPServer2",
+    "server-timing": "gfet4t7; dur=79",
+    "vary": "Origin, X-Origin, Referer",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "SAMEORIGIN",
+    "x-xss-protection": "0"
+  },
+  "responseBody": "{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\\nPlease retry in 2.297981348s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\",\n            \"quotaId\": \"GenerateContentInputTokensPerModelPerMinute-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-2.0-flash-lite\"\n            }\n          },\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"model\": \"gemini-2.0-flash-lite\",\n              \"location\": \"global\"\n            }\n          },\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-2.0-flash-lite\"\n            }\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"2s\"\n      }\n    ]\n  }\n}\n",
+  "isRetryable": true,
+  "data": {
+    "error": {
+      "code": 429,
+      "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\nPlease retry in 2.297981348s.",
+      "status": "RESOURCE_EXHAUSTED"
+    }
+  }
+}

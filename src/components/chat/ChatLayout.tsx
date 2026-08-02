@@ -55,9 +55,9 @@ const CooldownTimer: React.FC<{ cooldownUntil: number }> = ({ cooldownUntil }) =
 
 const MODELS = [
   { id: 'auto', name: 'Tự động (Auto)', desc: 'Tự động chọn & fallback', icon: Sparkles, color: 'text-amber-500 bg-amber-500/10' },
-  { id: 'grok', name: 'Grok (xAI)', desc: 'grok-2-1212', icon: Bot, color: 'text-emerald-500 bg-emerald-500/10' },
+  { id: 'groq', name: 'Groq', desc: 'llama-3.3-70b-versatile', icon: Bot, color: 'text-emerald-500 bg-emerald-500/10' },
   { id: 'gemini', name: 'Gemini (Google)', desc: 'gemini-2.5-flash', icon: Sparkles, color: 'text-blue-500 bg-blue-500/10' },
-  { id: 'deepseek', name: 'DeepSeek Chat', desc: 'deepseek-chat', icon: Cpu, color: 'text-cyan-500 bg-cyan-500/10' },
+  { id: 'cloudflare', name: 'Cloudflare Workers AI', desc: 'Llama 3.3 70B', icon: Cpu, color: 'text-cyan-500 bg-cyan-500/10' },
   { id: 'openrouter', name: 'OpenRouter Free', desc: 'qwen, deepseek, llama', icon: MessageSquare, color: 'text-purple-500 bg-purple-500/10' },
 ];
 

@@ -2,7 +2,12 @@ import { streamText, stepCountIs } from 'ai';
 import { getProviderModel, ProviderName } from './providers';
 import { recordSuccess, triggerCooldown, recordFallback, isProviderHealthy } from './health';
 import { keyPool } from './key-pool';
-import { resolveDynamicGeminiModel, reportBadGeminiModel } from './gemini-discovery';
+import { getDynamicGeminiModelCandidates, reportBadGeminiModel, warmGeminiModelDiscovery } from './gemini-discovery';
+
+const startupGeminiKey = keyPool.getKey('gemini');
+if (startupGeminiKey) {
+  void warmGeminiModelDiscovery(startupGeminiKey);
+}
 
 export interface FallbackOptions {
   sequence: ProviderName[];
@@ -35,6 +40,7 @@ export async function streamTextWithFallback(options: FallbackOptions) {
   const finalSequence = healthySequence.length > 0 ? healthySequence : sequence;
 
   const targets: TargetConfig[] = [];
+  let skipRemainingGeminiCandidates = false;
   
   for (const provider of finalSequence) {
     if (preferredModel && preferredModel.startsWith(`${provider}:`)) {
@@ -44,8 +50,12 @@ export async function streamTextWithFallback(options: FallbackOptions) {
 
     if (provider === 'gemini') {
       const apiKey = keyPool.getKey('gemini') || process.env.GOOGLE_GENERATIVE_AI_API_KEY || '';
-      const dynamicModel = await resolveDynamicGeminiModel(apiKey);
-      targets.push({ provider: 'gemini', model: dynamicModel });
+      try {
+        const dynamicModels = await getDynamicGeminiModelCandidates(apiKey);
+        targets.push(...dynamicModels.map(model => ({ provider: 'gemini' as const, model })));
+      } catch (error) {
+        console.warn(`[AI Fallback System] Skipping Gemini: ${error instanceof Error ? error.message : String(error)}`);
+      }
     } else if (provider === 'groq') {
       targets.push({ provider: 'groq', model: 'llama-3.3-70b-versatile' });
       targets.push({ provider: 'groq', model: 'mixtral-8x7b-32768' });
@@ -58,6 +68,10 @@ export async function streamTextWithFallback(options: FallbackOptions) {
 
   for (let i = 0; i < targets.length; i++) {
     const { provider, model: modelId } = targets[i];
+
+    if (provider === 'gemini' && skipRemainingGeminiCandidates) {
+      continue;
+    }
     
     if (!attemptedProviders.includes(provider)) {
       attemptedProviders.push(provider);
@@ -80,7 +94,10 @@ export async function streamTextWithFallback(options: FallbackOptions) {
         system,
         temperature,
         maxRetries: 0,
-        maxTokens: 1500,
+        // AI SDK v7 uses `maxOutputTokens`. The deprecated `maxTokens` option
+        // is ignored, which made OpenRouter reserve its 65,536-token default
+        // and reject requests when the account had a smaller credit balance.
+        maxOutputTokens: 1500,
         tools: provider === 'gemini' ? tools : undefined,
         stopWhen: stepCountIs(maxSteps || 5),
         onFinish: options.onFinish,
@@ -228,6 +245,13 @@ export async function streamTextWithFallback(options: FallbackOptions) {
         errLower.includes('exceeded') ||
         errLower.includes('404') ||
         errLower.includes('not found');
+
+      // Quota failures belong to the API key, not a single model. A 404 still
+      // moves to the next discovered Gemini model; quota failures move on.
+      if (provider === 'gemini' && /quota|429|rate|limit|exceeded/.test(errLower)) {
+        skipRemainingGeminiCandidates = true;
+        console.warn('[AI Fallback System] Gemini quota is unavailable; moving to the next provider.');
+      }
 
       if (isQuotaOrLimit) {
         triggerCooldown(provider, `Model ${modelId} error: ${errorMsg}`, 5 * 60 * 1000);

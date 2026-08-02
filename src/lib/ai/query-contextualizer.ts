@@ -6,6 +6,8 @@
 
 import { generateText } from 'ai';
 import { getProviderModel } from './providers';
+import { keyPool } from './key-pool';
+import { resolveDynamicGeminiModel } from './gemini-discovery';
 
 export async function contextualizeQuery(
   messages: Array<{ role: string; content?: any; parts?: any }>,
@@ -62,7 +64,8 @@ QUY TẮC:
 CÂU TÌM KIẾM ĐỘC LẬP:`;
 
   try {
-    const model = getProviderModel('gemini', 'gemini-3.5-flash');
+    const apiKey = keyPool.getKey('gemini') || '';
+    const model = getProviderModel('gemini', await resolveDynamicGeminiModel(apiKey));
     const { text } = await generateText({
       model,
       prompt,

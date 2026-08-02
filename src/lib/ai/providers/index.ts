@@ -13,7 +13,8 @@ export interface ProviderModelConfig {
 
 // Default models mapped for each provider
 export const DEFAULT_MODELS: Record<ProviderName, string> = {
-  gemini: 'gemini-flash-lite-latest',
+  // Gemini is deliberately resolved through models.list in gemini-discovery.
+  gemini: '',
   openrouter: 'openrouter/auto',
   groq: 'llama-3.3-70b-versatile',
   cloudflare: '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
@@ -27,6 +28,9 @@ export function getProviderModel(provider: ProviderName, modelName?: string): La
 
   switch (provider) {
     case 'gemini': {
+      if (!targetModel) {
+        throw new Error('Gemini model must be selected via Dynamic Model Discovery.');
+      }
       const gemini = getGeminiProvider();
       if (!gemini) {
         throw new Error('GOOGLE_GENERATIVE_AI_API_KEY chưa được cấu hình.');

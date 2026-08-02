@@ -1,9 +1,11 @@
 import connectToDatabase from '@/lib/db';
 import mongoose from 'mongoose';
 import { LlamaParseService } from '@/services/llamaparse';
-import { google } from '@ai-sdk/google';
 import { generateText } from 'ai';
 import { KnowledgeDatabaseEngine } from './knowledge-db';
+import { getProviderModel } from '../providers';
+import { keyPool } from '../key-pool';
+import { resolveDynamicGeminiModel } from '../gemini-discovery';
 
 export interface DocumentJob {
   id: string;
@@ -27,6 +29,11 @@ export interface DocumentJob {
 }
 
 export class DocumentIntelligenceEngine {
+  private static async getGeminiModel() {
+    const apiKey = keyPool.getKey('gemini') || '';
+    return getProviderModel('gemini', await resolveDynamicGeminiModel(apiKey));
+  }
+
   /**
    * Performs advanced OCR on images/PDFs using Gemini Multimodal Vision.
    */
@@ -43,7 +50,7 @@ export class DocumentIntelligenceEngine {
       console.log(`[DocumentIntelligence] Running Gemini Vision OCR...`);
       const base64Data = buffer.toString('base64');
       const { text } = await generateText({
-        model: google('gemini-2.0-flash'),
+        model: await this.getGeminiModel(),
         messages: [
           {
             role: 'user',
@@ -116,7 +123,7 @@ Trả về dữ liệu dưới dạng JSON thuần túy có schema:
 }`;
 
       const { text } = await generateText({
-        model: google('gemini-2.0-flash'),
+        model: await this.getGeminiModel(),
         messages: [
           {
             role: 'user',
@@ -268,7 +275,7 @@ Trả về định dạng JSON:
 
       try {
         const { text } = await generateText({
-          model: google('gemini-2.5-flash'),
+          model: await this.getGeminiModel(),
           prompt: prompt,
           temperature: 0.2
         });

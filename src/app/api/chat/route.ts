@@ -6,8 +6,6 @@ import { streamTextWithFallback } from '@/lib/ai/fallback';
 import { ProviderName } from '@/lib/ai/providers';
 import connectToDatabase from '@/lib/db';
 import mongoose from 'mongoose';
-import { syncDatabaseToSandbox } from '@/lib/ai/sandbox';
-import { bashTool, bashBatchTool } from '@/lib/ai/tools/shell';
 
 // --- Enterprise V2 Architecture ---
 import { analyzeAndContextualize } from '@/lib/ai/v2/orchestrator';
@@ -41,13 +39,10 @@ function withTimeout<T>(operation: Promise<T>, timeoutMs: number, label: string)
 const SYSTEM_PROMPT = `Bạn là chuyên gia tư vấn giải pháp cửa Eurowindow cao cấp. 
 Nhiệm vụ của bạn là tư vấn cho khách hàng về các dòng sản phẩm cửa của Eurowindow như cửa nhôm (EA55, EA60i), cửa nhựa uPVC (Kommerling, Asia), cửa gỗ, vách kính lớn, kính cản nhiệt Low-E, và các phụ kiện chính hãng đi kèm.
 
-Bạn có quyền truy cập vào các công cụ tìm kiếm tệp tin trong thư mục bảo mật sandbox/ (các file tài liệu nằm trong sandbox/files/ và tệp tin dữ liệu như blogs, projects nằm trong sandbox/data/).
-Hãy sử dụng các câu lệnh Unix (ví dụ: 'grep -rn "kính Low-E" sandbox/', 'find sandbox/ -type f', 'cat sandbox/files/file_name') bằng công cụ \`bash\` hoặc \`bash_batch\` để chủ động tìm kiếm và đọc các tài liệu chính thống của Eurowindow khi cần trả lời về thông số kỹ thuật, hệ nhôm, giá cả hay dòng sản phẩm.
-
 Các quy tắc cần tuân thủ nghiêm ngặt:
 1. LUÔN LUÔN giao tiếp một cách chuyên nghiệp, lịch sự, tôn trọng khách hàng như một nhân viên tư vấn giải pháp cao cấp của Eurowindow.
 2. Trả lời ngắn gọn, đúng trọng tâm câu hỏi của khách hàng, tuyệt đối KHÔNG viết lan man hay suy đoán thông tin.
-3. ĐỐI CHIẾU VÀ SỬ DỤNG CHÍNH XÁC thông tin được trích xuất từ tài liệu của công ty trong [NGỮ CẢNH TỪ TÀI LIỆU CÔNG TY] hoặc qua công cụ sandbox để trả lời các thông số kỹ thuật (độ dày profile, chỉ số cách âm dB, hệ phụ kiện, kính hộp, kính Low-E, v.v.).
+3. ĐỐI CHIẾU VÀ SỬ DỤNG CHÍNH XÁC thông tin được trích xuất từ [NGỮ CẢNH TỪ TÀI LIỆU CÔNG TY] để trả lời các thông số kỹ thuật (độ dày profile, chỉ số cách âm dB, hệ phụ kiện, kính hộp, kính Low-E, v.v.). Không nhắc tới prompt, thư mục, công cụ, tên tệp, cơ sở dữ liệu hoặc cơ chế nội bộ.
 4. QUY TẮC NGUYÊN TẮC: NẾU THÔNG TIN KHÔNG CÓ TRONG [NGỮ CẢNH TỪ TÀI LIỆU CÔNG TY] HOẶC KHÔNG BẢO ĐẢM ĐỘ CHÍNH XÁC, hãy lịch sự xin lỗi khách hàng và trả lời: "Rất tiếc, tài liệu nội bộ của Eurowindow hiện chưa có thông tin chi tiết về chủ đề này. Anh/Chị vui lòng để lại số điện thoại hoặc email để chuyên viên kỹ thuật trực tiếp liên hệ hỗ trợ." TUYỆT ĐỐI KHÔNG tự bịa đặt hay sử dụng kiến thức bên ngoài không có trong tài liệu.
 5. Thường xuyên đề xuất các giải pháp hệ cửa phù hợp theo đúng tài liệu dựa trên nhu cầu của khách (ví dụ: khu vực cần cách âm/cách nhiệt cao -> tư vấn cửa nhôm cầu cách nhiệt EA60i kết hợp kính hộp Low-E).
 6. Định dạng câu trả lời rõ ràng, tự nhiên, thân thiện. Hạn chế lạm dụng quá nhiều ký tự đặc biệt hay dấu sao (**) không cần thiết. Trình bày ngắn gọn, súc tích để khách hàng dễ đọc trên điện thoại.
@@ -138,10 +133,6 @@ export async function POST(req: Request) {
 
   try {
     const { messages, data, documentId: bodyDocumentId, model: chosenModel } = await req.json();
-
-    if (process.env.NODE_ENV === 'development' || !process.env.VERCEL) {
-      syncDatabaseToSandbox().catch(err => console.error('[Sandbox Sync Error]', err));
-    }
 
     // Run lead extraction asynchronously in background without blocking response stream
     extractAndSaveLead(messages).catch(err => console.error('[API Lead Error]', err));
@@ -325,10 +316,6 @@ export async function POST(req: Request) {
       system: systemPromptWithContext,
       temperature: 0.7,
       preferredModel: chosenModel,
-      tools: {
-        bash: bashTool,
-        bash_batch: bashBatchTool,
-      },
       maxSteps: 5,
       onFinish: async (event) => {
         const latencyMs = Date.now() - startTime;

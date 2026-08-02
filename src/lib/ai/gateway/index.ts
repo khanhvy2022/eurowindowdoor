@@ -110,7 +110,7 @@ export class GatewayOrchestrator {
 
     let resultText = '';
     let providerName = 'gemini';
-    let activeModelName = 'gemini-2.5-flash';
+    let activeModelName = 'pending-dynamic-selection';
     let tokensUsed = { prompt: 0, completion: 0, total: 0 };
     let errorOccurred: string | undefined;
 

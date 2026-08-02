@@ -69,3 +69,175 @@ Please retry in 58.721956988s.
     at async retryWithExponentialBackoffInternal (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3534:16)
     at async streamStep (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9284:80)
     at async F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9618:13
+[2026-08-01T14:50:21.145Z] openrouter/auto - AI_APICallError: This request requires more credits, or fewer max_tokens. You requested up to 65536 tokens, but can only afford 65460. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account
+    at F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3617:24
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async postToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3376:36)
+    at async postJsonToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3337:123)
+    at async _OpenAIChatLanguageModel.doStream (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_openai_dist_index_1k_duh7.js:1165:54)
+    at async execute (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8050:28)
+    at async runWithTracingChannelSpan (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4287:16)
+    at async executeLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4464:20)
+    at async streamLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8048:64)
+    at async retryWithExponentialBackoffInternal (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3534:16)
+    at async streamStep (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9284:80)
+    at async F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9618:13
+[2026-08-01T14:50:37.295Z] openrouter/auto - AI_APICallError: This request requires more credits, or fewer max_tokens. You requested up to 65536 tokens, but can only afford 65438. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account
+    at F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3617:24
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async postToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3376:36)
+    at async postJsonToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3337:123)
+    at async _OpenAIChatLanguageModel.doStream (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_openai_dist_index_1k_duh7.js:1165:54)
+    at async execute (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8050:28)
+    at async runWithTracingChannelSpan (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4287:16)
+    at async executeLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4464:20)
+    at async streamLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8048:64)
+    at async retryWithExponentialBackoffInternal (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3534:16)
+    at async streamStep (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9284:80)
+    at async F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9618:13
+[2026-08-01T14:50:58.463Z] openrouter/auto - AI_APICallError: This request requires more credits, or fewer max_tokens. You requested up to 65536 tokens, but can only afford 65438. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account
+    at F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3617:24
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async postToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3376:36)
+    at async postJsonToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3337:123)
+    at async _OpenAIChatLanguageModel.doStream (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_openai_dist_index_1k_duh7.js:1165:54)
+    at async execute (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8050:28)
+    at async runWithTracingChannelSpan (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4287:16)
+    at async executeLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4464:20)
+    at async streamLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8048:64)
+    at async retryWithExponentialBackoffInternal (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3534:16)
+    at async streamStep (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9284:80)
+    at async F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9618:13
+[2026-08-01T14:51:02.216Z] openrouter/auto - AI_APICallError: This request requires more credits, or fewer max_tokens. You requested up to 65536 tokens, but can only afford 65438. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account
+    at F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3617:24
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async postToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3376:36)
+    at async postJsonToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3337:123)
+    at async _OpenAIChatLanguageModel.doStream (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_openai_dist_index_1k_duh7.js:1165:54)
+    at async execute (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8050:28)
+    at async runWithTracingChannelSpan (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4287:16)
+    at async executeLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4464:20)
+    at async streamLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8048:64)
+    at async retryWithExponentialBackoffInternal (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3534:16)
+    at async streamStep (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9284:80)
+    at async F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9618:13
+[2026-08-01T14:53:59.541Z] openrouter/auto - AI_APICallError: This request requires more credits, or fewer max_tokens. You requested up to 65536 tokens, but can only afford 65438. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account
+    at F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3617:24
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async postToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3376:36)
+    at async postJsonToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3337:123)
+    at async _OpenAIChatLanguageModel.doStream (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_openai_dist_index_1k_duh7.js:1165:54)
+    at async execute (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8050:28)
+    at async runWithTracingChannelSpan (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4287:16)
+    at async executeLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4464:20)
+    at async streamLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8048:64)
+    at async retryWithExponentialBackoffInternal (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3534:16)
+    at async streamStep (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9284:80)
+    at async F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9618:13
+[2026-08-01T14:56:06.565Z] gemini-2.0-flash - AI_APICallError: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+Please retry in 28.605814817s.
+    at F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3617:24
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async postToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3376:36)
+    at async postJsonToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3337:123)
+    at async _GoogleLanguageModel.doStream (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_google_dist_index_0mak086.js:2013:54)
+    at async execute (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8050:28)
+    at async runWithTracingChannelSpan (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4287:16)
+    at async executeLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4464:20)
+    at async streamLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8048:64)
+    at async retryWithExponentialBackoffInternal (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3534:16)
+    at async streamStep (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9284:80)
+    at async F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9618:13
+[2026-08-01T14:56:08.591Z] gemini-2.0-flash - AI_APICallError: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+Please retry in 26.556593567s.
+    at F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3617:24
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async postToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3376:36)
+    at async postJsonToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3337:123)
+    at async _GoogleLanguageModel.doStream (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_google_dist_index_0mak086.js:2013:54)
+    at async execute (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8050:28)
+    at async runWithTracingChannelSpan (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4287:16)
+    at async executeLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4464:20)
+    at async streamLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8048:64)
+    at async retryWithExponentialBackoffInternal (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3534:16)
+    at async streamStep (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9284:80)
+    at async F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9618:13
+[2026-08-01T14:56:09.643Z] gemini-2.0-flash - AI_APICallError: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 25.519750824s.
+    at F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3617:24
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async postToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3376:36)
+    at async postJsonToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3337:123)
+    at async _GoogleLanguageModel.doStream (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_google_dist_index_0mak086.js:2013:54)
+    at async execute (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8050:28)
+    at async runWithTracingChannelSpan (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4287:16)
+    at async executeLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4464:20)
+    at async streamLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8048:64)
+    at async retryWithExponentialBackoffInternal (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3534:16)
+    at async streamStep (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9284:80)
+    at async F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9618:13
+[2026-08-01T14:57:49.458Z] gemini-2.0-flash - AI_APICallError: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 45.709206627s.
+    at F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3617:24
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async postToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3376:36)
+    at async postJsonToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3337:123)
+    at async _GoogleLanguageModel.doStream (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_google_dist_index_0mak086.js:2013:54)
+    at async execute (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8050:28)
+    at async runWithTracingChannelSpan (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4287:16)
+    at async executeLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4464:20)
+    at async streamLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8048:64)
+    at async retryWithExponentialBackoffInternal (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3534:16)
+    at async streamStep (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9284:80)
+    at async F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9618:13
+[2026-08-01T14:57:52.324Z] grok-2-1212 - AI_APICallError: Forbidden
+    at F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3631:24
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async postToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3376:36)
+    at async postJsonToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3337:123)
+    at async _OpenAIResponsesLanguageModel.doStream (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_openai_dist_index_1k_duh7.js:7278:54)
+    at async execute (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8050:28)
+    at async runWithTracingChannelSpan (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4287:16)
+    at async executeLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4464:20)
+    at async streamLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8048:64)
+    at async retryWithExponentialBackoffInternal (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3534:16)
+    at async streamStep (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9284:80)
+    at async F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9618:13
+[2026-08-01T14:58:22.529Z] google/gemini-2.0-flash-lite:free - AI_APICallError: google/gemini-2.0-flash-lite:free is not a valid model ID
+    at F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3617:24
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async postToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3376:36)
+    at async postJsonToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3337:123)
+    at async _OpenAIChatLanguageModel.doStream (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_openai_dist_index_1k_duh7.js:1165:54)
+    at async execute (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8050:28)
+    at async runWithTracingChannelSpan (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4287:16)
+    at async executeLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4464:20)
+    at async streamLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8048:64)
+    at async retryWithExponentialBackoffInternal (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3534:16)
+    at async streamStep (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9284:80)
+    at async F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9618:13
+[2026-08-01T15:00:44.403Z] deepseek-chat - AI_APICallError: Insufficient Balance
+    at F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3617:24
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async postToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3376:36)
+    at async postJsonToApi (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3337:123)
+    at async _OpenAIChatLanguageModel.doStream (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_openai_dist_index_1k_duh7.js:1165:54)
+    at async execute (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8050:28)
+    at async runWithTracingChannelSpan (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4287:16)
+    at async executeLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:4464:20)
+    at async streamLanguageModelCall (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:8048:64)
+    at async retryWithExponentialBackoffInternal (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_@ai-sdk_provider-utils_dist_index_1afcz0a.js:3534:16)
+    at async streamStep (F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9284:80)
+    at async F:\Nextjs\eurowindowdoor\.next\dev\server\chunks\node_modules_ai_dist_index_16zsbns.js:9618:13
