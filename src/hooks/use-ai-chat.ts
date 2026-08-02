@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useChat, UseChatOptions } from '@ai-sdk/react';
-import { UIMessage } from 'ai';
+import { useChat } from '@ai-sdk/react';
 
 // Client-side simple query cache to prevent repeat requests for identical queries
 const CLIENT_QUERY_CACHE = new Map<string, string>();
@@ -62,6 +61,7 @@ export function useAiChat(options: {
 
   // Configure Vercel AI SDK useChat
   const chat = useChat({
+    api: '/api/chat',
     body: {
       model: selectedModel,
       ...(documentId ? { documentId } : {}),
@@ -83,25 +83,23 @@ export function useAiChat(options: {
         onResponse(response);
       }
       
-      // Update health stats after a query completes
       fetchHealthStats();
     },
     onFinish: (message: any) => {
       submissionLockRef.current = false;
-      
-      // Save query response to client cache if successful
       const cleanPrompt = lastPromptRef.current.trim().toLowerCase();
       if (cleanPrompt && message.content) {
         CLIENT_QUERY_CACHE.set(cleanPrompt, message.content);
       }
     },
-    onError: () => {
+    onError: (err: any) => {
+      console.error('[useAiChat] Stream Error:', err);
       submissionLockRef.current = false;
       fetchHealthStats();
     }
   } as any) as any;
 
-  const { messages, setMessages, sendMessage: sdkSendMessage, regenerate, status } = chat;
+  const { messages, setMessages, append, sendMessage: sdkSendMessage, reload, status } = chat;
   const isLoading = status === 'submitted' || status === 'streaming';
   const [input, setInput] = useState('');
 
@@ -114,22 +112,18 @@ export function useAiChat(options: {
     const cleanPrompt = prompt.trim();
     if (!cleanPrompt) return;
 
-    // 1. Debounce protection: block if loading or locked
     if (isLoading || submissionLockRef.current) {
       console.warn('Chat request is currently locked or loading. Ignoring duplicate click.');
       return;
     }
 
-    // Lock submission
     submissionLockRef.current = true;
     lastPromptRef.current = cleanPrompt;
 
-    // 2. Cache hit check: bypass network request if identical query exists
     const cachedResponse = CLIENT_QUERY_CACHE.get(cleanPrompt.toLowerCase());
     if (cachedResponse && !data?.documentId) {
       console.log('[AI Cache] Trả về câu trả lời đã lưu trong cache client.');
       
-      // Simulate typing/connection delay of 150ms for natural feel
       setTimeout(() => {
         const userMsg: any = {
           id: `cache-user-${Date.now()}`,
@@ -156,14 +150,21 @@ export function useAiChat(options: {
       return;
     }
 
-    // 3. Cache miss: trigger regular streaming call
     try {
       setInput('');
-      await sdkSendMessage({
-        text: cleanPrompt,
-      });
+      if (append) {
+        await append({
+          role: 'user',
+          content: cleanPrompt,
+        });
+      } else if (sdkSendMessage) {
+        await sdkSendMessage({
+          role: 'user',
+          content: cleanPrompt,
+        });
+      }
     } catch (err) {
-      console.error('Failed to append message:', err);
+      console.error('Failed to send message:', err);
       submissionLockRef.current = false;
     }
   };
@@ -171,7 +172,9 @@ export function useAiChat(options: {
   const handleRetry = () => {
     if (messages.length === 0) return;
     submissionLockRef.current = true;
-    regenerate();
+    if (reload) {
+      reload();
+    }
   };
 
   return {
