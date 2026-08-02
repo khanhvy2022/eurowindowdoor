@@ -380,17 +380,22 @@ export async function POST(req: Request) {
       }
     });
 
-    return result.toDataStreamResponse({
+    return result.toUIMessageStreamResponse({
       headers: {
         'X-AI-Provider': provider,
         'X-AI-Model': modelName,
-        'X-AI-Fallback-Triggered': fallbackTriggered ? 'true' : 'false',
+        'X-AI-Fallback-Triggered': fallbackTriggered.toString(),
         'X-AI-Intent': intent
-      },
+      }
     });
   } catch (error: any) {
     console.error('Error in chat API, invoking friendly fallback response:', error);
     
+    // TEMPORARY: Write error to file for debugging
+    try {
+      require('fs').writeFileSync('F:/Nextjs/eurowindowdoor/chat-error.log', error.stack || error.toString());
+    } catch (e) {}
+
     // Log fatal fallback
     await logTransaction({
       sessionId: 'session-' + Date.now(),
@@ -413,15 +418,27 @@ export async function POST(req: Request) {
     
     // Friendly fallback
     const friendlyMessage = "Hiện tại trợ lý đang bận không thể trả lời tin nhắn của quý khách ngay được, quý khách có thể liên hệ lại tôi sau hoặc liên hệ qua Zalo, gọi điện tới Mr. Thắng để được tư vấn thêm.";
-    const textEncoder = new TextEncoder();
     
-    // Gửi phản hồi theo đúng giao thức AI SDK (tiền tố 0: biểu diễn text chunk)
-    const formattedProtocolMsg = `0:${JSON.stringify(friendlyMessage)}\n`;
+    // Gửi phản hồi theo đúng giao thức UIMessageStream (SSE format) cho @ai-sdk/react v4
+    const textPartId = `fallback-${Date.now()}`;
+    const ssePayload = [
+      { type: 'start' },
+      { type: 'start-step' },
+      { type: 'text-start', id: textPartId },
+      { type: 'text-delta', id: textPartId, delta: friendlyMessage },
+      { type: 'text-end', id: textPartId },
+      { type: 'finish-step' },
+      { type: 'finish' },
+    ].map(part => `data: ${JSON.stringify(part)}\n\n`).join('') + 'data: [DONE]\n\n';
     
-    return new Response(textEncoder.encode(formattedProtocolMsg), {
+    return new Response(ssePayload, {
       status: 200,
       headers: {
-        'Content-Type': 'text/plain; charset=utf-8',
+        'content-type': 'text/event-stream',
+        'cache-control': 'no-cache',
+        'connection': 'keep-alive',
+        'x-vercel-ai-ui-message-stream': 'v1',
+        'x-accel-buffering': 'no',
         'X-AI-Provider': 'fallback-error-handler',
         'X-AI-Model': 'friendly-fallback-msg',
         'X-AI-Fallback-Triggered': 'true'
@@ -429,3 +446,4 @@ export async function POST(req: Request) {
     });
   }
 }
+

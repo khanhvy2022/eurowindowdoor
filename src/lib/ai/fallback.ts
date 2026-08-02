@@ -72,6 +72,8 @@ export async function streamTextWithFallback(options: FallbackOptions) {
       
       const modelInstance = getProviderModel(provider, modelId);
       
+      let streamError: any = null;
+      
       const result = streamText({
         model: modelInstance,
         messages,
@@ -84,6 +86,7 @@ export async function streamTextWithFallback(options: FallbackOptions) {
         onFinish: options.onFinish,
         onError: (event: any) => {
           const { error } = event;
+          streamError = error; // Capture the error!
           console.error(`[AI Fallback System] Stream Error từ ${provider} (${modelId}):`, error);
           if (provider === 'gemini') {
             reportBadGeminiModel(modelId, error?.message || String(error));
@@ -95,11 +98,110 @@ export async function streamTextWithFallback(options: FallbackOptions) {
         },
       } as any);
 
+      // --- CRITICAL FIX ---
+      const reader = result.textStream.getReader();
+      const firstChunk = await reader.read();
+      
+      // If streamError was populated during the very first chunk, or the first chunk was unexpectedly done without yielding anything
+      if (streamError) {
+        throw streamError;
+      }
+      if (firstChunk.done) {
+        throw new Error("Stream closed prematurely without yielding any content.");
+      }
+      
+      // If we reach here, the connection succeeded!
       recordSuccess(provider, 0);
       console.log(`[AI Fallback System] Kết nối thành công: ${provider} (${modelId})`);
 
+      // Reconstruct a new text stream from the consumed first chunk and the rest of the reader
+      const reconstructedTextStream = new ReadableStream({
+        async start(controller) {
+          if (!firstChunk.done && firstChunk.value) {
+            controller.enqueue(firstChunk.value);
+          }
+          if (!firstChunk.done) {
+            try {
+              while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                if (value) controller.enqueue(value);
+              }
+            } catch (err) {
+              controller.error(err);
+            }
+          }
+          controller.close();
+        }
+      });
+
+      // Use a Proxy to override textStream and toTextStreamResponse safely without mutating the original read-only object
+      const customResult = new Proxy(result, {
+        get(target, prop) {
+          if (prop === 'textStream') {
+            return reconstructedTextStream;
+          }
+          if (prop === 'toTextStreamResponse') {
+            return (init?: any) => {
+              return new Response(reconstructedTextStream.pipeThrough(new TextEncoderStream()), {
+                status: 200,
+                headers: {
+                  'Content-Type': 'text/plain; charset=utf-8',
+                  ...(init?.headers || {})
+                }
+              });
+            };
+          }
+          if (prop === 'toUIMessageStreamResponse') {
+            return (init?: any) => {
+              // AI SDK v7 expects UI message lifecycle events rather than a
+              // legacy `{ type: 'text', value }` SSE payload.
+              const textPartId = `text-${Date.now()}`;
+              const sseStream = reconstructedTextStream.pipeThrough(
+                new TransformStream({
+                  start(controller) {
+                    controller.enqueue({ type: 'start' });
+                    controller.enqueue({ type: 'start-step' });
+                    controller.enqueue({ type: 'text-start', id: textPartId });
+                  },
+                  transform(chunk, controller) {
+                    controller.enqueue({ type: 'text-delta', id: textPartId, delta: chunk });
+                  },
+                  flush(controller) {
+                    controller.enqueue({ type: 'text-end', id: textPartId });
+                    controller.enqueue({ type: 'finish-step' });
+                    controller.enqueue({ type: 'finish' });
+                  }
+                })
+              ).pipeThrough(new TransformStream({
+                transform(part, controller) {
+                  controller.enqueue(`data: ${JSON.stringify(part)}\n\n`);
+                },
+                flush(controller) {
+                  controller.enqueue('data: [DONE]\n\n');
+                }
+              })).pipeThrough(new TextEncoderStream());
+              
+              return new Response(sseStream, {
+                status: 200,
+                headers: {
+                  'content-type': 'text/event-stream',
+                  'cache-control': 'no-cache',
+                  'connection': 'keep-alive',
+                  'x-vercel-ai-ui-message-stream': 'v1',
+                  'x-accel-buffering': 'no',
+                  ...(init?.headers || {})
+                }
+              });
+            };
+          }
+          const value = Reflect.get(target, prop);
+          return typeof value === 'function' ? value.bind(target) : value;
+        }
+      });
+
       return {
-        result,
+        result: customResult,
         provider,
         modelName: modelId,
         fallbackTriggered: i > 0,
@@ -108,6 +210,7 @@ export async function streamTextWithFallback(options: FallbackOptions) {
     } catch (err: any) {
       const errorMsg = err.message || String(err);
       console.error(`[AI Fallback System] Lỗi từ ${provider} (${modelId}): ${errorMsg}`);
+      try { require('fs').appendFileSync('F:/Nextjs/eurowindowdoor/fallback.log', `Lỗi từ ${provider}: ${errorMsg}\n`); } catch(e){}
       
       if (provider === 'gemini') {
         reportBadGeminiModel(modelId, errorMsg);
@@ -136,6 +239,7 @@ export async function streamTextWithFallback(options: FallbackOptions) {
     }
   }
 
+  try { require('fs').appendFileSync('F:/Nextjs/eurowindowdoor/fallback.log', `Tất cả mô hình đều lỗi: ${lastError}\n`); } catch(e){}
   throw new Error(
     `Tất cả các mô hình AI trong chuỗi fallback đều gặp lỗi. Lỗi cuối cùng: ${lastError?.message || lastError}`
   );

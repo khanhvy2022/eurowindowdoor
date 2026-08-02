@@ -35,6 +35,10 @@ if (!globalRef.providerHealthRegistry) {
 export const registry = globalRef.providerHealthRegistry;
 
 export function isProviderHealthy(provider: ProviderName): boolean {
+  if (!registry[provider]) {
+    registry[provider] = DEFAULT_HEALTH();
+  }
+
   if (!isProviderAvailable(provider)) {
     if (registry[provider].status !== 'offline') {
       registry[provider].status = 'offline';

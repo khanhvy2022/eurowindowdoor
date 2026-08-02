@@ -63,16 +63,8 @@ export function getProviderModel(provider: ProviderName, modelName?: string): La
  * Check if a provider has its API Key configured.
  */
 export function isProviderAvailable(provider: ProviderName): boolean {
-  switch (provider) {
-    case 'gemini':
-      return !!(process.env.GEMINI_API_KEYS || process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY);
-    case 'openrouter':
-      return !!(process.env.OPENROUTER_API_KEYS || process.env.OPENROUTER_API_KEY);
-    case 'groq':
-      return !!(process.env.GROQ_API_KEYS || process.env.GROQ_API_KEY);
-    case 'cloudflare':
-      return !!(process.env.CLOUDFLARE_API_TOKENS || process.env.CLOUDFLARE_API_TOKEN);
-    default:
-      return false;
-  }
+  // Use keyPool to check availability since it can read from .env.local dynamically
+  const { keyPool } = require('../key-pool');
+  const key = keyPool.getKey(provider);
+  return !!key;
 }

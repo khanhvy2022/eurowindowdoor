@@ -30,10 +30,30 @@ class KeyPoolManager {
 
   public refreshPoolFromEnv() {
     const parseKeys = (envVar: string, singleVar: string, provider: ProviderName): KeyEntry[] => {
-      const keysStr = process.env[envVar] || process.env[singleVar] || '';
+      let keysStr = process.env[envVar] || process.env[singleVar] || '';
+      
+      // Fallback: Read directly from .env.local if process.env is stale (e.g. server not restarted)
+      if (!keysStr) {
+        try {
+          const fs = require('fs');
+          const path = require('path');
+          const envLocalPath = path.resolve(process.cwd(), '.env.local');
+          if (fs.existsSync(envLocalPath)) {
+            const envContent = fs.readFileSync(envLocalPath, 'utf-8');
+            const match = envContent.match(new RegExp(`^${envVar}=(.*)$`, 'm')) || 
+                          envContent.match(new RegExp(`^${singleVar}=(.*)$`, 'm'));
+            if (match && match[1]) {
+              keysStr = match[1].trim();
+            }
+          }
+        } catch (e) {
+          console.error('[KeyPool] Error reading .env.local', e);
+        }
+      }
+
       if (!keysStr) return [];
-      const keys = keysStr.split(',').map(k => k.trim()).filter(Boolean);
-      return keys.map(key => ({
+      const keys = keysStr.split(',').map((k: string) => k.trim()).filter(Boolean);
+      return keys.map((key: string) => ({
         key,
         provider,
         status: 'active',

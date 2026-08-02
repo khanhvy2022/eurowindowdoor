@@ -146,6 +146,9 @@ export function useAiChat(options: {
     }
 
     try {
+      if (chat.clearError) {
+        chat.clearError();
+      }
       setInput('');
       if (append) {
         await append({
@@ -167,6 +170,9 @@ export function useAiChat(options: {
   };
 
   const handleRetry = () => {
+    if (chat.clearError) {
+      chat.clearError();
+    }
     if (messages.length === 0) return;
     submissionLockRef.current = false;
     if (reload) {
@@ -189,3 +195,4 @@ export function useAiChat(options: {
     refreshHealth: fetchHealthStats,
   };
 }
+
