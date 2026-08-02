@@ -46,13 +46,10 @@ export async function streamTextWithFallback(options: FallbackOptions) {
     } else if (provider === 'groq') {
       targets.push({ provider: 'groq', model: 'llama-3.3-70b-versatile' });
       targets.push({ provider: 'groq', model: 'mixtral-8x7b-32768' });
+    } else if (provider === 'cloudflare') {
+      targets.push({ provider: 'cloudflare', model: '@cf/meta/llama-3.3-70b-instruct-fp8-fast' });
     } else if (provider === 'openrouter') {
       targets.push({ provider: 'openrouter', model: 'openrouter/auto' });
-      targets.push({ provider: 'openrouter', model: 'meta-llama/llama-3.3-70b-instruct:free' });
-    } else if (provider === 'deepseek') {
-      targets.push({ provider: 'deepseek', model: 'deepseek-chat' });
-    } else if (provider === 'grok') {
-      targets.push({ provider: 'grok', model: 'grok-2-1212' });
     }
   }
 

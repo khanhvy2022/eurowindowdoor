@@ -1,8 +1,7 @@
 import { createOpenAI } from '@ai-sdk/openai';
-import { keyPool } from '../key-pool';
 
 export function getDeepSeekProvider() {
-  const apiKey = keyPool.getKey('deepseek');
+  const apiKey = process.env.DEEPSEEK_API_KEY;
   if (!apiKey) return null;
   return createOpenAI({
     apiKey,

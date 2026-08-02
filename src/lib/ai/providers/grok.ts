@@ -1,8 +1,7 @@
 import { createOpenAI } from '@ai-sdk/openai';
-import { keyPool } from '../key-pool';
 
 export function getGrokProvider() {
-  const apiKey = keyPool.getKey('grok');
+  const apiKey = process.env.XAI_API_KEY;
   if (!apiKey) return null;
   return createOpenAI({
     apiKey,

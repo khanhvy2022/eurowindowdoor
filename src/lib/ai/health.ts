@@ -3,7 +3,7 @@ import { isProviderAvailable, ProviderName } from './providers';
 export interface ProviderHealth {
   status: 'online' | 'offline' | 'cooldown';
   cooldownUntil: number | null;
-  latency: number[]; // recent response latencies in ms
+  latency: number[];
   requestCount: number;
   errorCount: number;
   fallbackCount: number;
@@ -25,21 +25,16 @@ const globalRef = globalThis as unknown as {
 
 if (!globalRef.providerHealthRegistry) {
   globalRef.providerHealthRegistry = {
-    grok: DEFAULT_HEALTH(),
     gemini: DEFAULT_HEALTH(),
     openrouter: DEFAULT_HEALTH(),
-    deepseek: DEFAULT_HEALTH(),
     groq: DEFAULT_HEALTH(),
+    cloudflare: DEFAULT_HEALTH(),
   };
 }
 
 export const registry = globalRef.providerHealthRegistry;
 
-/**
- * Checks if a provider is fully operational (has API key and is NOT in cooldown).
- */
 export function isProviderHealthy(provider: ProviderName): boolean {
-  // 1. Check API Key availability
   if (!isProviderAvailable(provider)) {
     if (registry[provider].status !== 'offline') {
       registry[provider].status = 'offline';
@@ -48,84 +43,59 @@ export function isProviderHealthy(provider: ProviderName): boolean {
     return false;
   }
 
-  // 2. Check cooldown status
-  const stats = registry[provider];
-  if (stats.status === 'cooldown') {
-    if (stats.cooldownUntil && Date.now() > stats.cooldownUntil) {
-      // Cooldown expired! Reset to online
-      stats.status = 'online';
-      stats.cooldownUntil = null;
+  const p = registry[provider];
+  const now = Date.now();
+
+  if (p.status === 'cooldown') {
+    if (p.cooldownUntil && now >= p.cooldownUntil) {
+      p.status = 'online';
+      p.cooldownUntil = null;
+      p.lastErrorMsg = undefined;
+      console.log(`[HealthRegistry] ${provider} đã hết thời gian Cooldown. Tự động phục hồi trạng thái Online.`);
       return true;
     }
     return false;
   }
 
-  // Otherwise, if it was marked offline (due to missing key) but now key is found
-  if (stats.status === 'offline') {
-    stats.status = 'online';
-  }
-
-  return true;
+  return p.status === 'online';
 }
 
-/**
- * Retrieves the health profile of a single provider.
- */
-export function getProviderHealth(provider: ProviderName): ProviderHealth {
-  // Trigger auto cooldown expiry check
-  isProviderHealthy(provider);
-  return registry[provider];
-}
-
-/**
- * Retrieves health profiles of all providers.
- */
-export function getAllProvidersHealth(): Record<ProviderName, ProviderHealth> {
-  const keys: ProviderName[] = ['grok', 'gemini', 'openrouter', 'deepseek'];
-  keys.forEach(isProviderHealthy);
-  return registry;
-}
-
-/**
- * Records a successful response.
- */
 export function recordSuccess(provider: ProviderName, latencyMs: number) {
-  const stats = registry[provider];
-  stats.status = 'online';
-  stats.cooldownUntil = null;
-  stats.requestCount += 1;
-  
-  // Track last 10 latency entries
-  stats.latency.push(latencyMs);
-  if (stats.latency.length > 10) {
-    stats.latency.shift();
+  const p = registry[provider];
+  p.requestCount += 1;
+  p.latency.push(latencyMs);
+  if (p.latency.length > 20) p.latency.shift();
+  p.status = 'online';
+}
+
+export function triggerCooldown(provider: ProviderName, errorMsg: string, durationMs = 5 * 60 * 1000) {
+  const p = registry[provider];
+  p.errorCount += 1;
+  p.status = 'cooldown';
+  p.cooldownUntil = Date.now() + durationMs;
+  p.lastErrorMsg = errorMsg;
+  console.warn(`[HealthRegistry] Kích hoạt Cooldown cho ${provider} trong ${durationMs / 1000}s. Nguyên nhân: ${errorMsg}`);
+}
+
+export function recordFallback(provider: ProviderName) {
+  if (registry[provider]) {
+    registry[provider].fallbackCount += 1;
   }
 }
 
-/**
- * Triggers cooldown for a provider when it fails.
- * Cooldown defaults to 5 minutes (300,000ms).
- */
-export function triggerCooldown(provider: ProviderName, errorMsg: string, durationMs = 5 * 60 * 1000) {
-  const stats = registry[provider];
-  stats.status = 'cooldown';
-  stats.cooldownUntil = Date.now() + durationMs;
-  stats.errorCount += 1;
-  stats.lastErrorMsg = errorMsg;
-  console.warn(`[AI Health System] Provider ${provider} enters COOLDOWN for ${durationMs / 1000}s. Reason: ${errorMsg}`);
-}
+export function getAllProvidersHealth() {
+  const providers: ProviderName[] = ['gemini', 'groq', 'cloudflare', 'openrouter'];
+  const res: Record<string, any> = {};
 
-/**
- * Increments the fallback count for a provider (i.e. when we fail to use it and must try a fallback).
- */
-export function recordFallback(provider: ProviderName) {
-  const stats = registry[provider];
-  stats.fallbackCount += 1;
-}
+  providers.forEach(p => {
+    const isAvailable = isProviderAvailable(p);
+    const h = registry[p] || DEFAULT_HEALTH();
+    res[p] = {
+      ...h,
+      available: isAvailable,
+      avgLatencyMs: h.latency.length > 0 ? Math.round(h.latency.reduce((a, b) => a + b, 0) / h.latency.length) : 0,
+    };
+  });
 
-/**
- * Forces reset of stats. Useful for testing or manual recovery.
- */
-export function resetProviderStats(provider: ProviderName) {
-  registry[provider] = DEFAULT_HEALTH();
+  return res;
 }

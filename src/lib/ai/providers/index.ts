@@ -1,12 +1,10 @@
 import { LanguageModel } from 'ai';
-import { getGrokProvider } from './grok';
 import { getGeminiProvider } from './gemini';
 import { getOpenRouterProvider } from './openrouter';
-import { getDeepSeekProvider } from './deepseek';
 import { getGroqProvider } from './groq';
-import { keyPool } from '../key-pool';
+import { getCloudflareProvider } from './cloudflare';
 
-export type ProviderName = 'grok' | 'gemini' | 'openrouter' | 'deepseek' | 'groq';
+export type ProviderName = 'gemini' | 'openrouter' | 'groq' | 'cloudflare';
 
 export interface ProviderModelConfig {
   provider: ProviderName;
@@ -15,11 +13,10 @@ export interface ProviderModelConfig {
 
 // Default models mapped for each provider
 export const DEFAULT_MODELS: Record<ProviderName, string> = {
-  grok: 'grok-2-1212',
   gemini: 'gemini-flash-latest',
   openrouter: 'openrouter/auto',
-  deepseek: 'deepseek-chat',
   groq: 'llama-3.3-70b-versatile',
+  cloudflare: '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
 };
 
 /**
@@ -29,24 +26,10 @@ export function getProviderModel(provider: ProviderName, modelName?: string): La
   const targetModel = modelName || DEFAULT_MODELS[provider];
 
   switch (provider) {
-    case 'groq': {
-      const groq = getGroqProvider();
-      if (!groq) {
-        throw new Error('GROQ_API_KEY chưa được cấu hình.');
-      }
-      return groq.chat(targetModel);
-    }
-    case 'grok': {
-      const grok = getGrokProvider();
-      if (!grok) {
-        throw new Error('XAI_API_KEY chưa được cấu hình.');
-      }
-      return grok(targetModel);
-    }
     case 'gemini': {
       const gemini = getGeminiProvider();
       if (!gemini) {
-        throw new Error('GEMINI_API_KEY chưa được cấu hình.');
+        throw new Error('GOOGLE_GENERATIVE_AI_API_KEY chưa được cấu hình.');
       }
       return gemini(targetModel);
     }
@@ -57,12 +40,19 @@ export function getProviderModel(provider: ProviderName, modelName?: string): La
       }
       return openrouter.chat(targetModel);
     }
-    case 'deepseek': {
-      const deepseek = getDeepSeekProvider();
-      if (!deepseek) {
-        throw new Error('DEEPSEEK_API_KEY chưa được cấu hình.');
+    case 'groq': {
+      const groq = getGroqProvider();
+      if (!groq) {
+        throw new Error('GROQ_API_KEY chưa được cấu hình.');
       }
-      return deepseek.chat(targetModel);
+      return groq.chat(targetModel);
+    }
+    case 'cloudflare': {
+      const cf = getCloudflareProvider();
+      if (!cf) {
+        throw new Error('CLOUDFLARE_API_TOKEN chưa được cấu hình.');
+      }
+      return cf.chat(targetModel);
     }
     default:
       throw new Error(`Nhà cung cấp AI không hợp lệ: ${provider}`);
@@ -74,16 +64,14 @@ export function getProviderModel(provider: ProviderName, modelName?: string): La
  */
 export function isProviderAvailable(provider: ProviderName): boolean {
   switch (provider) {
-    case 'groq':
-      return !!(process.env.GROQ_API_KEYS || process.env.GROQ_API_KEY);
-    case 'grok':
-      return !!(process.env.XAI_API_KEYS || process.env.XAI_API_KEY);
     case 'gemini':
       return !!(process.env.GEMINI_API_KEYS || process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY);
     case 'openrouter':
       return !!(process.env.OPENROUTER_API_KEYS || process.env.OPENROUTER_API_KEY);
-    case 'deepseek':
-      return !!(process.env.DEEPSEEK_API_KEYS || process.env.DEEPSEEK_API_KEY);
+    case 'groq':
+      return !!(process.env.GROQ_API_KEYS || process.env.GROQ_API_KEY);
+    case 'cloudflare':
+      return !!(process.env.CLOUDFLARE_API_TOKENS || process.env.CLOUDFLARE_API_TOKEN);
     default:
       return false;
   }

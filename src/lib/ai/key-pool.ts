@@ -14,16 +14,14 @@ class KeyPoolManager {
     gemini: [],
     openrouter: [],
     groq: [],
-    grok: [],
-    deepseek: [],
+    cloudflare: [],
   };
 
   private activeIndexes: Record<ProviderName, number> = {
     gemini: 0,
     openrouter: 0,
     groq: 0,
-    grok: 0,
-    deepseek: 0,
+    cloudflare: 0,
   };
 
   constructor() {
@@ -51,8 +49,7 @@ class KeyPoolManager {
     }
     this.pool.openrouter = parseKeys('OPENROUTER_API_KEYS', 'OPENROUTER_API_KEY', 'openrouter');
     this.pool.groq = parseKeys('GROQ_API_KEYS', 'GROQ_API_KEY', 'groq');
-    this.pool.grok = parseKeys('XAI_API_KEYS', 'XAI_API_KEY', 'grok');
-    this.pool.deepseek = parseKeys('DEEPSEEK_API_KEYS', 'DEEPSEEK_API_KEY', 'deepseek');
+    this.pool.cloudflare = parseKeys('CLOUDFLARE_API_TOKENS', 'CLOUDFLARE_API_TOKEN', 'cloudflare');
   }
 
   public getKey(provider: ProviderName): string | null {
