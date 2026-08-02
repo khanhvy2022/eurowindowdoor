@@ -79,7 +79,7 @@ export async function streamTextWithFallback(options: FallbackOptions) {
         temperature,
         maxRetries: 0,
         maxTokens: 1500,
-        tools,
+        tools: provider === 'gemini' ? tools : undefined,
         stopWhen: stepCountIs(maxSteps || 5),
         onFinish: options.onFinish,
         onError: (event: any) => {
