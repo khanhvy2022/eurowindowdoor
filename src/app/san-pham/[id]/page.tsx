@@ -14,33 +14,6 @@ interface ProductDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
-export async function generateMetadata({ params }: ProductDetailPageProps) {
-  const resolvedParams = await params;
-  const product = productsData.find(
-    (p) => p.slug === resolvedParams.id || p.id === resolvedParams.id
-  );
-
-  if (!product) {
-    return {
-      title: 'Sản Phẩm Không Tồn Tại | Eurowindow',
-    };
-  }
-
-  return {
-    title: `${product.name} | Eurowindow`,
-    description: product.description || `Thông tin chi tiết và thông số kỹ thuật sản phẩm ${product.name} chính hãng Eurowindow.`,
-    alternates: {
-      canonical: `https://eurowindowdoor.com/san-pham/${product.slug}`,
-    },
-    openGraph: {
-      title: product.name,
-      description: product.description,
-      url: `https://eurowindowdoor.com/san-pham/${product.slug}`,
-      images: [{ url: product.image }],
-    },
-  };
-}
-
 
 export default function ProductDetailPage({ params }: ProductDetailPageProps) {
   const resolvedParams = use(params);
