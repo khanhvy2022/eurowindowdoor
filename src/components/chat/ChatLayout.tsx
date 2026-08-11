@@ -289,7 +289,7 @@ export function ChatLayout({ isAdmin = false }: { isAdmin?: boolean }) {
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
               <Bot className="w-5 h-5 text-white" />
             </div>
-            <h1 className="font-semibold text-sm">Eurowindow AI</h1>
+            <p className="font-semibold text-sm">Eurowindow AI</p>
           </div>
           
           <div className="flex items-center gap-2">

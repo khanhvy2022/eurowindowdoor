@@ -105,7 +105,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Brand Header */}
         <div className="p-5 border-b border-gray-200 flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-black text-[#005ba7] tracking-tight">Eurowindow</h1>
+            <p className="text-xl font-black text-[#005ba7] tracking-tight">Eurowindow</p>
             <p className="text-xs text-gray-500 font-medium">Hệ Thống Quản Trị AI Portal</p>
           </div>
           <button

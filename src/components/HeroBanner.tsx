@@ -40,6 +40,12 @@ export const HeroBanner: React.FC = () => {
 
   return (
     <section className="relative w-full overflow-hidden mt-[105px] group select-none font-sans touch-pan-y">
+      {/* SEO: Page H1 — visually hidden, present for crawlers and screen readers */}
+      <h1 className="sr-only">
+        {language === 'ENG'
+          ? 'Eurowindow – Aluminium Doors, uPVC Doors, Wood Doors & Glass Systems'
+          : 'Eurowindow – Cửa Nhôm, Cửa Nhựa uPVC, Cửa Gỗ, Vách Kính Tiêu Chuẩn Châu Âu'}
+      </h1>
       {/* Top Countdown Progress Bar */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-white/20 z-40">
         <div 
