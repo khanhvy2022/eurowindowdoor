@@ -52,6 +52,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.7,
     },
+    {
+      url: `${baseUrl}/bao-gia`,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/chat`,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
   ];
 
   const productPages: MetadataRoute.Sitemap = productsData.map((product) => ({

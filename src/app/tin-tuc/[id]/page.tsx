@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params;
   
   if (CATEGORY_MAP[id]) {
-    return { title: `${CATEGORY_MAP[id]} | Tin tức Eurowindow` };
+    return { title: `${CATEGORY_MAP[id]}` };
   }
   
   try {
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     }
   } catch (e) {}
 
-  return { title: 'Tin tức Eurowindow' };
+  return { title: 'Tin tức' };
 }
 
 export default async function ArticleDetailPage({ params }: { params: Promise<{ id: string }> }) {

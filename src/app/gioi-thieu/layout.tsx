@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Giới Thiệu Eurowindow - 23 Năm Tiên Phong Công Nghệ Châu Âu',
+  title: 'Giới Thiệu - 23 Năm Tiên Phong Công Nghệ Châu Âu',
   description: 'Tìm hiểu hành trình 23 năm phát triển của Eurowindow - nhà cung cấp giải pháp tổng thể về cửa và vật liệu xây dựng xanh hàng đầu Việt Nam.',
   keywords: [
     'Giới thiệu Eurowindow',
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     canonical: 'https://eurowindowdoor.com/gioi-thieu',
   },
   openGraph: {
-    title: 'Giới Thiệu Eurowindow - 23 Năm Tiên Phong Công Nghệ Châu Âu',
+  title: 'Giới Thiệu - 23 Năm Tiên Phong Công Nghệ Châu Âu',
     description: 'Hành trình tiên phong kiến tạo không gian sống xanh và hiện đại.',
     url: 'https://eurowindowdoor.com/gioi-thieu',
   },

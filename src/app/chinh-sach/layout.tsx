@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Chính Sách Eurowindow - Bảo Hành, Đổi Trả & Vận Chuyển Toàn Quốc',
+  title: 'Chính Sách - Bảo Hành, Đổi Trả & Vận Chuyển',
   description: 'Thông tin chi tiết về chính sách bảo hành dài hạn, bảo trì định kỳ, chính sách chất lượng và vận chuyển các sản phẩm cửa Eurowindow.',
   keywords: [
     'Chính sách bảo hành Eurowindow',

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Liên Hệ Eurowindow - Hotline 0966 994 338 | Chi Nhánh Miền Nam',
+  title: 'Liên Hệ - Hotline 0966 994 338',
   description: 'Liên hệ tư vấn, báo giá cửa nhôm kính, cửa nhựa uPVC Eurowindow chính hãng. Hotline: 0966 994 338. Email: thangtq2@eurowindow.biz.',
   keywords: [
     'Liên hệ Eurowindow',

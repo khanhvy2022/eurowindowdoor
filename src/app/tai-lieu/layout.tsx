@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Tài Liệu Kỹ Thuật Eurowindow - Catalog & Brochure Sản Phẩm',
+  title: 'Tài Liệu Kỹ Thuật - Catalog & Brochure Sản Phẩm',
   description: 'Tải về catalog, thông số kỹ thuật, bản vẽ chi tiết và tài liệu hướng dẫn sử dụng các giải pháp cửa nhôm kính, cửa uPVC Eurowindow.',
   keywords: [
     'Catalog Eurowindow',

@@ -19,13 +19,13 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
   const resolvedParams = await params;
   
   if (CATEGORY_MAP[resolvedParams.id]) {
-    return { title: `${CATEGORY_MAP[resolvedParams.id]} | Công trình tiêu biểu Eurowindow` };
+    return { title: `${CATEGORY_MAP[resolvedParams.id]} | Công trình tiêu biểu` };
   }
   
   const project = projectsData.find((p) => p.slug === resolvedParams.id || p.id === resolvedParams.id);
 
   if (!project) {
-    return { title: 'Công trình tiêu biểu Eurowindow' };
+    return { title: 'Công trình tiêu biểu' };
   }
 
   return {

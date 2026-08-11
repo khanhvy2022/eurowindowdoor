@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Tin Tức Eurowindow - Khuyến Mãi, Sự Kiện & Công Nghệ Cửa Mới Nhất',
+  title: 'Tin Tức - Khuyến Mãi, Sự Kiện & Công Nghệ Cửa',
   description: 'Cập nhật tin tức mới nhất về thương hiệu Eurowindow, các chương trình khuyến mãi tri ân khách hàng, sự kiện và xu hướng công nghệ cửa Châu Âu.',
   keywords: [
     'Tin tức Eurowindow',

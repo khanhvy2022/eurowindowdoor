@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import ProjectsContent from './ProjectsContent';
 
 export const metadata = {
-  title: 'Công trình tiêu biểu | Eurowindow',
+  title: 'Công trình tiêu biểu',
   description: 'Các dự án và công trình tiêu biểu sử dụng sản phẩm cửa và vách nhôm kính của Eurowindow trên toàn quốc.',
   alternates: {
     canonical: 'https://eurowindowdoor.com/cong-trinh-tieu-bieu',

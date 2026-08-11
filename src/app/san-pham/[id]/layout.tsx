@@ -14,12 +14,12 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
 
   if (!product) {
     return {
-      title: 'Sản phẩm không tồn tại | Eurowindow',
+      title: 'Sản phẩm không tồn tại',
     };
   }
 
   return {
-    title: `${product.name} - ${product.category} | Eurowindow`,
+    title: `${product.name} - ${product.category}`,
     description: product.description,
     openGraph: {
       title: `${product.name} | Eurowindow`,

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: 'Eurowindow - Cửa Nhôm, Cửa uPVC, Cửa Gỗ, Vách Kính Tiêu Chuẩn Châu Âu',
-    template: '%s | Eurowindow Việt Nam',
+    template: '%s | Eurowindow',
   },
   description: 'Eurowindow - Nhà cung cấp giải pháp tổng thể về cửa nhựa uPVC, cửa nhôm cao cấp, cửa gỗ, cửa cuốn, cửa tự động, kính cản nhiệt Low-E hàng đầu Việt Nam.',
   keywords: [
@@ -43,7 +43,6 @@ export const metadata: Metadata = {
     canonical: siteUrl,
     languages: {
       'vi-VN': siteUrl,
-      'en-US': `${siteUrl}/en`,
     },
   },
   openGraph: {

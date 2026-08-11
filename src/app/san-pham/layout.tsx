@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Sản Phẩm Eurowindow - Cửa Nhôm, Cửa uPVC, Cửa Gỗ, Vách Kính Low-E',
+  title: 'Sản Phẩm - Cửa Nhôm, uPVC, Gỗ, Vách Kính Low-E',
   description: 'Khám phá các dòng sản phẩm cửa nhựa uPVC, cửa nhôm cao cấp, cửa gỗ, cửa cuốn, vách kính mặt dựng và kính cản nhiệt Low-E Eurowindow chính hãng.',
   keywords: [
     'Sản phẩm Eurowindow',
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     canonical: 'https://eurowindowdoor.com/san-pham',
   },
   openGraph: {
-    title: 'Sản Phẩm Eurowindow - Cửa Nhôm, Cửa uPVC, Cửa Gỗ, Vách Kính Low-E',
+  title: 'Sản Phẩm - Cửa Nhôm, uPVC, Gỗ, Vách Kính Low-E',
     description: 'Các giải pháp cửa và vách kính công nghệ Châu Âu hàng đầu Việt Nam.',
     url: 'https://eurowindowdoor.com/san-pham',
   },

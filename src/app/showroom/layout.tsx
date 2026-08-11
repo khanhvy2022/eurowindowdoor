@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Showroom Eurowindow - Hệ Thống Trưng Bày & Trải Nghiệm Toàn Quốc',
+  title: 'Showroom - Hệ Thống Trưng Bày & Trải Nghiệm Toàn Quốc',
   description: 'Danh sách hệ thống Showroom Eurowindow trên toàn quốc. Hãy đến trải nghiệm trực tiếp các giải pháp cửa thông minh và vách kính công nghệ Châu Âu.',
   keywords: [
     'Showroom Eurowindow',
