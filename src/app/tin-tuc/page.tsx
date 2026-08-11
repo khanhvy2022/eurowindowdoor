@@ -3,13 +3,7 @@ import NewsContent from './NewsContent';
 import connectToDatabase from '@/lib/db';
 import { Article } from '@/models/Article';
 
-export const metadata = {
-  title: 'Tin tức',
-  description: 'Cập nhật các tin tức, sự kiện và khuyến mãi mới nhất từ Eurowindow.',
-  alternates: {
-    canonical: 'https://eurowindowdoor.com/tin-tuc',
-  },
-};
+
 
 // Next.js config to ensure fresh data
 export const revalidate = 60;
