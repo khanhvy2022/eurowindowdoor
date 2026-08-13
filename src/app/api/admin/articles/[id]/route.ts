@@ -46,11 +46,20 @@ export async function PUT(
     const resolvedParams = await params;
     const body = await request.json();
 
-    const updated = await Article.findByIdAndUpdate(
-      resolvedParams.id,
-      { $set: body },
-      { new: true, runValidators: true }
-    );
+    let updated;
+    if (mongoose.Types.ObjectId.isValid(resolvedParams.id)) {
+      updated = await Article.findByIdAndUpdate(
+        resolvedParams.id,
+        { $set: body },
+        { new: true, runValidators: true }
+      );
+    } else {
+      updated = await Article.findOneAndUpdate(
+        { slug: resolvedParams.id },
+        { $set: body },
+        { new: true, runValidators: true }
+      );
+    }
 
     if (!updated) {
       return NextResponse.json(
@@ -82,7 +91,13 @@ export async function DELETE(
     await connectToDatabase();
     const resolvedParams = await params;
     
-    const deleted = await Article.findByIdAndDelete(resolvedParams.id);
+    let deleted;
+    if (mongoose.Types.ObjectId.isValid(resolvedParams.id)) {
+      deleted = await Article.findByIdAndDelete(resolvedParams.id);
+    } else {
+      deleted = await Article.findOneAndDelete({ slug: resolvedParams.id });
+    }
+
     if (!deleted) {
       return NextResponse.json(
         { success: false, message: 'Không tìm thấy bài viết để xóa' },
