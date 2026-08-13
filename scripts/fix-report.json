@@ -1,0 +1,241 @@
+{
+  "mode": "apply",
+  "ok": 26,
+  "fail": 0,
+  "report": [
+    {
+      "slug": "the-le-chuong-trinh-khuyen-mai-ngan-uu-dai-vang-tri-an-khach-hang-nhan-ky-niem-20-nam-thanh-lap-eurowindow",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-khuyen-mai/the-le-chuong-trinh-khuyen-mai-ngan-uu-dai-vang-tri-an-khach-hang-nhan-ky-niem-20-nam-thanh-lap-eurowindow.html",
+      "imgCount": 1,
+      "oldLen": 1639,
+      "newLen": 15303,
+      "imgFallback": false
+    },
+    {
+      "slug": "kinh-dien-cho-biet-thu-van-phong-cao-cap-xu-huong-thiet-ke-2026",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tu-van/kinh-dien-cho-biet-thu-van-phong-cao-cap-xu-huong-thiet-ke-2026.html",
+      "imgCount": 2,
+      "oldLen": 6498,
+      "newLen": 6960,
+      "imgFallback": false
+    },
+    {
+      "slug": "cua-tiet-kiem-dien-mua-he-xu-huong-nha-o-hien-dai",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tu-van/cua-tiet-kiem-dien-mua-he-xu-huong-nha-o-hien-dai.html",
+      "imgCount": 3,
+      "oldLen": 6659,
+      "newLen": 7288,
+      "imgFallback": false
+    },
+    {
+      "slug": "cua-cach-am-cach-nhiet-giai-phap-2-trong-1-cho-do-thi",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tu-van/cua-cach-am-cach-nhiet-giai-phap-2-trong-1-cho-do-thi.html",
+      "imgCount": 3,
+      "oldLen": 6972,
+      "newLen": 8090,
+      "imgFallback": false
+    },
+    {
+      "slug": "the-le-chuong-trinh-khuyen-mai-dau-tu-xung-tam-uu-dai-cuc-pham",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-khuyen-mai/the-le-chuong-trinh-khuyen-mai-%E2%80%9Cdau-tu-xung-tam-%E2%80%93-uu-dai-cuc-pham%E2%80%9D.html",
+      "imgCount": 1,
+      "oldLen": 3616,
+      "newLen": 3605,
+      "imgFallback": false
+    },
+    {
+      "slug": "nen-chon-cua-gi-cho-mua-he-nang-nong",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tu-van/nen-chon-cua-gi-cho-mua-he-nang-nong.html",
+      "imgCount": 1,
+      "oldLen": 10462,
+      "newLen": 12526,
+      "imgFallback": false
+    },
+    {
+      "slug": "giai-phap-cach-nhiet-eurowindow-he-2026",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tu-van/giai-phap-cach-nhiet-eurowindow-he-2026.html",
+      "imgCount": 2,
+      "oldLen": 5559,
+      "newLen": 7134,
+      "imgFallback": false
+    },
+    {
+      "slug": "eurowindow-to-chuc-le-ky-ket-khai-xuan-khoi-dong-nam-2026-hanh-thong-but-pha",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-tuc-su-kien/eurowindow-to-chuc-le-ky-ket-khai-xuan-khoi-dong-nam-2026-hanh-thong-but-pha.html",
+      "imgCount": 4,
+      "oldLen": 3895,
+      "newLen": 4289,
+      "imgFallback": false
+    },
+    {
+      "slug": "eurowindow-dong-hanh-dien-dan-nang-luong-va-moi-truong-the-gioi-viet-nam-2026-thuc-day-giai-phap-vat-lieu-xanh-huong-toi-net-zero",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-tuc-su-kien/eurowindow-dong-hanh-dien-dan-nang-luong-va-moi-truong-the-gioi-%E2%80%93-viet-nam-2026-thuc-day-giai-phap-vat-lieu-xanh-huong-toi-net-zero.html",
+      "imgCount": 2,
+      "oldLen": 4552,
+      "newLen": 4482,
+      "imgFallback": false
+    },
+    {
+      "slug": "the-le-chuong-trinh-khuyen-mai-mua-cua-trung-xe-nghi-duong-don-he",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-khuyen-mai/the-le-chuong-trinh-khuyen-mai-mua-cua-trung-xe-nghi-duong-don-he.html",
+      "imgCount": 1,
+      "oldLen": 4049,
+      "newLen": 4476,
+      "imgFallback": false
+    },
+    {
+      "slug": "the-le-chuong-trinh-khuyen-mai-don-ha-sang-nhan-uu-dai-vang",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-khuyen-mai/the-le-chuong-trinh-khuyen-mai-don-ha-sang-nhan-uu-dai-vang.html",
+      "imgCount": 1,
+      "oldLen": 5647,
+      "newLen": 6150,
+      "imgFallback": false
+    },
+    {
+      "slug": "phat-dong-cuoc-thi-eurowindow-noi-lam-viec-toi-yeu",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-noi-bo/phat-dong-cuoc-thi-eurowindow-noi-lam-viec-toi-yeu.html",
+      "imgCount": 1,
+      "oldLen": 3594,
+      "newLen": 4392,
+      "imgFallback": false
+    },
+    {
+      "slug": "eurowindow-khuyen-mai-nhan-dip-vietbuild-don-cua-tan-gia-nhan-qua-nghi-duong",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-khuyen-mai/eurowindow-khuyen-mai-nhan-dip-vietbuild-don-cua-tan-gia-nhan-qua-nghi-duong.html",
+      "imgCount": 1,
+      "oldLen": 5323,
+      "newLen": 5236,
+      "imgFallback": false
+    },
+    {
+      "slug": "eurowindow-trung-thau-thi-cong-he-cua-va-vach-nhom-kinh-du-an-fpt-telecom-tower",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-du-an/eurowindow-trung-thau-thi-cong-he-cua-va-vach-nhom-kinh-du-an-fpt-telecom-tower.html",
+      "imgCount": 1,
+      "oldLen": 4379,
+      "newLen": 4459,
+      "imgFallback": false
+    },
+    {
+      "slug": "eurowindow-thi-cong-cua-va-vach-nhom-kinh-cho-du-an-to-hop-nghi-duong-5-sao-the-residences-at-arbora-quang-nam",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-du-an/eurowindow-thi-cong-cua-va-vach-nhom-kinh-cho-du-an-to-hop-nghi-duong-5-sao-the-residences-at-arbora-quang-nam.html",
+      "imgCount": 2,
+      "oldLen": 4278,
+      "newLen": 4110,
+      "imgFallback": false
+    },
+    {
+      "slug": "eurowindow-kien-tao-khong-gian-song-thuong-luu-tai-chung-cu-cao-tang-the-prive-nam-rach-chiec",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-du-an/eurowindow-kien-tao-khong-gian-song-thuong-luu-tai-chung-cu-cao-tang-the-prive-nam-rach-chiec%C2%A0.html",
+      "imgCount": 1,
+      "oldLen": 3061,
+      "newLen": 2991,
+      "imgFallback": false
+    },
+    {
+      "slug": "eurowindow-gop-phan-kien-tao-khong-gian-song-thuong-luu-du-an-sunshine-noble-palace-long-bien",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-du-an/eurowindow-gop-phan-kien-tao-khong-gian-song-thuong-luu-du-an-sunshine-noble-palace-long-bien.html",
+      "imgCount": 1,
+      "oldLen": 3131,
+      "newLen": 3046,
+      "imgFallback": false
+    },
+    {
+      "slug": "eurowindow-dong-hanh-cung-the-opusk-residence-khang-dinh-vi-the-bat-dong-san-thuong-luu-tai-trung-tam-thu-thiem",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-du-an/eurowindow-dong-hanh-cung-the-opusk-residence-khang-dinh-vi-the-bat-dong-san-thuong-luu-tai-trung-tam-thu-thiem.html",
+      "imgCount": 2,
+      "oldLen": 2929,
+      "newLen": 2956,
+      "imgFallback": false
+    },
+    {
+      "slug": "cua-nhom",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tu-van/cua-nhom.html",
+      "imgCount": 63,
+      "oldLen": 16285,
+      "newLen": 47090,
+      "imgFallback": false
+    },
+    {
+      "slug": "eurowindow-duoc-vinh-danh-top-10-doanh-nghiep-uy-tin-nganh-kinh-va-thuy-tinh-viet-nam",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-tuc-su-kien/eurowindow-duoc-vinh-danh-top-10-doanh-nghiep-uy-tin-nganh-kinh-va-thuy-tinh-viet-nam.html",
+      "imgCount": 3,
+      "oldLen": 3491,
+      "newLen": 4229,
+      "imgFallback": false
+    },
+    {
+      "slug": "hanh-trinh-van-hoa-eurowindow-2025-nang-luong-lan-toa-tu-nhung-nguoi-dung-dau",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-noi-bo/hanh-trinh-van-hoa-eurowindow-2025-nang-luong-lan-toa-tu-nhung-nguoi-dung-dau.html",
+      "imgCount": 3,
+      "oldLen": 2827,
+      "newLen": 4030,
+      "imgFallback": false
+    },
+    {
+      "slug": "eurowindow-trung-thau-thi-cong-cua-va-vach-nhom-kinh-du-an-the-9-stellars",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-du-an/eurowindow-trung-thau-thi-cong-cua-va-vach-nhom-kinh-du-an-the-9-stellars.html",
+      "imgCount": 1,
+      "oldLen": 403,
+      "newLen": 2800,
+      "imgFallback": false
+    },
+    {
+      "slug": "eurowindow-but-pha-tren-hanh-trinh-tai-thiet-kien-tao-moi-truong-lam-viec-chuyen-nghiep",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-noi-bo/eurowindow-but-pha-tren-hanh-trinh-tai-thiet-kien-tao-moi-truong-lam-viec-chuyen-nghiep.html",
+      "imgCount": 1,
+      "oldLen": 653,
+      "newLen": 2794,
+      "imgFallback": false
+    },
+    {
+      "slug": "eurowindow-14-nam-lien-tiep-duoc-vinh-danh-thuong-hieu-quoc-gia",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-tuc-su-kien/eurowindow-14-nam-lien-tiep-duoc-vinh-danh-thuong-hieu-quoc-gia.html",
+      "imgCount": 2,
+      "oldLen": 652,
+      "newLen": 4054,
+      "imgFallback": false
+    },
+    {
+      "slug": "chuong-trinh-khuyen-mai-dac-biet-danh-cho-khach-hang-mua-kinh-dien-eurowindow",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-khuyen-mai/chuong-trinh-khuyen-mai-dac-biet-danh-cho-khach-hang-mua-kinh-dien-eurowindow.html",
+      "imgCount": 1,
+      "oldLen": 924,
+      "newLen": 3067,
+      "imgFallback": false
+    },
+    {
+      "slug": "eurowindow-thi-cong-he-vach-kinh-mat-dung-khu-nghi-duong-ban-mong-sa-pa",
+      "status": "OK",
+      "url": "https://eurowindow.biz/tin-tuc/tin-du-an/eurowindow-thi-cong-he-vach-kinh-mat-dung-khu-nghi-duong-ban-mong-sa-pa.html",
+      "imgCount": 4,
+      "oldLen": 3501,
+      "newLen": 4105,
+      "imgFallback": false
+    }
+  ]
+}
