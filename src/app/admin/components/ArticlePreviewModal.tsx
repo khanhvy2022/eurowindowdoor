@@ -16,9 +16,10 @@ export function ArticlePreviewModal({
   onClose,
   data,
   category = 'Tin tức',
-  date = new Date().toLocaleDateString('vi-VN'),
+  date = '',
 }: ArticlePreviewModalProps) {
   const [device, setDevice] = useState<'desktop' | 'mobile'>('desktop');
+  const displayDate = date || 'Gần đây';
 
   if (!isOpen) return null;
 
@@ -80,7 +81,7 @@ export function ArticlePreviewModal({
                 <span className="text-xs font-bold text-[#005ba7] bg-blue-50 px-2.5 py-1 rounded-full uppercase">
                   {category}
                 </span>
-                <span className="text-xs text-gray-400">• {date}</span>
+                <span className="text-xs text-gray-400">• {displayDate}</span>
               </div>
               <h1 className="text-2xl md:text-3xl font-black text-gray-900 leading-tight">
                 {data.title || 'Tiêu đề bài viết chưa nhập...'}
