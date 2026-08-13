@@ -33,13 +33,15 @@ export function SEOScorePanel({
     secondaryKeywords,
   };
 
-  const result: SEOAnalysisResult = calculateSEOScore(fullData);
+  const result: SEOAnalysisResult = React.useMemo(() => {
+    return calculateSEOScore(fullData);
+  }, [data.title, data.content, data.excerpt, data.slug, focusKeyword, secondaryKeywords]);
 
   React.useEffect(() => {
     if (onAnalysisChange) {
       onAnalysisChange(result);
     }
-  }, [result.overallScore, focusKeyword, secondaryKeywords, data.title, data.content, data.excerpt, data.slug]);
+  }, [result.overallScore, onAnalysisChange]);
 
   return (
     <div className="space-y-4">
