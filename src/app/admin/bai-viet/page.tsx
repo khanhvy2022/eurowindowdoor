@@ -2,11 +2,13 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { ArticlePreviewModal } from '@/app/admin/components/ArticlePreviewModal';
 
 export default function ArticleManagerPage() {
   const [articles, setArticles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [previewArticle, setPreviewArticle] = useState<any | null>(null);
 
   const fetchArticles = async () => {
     try {
@@ -90,13 +92,14 @@ export default function ArticleManagerPage() {
                   <th className="p-3 sm:p-4">Hình ảnh</th>
                   <th className="p-3 sm:p-4">Tiêu đề & Slug</th>
                   <th className="p-3 sm:p-4">Danh mục</th>
+                  <th className="p-3 sm:p-4">Điểm SEO</th>
                   <th className="p-3 sm:p-4">Ngày đăng</th>
                   <th className="p-3 sm:p-4 text-right">Thao tác</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {filteredArticles.map((article) => (
-                  <tr key={article.id || article.slug} className="hover:bg-blue-50/30 transition-colors">
+                  <tr key={article.id || article._id || article.slug} className="hover:bg-blue-50/30 transition-colors">
                     <td className="p-3 sm:p-4">
                       <img
                         src={article.image || '/images/default.jpg'}
@@ -116,18 +119,38 @@ export default function ArticleManagerPage() {
                         {article.category || 'Tin tức'}
                       </span>
                     </td>
+                    <td className="p-3 sm:p-4">
+                      {typeof article.seoScore === 'number' && article.seoScore > 0 ? (
+                        <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-extrabold ${
+                          article.seoScore >= 85 ? 'bg-emerald-100 text-emerald-800' :
+                          article.seoScore >= 70 ? 'bg-blue-100 text-blue-800' :
+                          article.seoScore >= 50 ? 'bg-amber-100 text-amber-800' : 'bg-red-100 text-red-800'
+                        }`}>
+                          {article.seoScore}/100
+                        </span>
+                      ) : (
+                        <span className="text-gray-400 text-xs italic">Chưa chấm</span>
+                      )}
+                    </td>
                     <td className="p-3 sm:p-4 text-xs text-gray-500 whitespace-nowrap">
                       {article.date || 'Gần đây'}
                     </td>
                     <td className="p-3 sm:p-4 text-right whitespace-nowrap space-x-2">
+                      <button
+                        onClick={() => setPreviewArticle(article)}
+                        className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-xs font-bold transition inline-flex items-center gap-1 border border-slate-200"
+                        title="Xem trước bài đăng"
+                      >
+                        👁️ Xem trước
+                      </button>
                       <Link
-                        href={`/admin/bai-viet/${article.id || article.slug}/chinh-sua`}
+                        href={`/admin/bai-viet/${article.id || article._id || article.slug}/chinh-sua`}
                         className="px-2.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-[#005ba7] rounded-lg text-xs font-bold transition inline-block"
                       >
                         ✏️ Sửa
                       </Link>
                       <button
-                        onClick={() => handleDelete(article.id || article.slug)}
+                        onClick={() => handleDelete(article.id || article._id || article.slug)}
                         className="px-2.5 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-bold transition inline-block"
                       >
                         🗑️ Xóa
@@ -140,6 +163,23 @@ export default function ArticleManagerPage() {
           </div>
         )}
       </div>
+
+      {/* Article Live Preview Modal */}
+      {previewArticle && (
+        <ArticlePreviewModal
+          isOpen={!!previewArticle}
+          onClose={() => setPreviewArticle(null)}
+          data={{
+            title: previewArticle.title,
+            slug: previewArticle.slug,
+            excerpt: previewArticle.excerpt,
+            content: previewArticle.content,
+            image: previewArticle.image,
+          }}
+          category={previewArticle.category}
+          date={previewArticle.date}
+        />
+      )}
     </div>
   );
 }
