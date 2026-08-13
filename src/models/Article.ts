@@ -8,6 +8,10 @@ export interface IArticle extends Document {
   image: string;
   date: string;
   category: string;
+  focusKeyword?: string;
+  secondaryKeywords?: string[];
+  seoScore?: number;
+  seoAnalysis?: any;
 }
 
 const ArticleSchema: Schema = new Schema({
@@ -17,7 +21,11 @@ const ArticleSchema: Schema = new Schema({
   content: { type: String, required: true },
   image: { type: String, default: '' },
   date: { type: String, default: () => new Date().toISOString().split('T')[0] },
-  category: { type: String, default: 'Tin tức' }
+  category: { type: String, default: 'Tin tức' },
+  focusKeyword: { type: String, default: '' },
+  secondaryKeywords: { type: [String], default: [] },
+  seoScore: { type: Number, default: 0 },
+  seoAnalysis: { type: Schema.Types.Mixed, default: null }
 }, {
   timestamps: true // adds createdAt and updatedAt automatically
 });
