@@ -1,11 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
-import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css';
-
-// Import react-quill dynamically with SSR disabled
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false, loading: () => <p className="text-gray-500">Đang tải trình soạn thảo...</p> });
+import React from 'react';
 
 interface EditorProps {
   value: string;
@@ -14,34 +9,17 @@ interface EditorProps {
 }
 
 export default function Editor({ value, onChange, placeholder = 'Nhập nội dung bài viết...' }: EditorProps) {
-  // Modules configuration for ReactQuill
-  const modules = useMemo(() => ({
-    toolbar: [
-      [{ header: [2, 3, 4, false] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      ['link', 'image', 'video'],
-      ['clean'],
-    ],
-  }), []);
-
-  const formats = [
-    'header',
-    'bold', 'italic', 'underline', 'strike', 'blockquote',
-    'list', 'bullet',
-    'link', 'image', 'video'
-  ];
-
   return (
-    <div className="bg-white">
-      <ReactQuill 
-        theme="snow"
+    <div className="bg-white space-y-2">
+      <div className="flex items-center gap-2 p-2 bg-slate-100 rounded-t-xl border border-gray-200 text-xs font-semibold text-gray-600">
+        <span>📝 Trình Soạn Thảo HTML / Văn Bản Bài Viết</span>
+      </div>
+      <textarea
         value={value}
-        onChange={onChange}
-        modules={modules}
-        formats={formats}
+        onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="h-[400px] mb-12" // Leave margin at bottom because quill toolbar/editor adds height
+        rows={14}
+        className="w-full p-4 border border-gray-200 rounded-b-xl text-xs sm:text-sm font-mono leading-relaxed focus:ring-1 focus:ring-[#005ba7] focus:outline-none bg-slate-50/50"
       />
     </div>
   );

@@ -3,15 +3,10 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
+import Editor from '@/components/Editor';
 import { SEOScorePanel } from '@/app/admin/components/seo/SEOScorePanel';
 import { ArticlePreviewModal } from '@/app/admin/components/ArticlePreviewModal';
 import { SEOAnalysisResult } from '@/lib/seo/analyzer/types';
-
-const Editor = dynamic(() => import('@/components/Editor'), {
-  ssr: false,
-  loading: () => <div className="p-4 bg-gray-50 text-gray-500 text-xs italic rounded-xl border border-gray-200">⏳ Đang tải trình soạn thảo văn bản...</div>
-});
 
 export default function AddArticlePage() {
   const router = useRouter();
