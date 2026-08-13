@@ -102,6 +102,14 @@ export default function ShowroomPage() {
                         {sr.phone}
                       </a>
                     </p>
+                    {sr.email && (
+                      <p className="flex items-center text-gray-600">
+                        <span className="font-bold text-gray-800 min-w-[65px]">Email:</span>
+                        <a href={`mailto:${sr.email}`} className="text-[#005ba7] hover:underline truncate">
+                          {sr.email}
+                        </a>
+                      </p>
+                    )}
                     {sr.hours && (
                       <p className="flex items-center text-gray-500">
                         <span className="font-semibold min-w-[65px]">{t('sr_hours_label')}</span>
