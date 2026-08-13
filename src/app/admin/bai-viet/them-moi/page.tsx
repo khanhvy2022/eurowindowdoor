@@ -18,19 +18,24 @@ export default function AddArticlePage() {
   });
 
   const generateSlug = (text: string) => {
-    return text.toString().toLowerCase()
+    return text
+      .toString()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'D')
+      .toLowerCase()
+      .trim()
       .replace(/\s+/g, '-')
       .replace(/[^\w\-]+/g, '')
-      .replace(/\-\-+/g, '-')
-      .replace(/^-+/, '')
-      .replace(/-+$/, '');
+      .replace(/\-\-+/g, '-');
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => {
       const updated = { ...prev, [name]: value };
-      if (name === 'title' && !prev.slug) {
+      if (name === 'title') {
         updated.slug = generateSlug(value);
       }
       return updated;
@@ -47,13 +52,14 @@ export default function AddArticlePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-      if (res.ok) {
+      const data = await res.json();
+      if (res.ok && data.success) {
         router.push('/admin/bai-viet');
       } else {
-        alert('Có lỗi xảy ra');
+        alert(data.message || 'Có lỗi xảy ra khi tạo bài viết');
       }
-    } catch (error) {
-      alert('Lỗi kết nối');
+    } catch (error: any) {
+      alert('Lỗi kết nối: ' + (error.message || 'Không thể gửi yêu cầu'));
     } finally {
       setLoading(false);
     }
