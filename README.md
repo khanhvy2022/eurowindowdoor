@@ -1,5 +1,24 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## remove-ai-marks
+
+Local, stdlib-only skill for cleaning AI provenance marks (invisible Unicode, C2PA/EXIF/XMP, container metadata) from user-owned files. Full docs: [`docs/remove-ai-marks.md`](docs/remove-ai-marks.md).
+
+```bash
+PY=venv\Scripts\python.exe
+SK=skills/remove-ai-marks/scripts
+$PY $SK/inspect_file.py --json notes.md
+$PY $SK/clean_file.py notes.md -o notes.cleaned.md
+$PY $SK/clean_file.py shot.png -o shot.cleaned.png
+```
+
+Tests (stdlib unittest, no pytest):
+
+```bash
+venv\Scripts\python.exe -m unittest discover -s tests/remove_ai_marks -t .
+npm run test:remove-ai-marks
+```
+
 ## Getting Started
 
 First, run the development server:

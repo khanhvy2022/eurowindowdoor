@@ -1,17 +1,98 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-light: var(--primary-light);
+  --color-deep-navy: var(--deep-navy);
+  --color-near-black: var(--near-black);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-gold: var(--accent-gold);
+  --color-accent-green: var(--accent-green);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
 @layer base {
   :root {
+    --background: #ffffff;
+    --foreground: #0f172a;
+    --card: #ffffff;
+    --card-foreground: #0f172a;
+    --popover: #ffffff;
+    --popover-foreground: #0f172a;
     --primary: #005ba7;
+    --primary-foreground: #ffffff;
     --primary-dark: #00386c;
     --primary-light: #3385cb;
+    --deep-navy: #06142a;
+    --near-black: #0f1115;
+    --secondary: #f1f5f9;
+    --secondary-foreground: #0f172a;
+    --muted: #f8fafc;
+    --muted-foreground: #64748b;
+    --accent: #f59e0b;
+    --accent-foreground: #ffffff;
     --accent-gold: #f59e0b;
     --accent-green: #10b981;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --border: #e2e8f0;
+    --input: #e2e8f0;
+    --ring: #005ba7;
+    --radius: 0.5rem;
     --text-title: #005ba7;
     --bg-gray: #f8fafc;
   }
+
+  .dark {
+    --background: #06142a;
+    --foreground: #f8fafc;
+    --card: #0a1f3c;
+    --card-foreground: #f8fafc;
+    --popover: #0a1f3c;
+    --popover-foreground: #f8fafc;
+    --primary: #005ba7;
+    --primary-foreground: #ffffff;
+    --primary-dark: #00386c;
+    --primary-light: #3385cb;
+    --deep-navy: #06142a;
+    --near-black: #0f1115;
+    --secondary: #1e293b;
+    --secondary-foreground: #f8fafc;
+    --muted: #0f172a;
+    --muted-foreground: #94a3b8;
+    --accent: #f59e0b;
+    --accent-foreground: #0f172a;
+    --accent-gold: #f59e0b;
+    --accent-green: #10b981;
+    --destructive: #7f1d1d;
+    --destructive-foreground: #f8fafc;
+    --border: #1e293b;
+    --input: #1e293b;
+    --ring: #3385cb;
+  }
 }
+
 
 html {
   scroll-behavior: smooth;
