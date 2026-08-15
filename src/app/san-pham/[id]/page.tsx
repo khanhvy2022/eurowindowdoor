@@ -62,66 +62,8 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
     .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, 3);
 
-  // Product JSON-LD Schema.org
-  const productJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: productName,
-    image: galleryList.map((img) => `https://eurowindowdoor.com${img}`),
-    description: productDesc,
-    brand: {
-      '@type': 'Brand',
-      name: 'Eurowindow',
-    },
-    category: productCat,
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'VND',
-      price: '0',
-      availability: 'https://schema.org/InStock',
-      url: `https://eurowindowdoor.com/san-pham/${product.slug}`,
-      seller: {
-        '@type': 'Organization',
-        name: 'Eurowindow Việt Nam',
-      },
-    },
-  };
-
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: isEn ? 'Home' : 'Trang chủ',
-        item: 'https://eurowindowdoor.com',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: isEn ? 'Products' : 'Sản phẩm',
-        item: 'https://eurowindowdoor.com/san-pham',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: productName,
-        item: `https://eurowindowdoor.com/san-pham/${product.slug}`,
-      },
-    ],
-  };
-
   return (
     <main className="min-h-screen bg-gray-50 font-sans">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
       <Header />
 
       <div className="pt-[130px] pb-20">

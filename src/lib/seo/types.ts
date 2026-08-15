@@ -221,7 +221,6 @@ export type SchemaType =
   | 'HowTo'
   | 'Video'
   | 'Review'
-  | 'AggregateRating'
   | 'WebSite'
   | 'SearchAction'
   | 'Service';

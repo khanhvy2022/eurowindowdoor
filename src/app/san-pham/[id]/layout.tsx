@@ -1,5 +1,10 @@
 import { Metadata } from 'next';
 import { productsData } from '@/data/products';
+import {
+  generateProductJsonLd,
+  generateProductBreadcrumbJsonLd,
+  BASE_URL,
+} from '@/lib/seo/product-schema';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -32,14 +37,39 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
           alt: product.name,
         },
       ],
-      url: `https://eurowindowdoor.com/san-pham/${product.slug}`,
+      url: `${BASE_URL}/san-pham/${product.slug}`,
     },
     alternates: {
-      canonical: `https://eurowindowdoor.com/san-pham/${product.slug}`,
+      canonical: `${BASE_URL}/san-pham/${product.slug}`,
     },
   };
 }
 
-export default function ProductDetailLayout({ children }: LayoutProps) {
-  return <>{children}</>;
+export default async function ProductDetailLayout({ children, params }: LayoutProps) {
+  const resolvedParams = await params;
+  const product = productsData.find(
+    (p) => p.slug === resolvedParams.id || p.id === resolvedParams.id
+  );
+
+  if (!product) {
+    return <>{children}</>;
+  }
+
+  const productUrl = `${BASE_URL}/san-pham/${product.slug}`;
+  const productSchema = generateProductJsonLd({ product, url: productUrl });
+  const breadcrumbSchema = generateProductBreadcrumbJsonLd(product);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      {children}
+    </>
+  );
 }

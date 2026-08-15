@@ -71,8 +71,38 @@ function buildProduct(data: Record<string, unknown>) {
     offers: data.offers ?? {
       '@type': 'Offer',
       priceCurrency: 'VND',
-      availability: 'https://schema.org/InStock',
+      price: '0',
+      availability: 'https://schema.org/PreOrder',
+      itemCondition: 'https://schema.org/NewCondition',
       seller: { '@type': 'Organization', name: 'Eurowindow' },
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: 'VN',
+        },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 7,
+            maxValue: 30,
+            unitCode: 'DAY',
+          },
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 1,
+            maxValue: 5,
+            unitCode: 'DAY',
+          },
+        },
+      },
+      hasMerchantReturnPolicy: {
+        '@type': 'MerchantReturnPolicy',
+        applicableCountry: 'VN',
+        returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+        merchantReturnLink: 'https://eurowindowdoor.com/chinh-sach',
+      },
     },
     ...data,
   };
@@ -175,21 +205,8 @@ function buildWebSite() {
   };
 }
 
-function buildAggregateRating(data: Record<string, unknown>) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: data.productName ?? 'Eurowindow Product',
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: data.ratingValue ?? '4.8',
-      reviewCount: data.reviewCount ?? '100',
-      bestRating: '5',
-      worstRating: '1',
-    },
-    ...data,
-  };
-}
+// NOTE: buildAggregateRating removed — no real review/rating data exists.
+// Adding fake ratings violates Google structured data policies.
 
 // ─── Simple Validation ─────────────────────────────────────────────────────────
 
@@ -230,7 +247,7 @@ export function generateSchema(input: SchemaGeneratorInput): SchemaGeneratorResu
     case 'HowTo':              schema = buildHowTo(data); break;
     case 'Service':            schema = buildService(data); break;
     case 'WebSite':            schema = buildWebSite(); break;
-    case 'AggregateRating':    schema = buildAggregateRating(data); break;
+    // AggregateRating removed — no real review data exists
     default:                   schema = { '@context': 'https://schema.org', '@type': type, ...data };
   }
 
