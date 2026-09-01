@@ -59,6 +59,26 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
   {
+    "source": "/tin-tuc/tin-khuyen-mai/chuong-trinh-khuyen-mai-dac-biet-danh-cho-khach-hang-mua-kinh-dien-eurowindow.html",
+    "destination": "/tin-tuc/chuong-trinh-khuyen-mai-dac-biet-danh-cho-khach-hang-mua-kinh-dien-eurowindow",
+    "permanent": true
+  },
+  {
+    "source": "/tin-tuc/tin-tuc-su-kien/eurowindow-14-nam-lien-tiep-duoc-vinh-danh-thuong-hieu-quoc-gia.html",
+    "destination": "/tin-tuc/eurowindow-14-nam-lien-tiep-duoc-vinh-danh-thuong-hieu-quoc-gia",
+    "permanent": true
+  },
+  {
+    "source": "/tin-tuc/tin-tuc-su-kien/eurowindow-but-pha-tren-hanh-trinh-tai-thiet-kien-tao-moi-truong-lam-viec-chuyen-nghiep.html",
+    "destination": "/tin-tuc/eurowindow-but-pha-tren-hanh-trinh-tai-thiet-kien-tao-moi-truong-lam-viec-chuyen-nghiep",
+    "permanent": true
+  },
+  {
+    "source": "/tin-tuc/tin-du-an/eurowindow-trung-thau-thi-cong-cua-va-vach-nhom-kinh-du-an-the-9-stellars.html",
+    "destination": "/tin-tuc/eurowindow-trung-thau-thi-cong-cua-va-vach-nhom-kinh-du-an-the-9-stellars",
+    "permanent": true
+  },
+  {
     "source": "/2024/11/eurowindow-22-nam-dong-hanh-cung-nganh-vat-lieu-xay-dung-phat-trien-ben-vung.html",
     "destination": "/tin-tuc/eurowindow-22-nam-dong-hanh-cung-nganh-vat-lieu-xay-dung-phat-trien-ben-vung",
     "permanent": true

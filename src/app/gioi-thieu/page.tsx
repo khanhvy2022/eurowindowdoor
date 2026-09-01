@@ -180,55 +180,48 @@ export default function GioiThieuPage() {
 
               <p className="mb-6">
                 {isEn
-                  ? 'Eurowindow owns 5 major manufacturing complexes with a total area of over 50 hectares in Hanoi, Binh Duong, and Da Nang. All factories are equipped with modern automated technology imported from world-leading corporations in Germany, Italy, and Switzerland (Elumatec, Lisec, Biesse, Haupt).'
-                  : 'Eurowindow sở hữu 5 cụm nhà máy sản xuất quy mô lớn với tổng diện tích hơn 50 ha tại Hà Nội, Bình Dương và Đà Nẵng. Toàn bộ nhà máy được trang bị dây chuyền công nghệ tự động hóa hiện đại nhập khẩu đồng bộ từ các tập đoàn hàng đầu thế giới tại Đức, Ý, Thụy Sĩ (Elumatec, Lisec, Biesse, Haupt).'
+                  ? 'Eurowindow owns 5 major manufacturing complexes equipped with modern automated technology imported from world-leading corporations in Germany, Italy, and Switzerland (Elumatec, Lisec, Biesse, Haupt).'
+                  : 'Eurowindow sở hữu 5 cụm nhà máy sản xuất quy mô lớn được trang bị dây chuyền công nghệ tự động hóa hiện đại nhập khẩu đồng bộ từ các tập đoàn hàng đầu thế giới tại Đức, Ý, Thụy Sĩ (Elumatec, Lisec, Biesse, Haupt).'
                 }
               </p>
 
               <div className="space-y-4">
                 <div className="flex items-start gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100">
-                  <div className="w-10 h-10 rounded-lg bg-[#005ba7] text-white flex items-center justify-center font-bold shrink-0">F1</div>
+                  <div className="w-10 h-10 rounded-lg bg-[#005ba7] text-white flex items-center justify-center font-bold shrink-0 text-xs">NM1</div>
                   <div>
-                    <h4 className="font-bold text-gray-900 text-base">{isEn ? 'Factory 1 (Quang Minh IZ, Me Linh, Hanoi)' : 'Nhà máy 1 (KCN Quang Minh, Mê Linh, Hà Nội)'}</h4>
-                    <p className="text-xs text-gray-600 mt-1">
-                      {isEn 
-                        ? 'Specializes in producing galvanized steel core uPVC doors, automatic sensor doors, and soundproof Low-E double glass units.'
-                        : 'Chuyên sản xuất cửa nhựa uPVC lõi thép mạ kẽm, cửa tự động cảm biến và hộp kính cách âm Low-E.'
-                      }
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100">
-                  <div className="w-10 h-10 rounded-lg bg-[#005ba7] text-white flex items-center justify-center font-bold shrink-0">F2</div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-base">{isEn ? 'Factory 2 (Dong Anh IZ, Hanoi)' : 'Nhà máy 2 (KCN Đông Anh, Hà Nội)'}</h4>
-                    <p className="text-xs text-gray-600 mt-1">
-                      {isEn 
-                        ? 'Processing center for high-end aluminum doors and Unitized glass curtain walls for skyscrapers.'
-                        : 'Trung tâm gia công cửa nhôm cao cấp, vách nhôm kính mặt dựng Unitized cho các tòa nhà chọc trời.'
-                      }
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100">
-                  <div className="w-10 h-10 rounded-lg bg-[#005ba7] text-white flex items-center justify-center font-bold shrink-0">F3</div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-base">{isEn ? 'Factory 3 (Tan Uyen IZ, Binh Duong)' : 'Nhà máy 3 (KCN Tân Uyên, Bình Dương)'}</h4>
+                    <h4 className="font-bold text-gray-900 text-base">
+                      {isEn ? 'Factory 1: Lot 15, Quang Minh Industrial Zone, Me Linh, Hanoi' : 'Nhà máy 1: Lô 15, Khu Công Nghiệp Quang Minh, Mê Linh, Hà Nội'}
+                    </h4>
                     <p className="text-xs text-gray-600 mt-1">
                       {isEn
-                        ? 'Specializes in thermally modified solid wood processing, MDF veneer doors, and 60-120 min fire-resistant doors.'
-                        : 'Chuyên chế biến gỗ tự nhiên biến tính nhiệt, cửa gỗ MDF veneer và cửa gỗ chống cháy 60-120 phút.'
+                        ? 'Specializes in producing galvanized steel core uPVC doors, automatic sensor doors, high-end aluminum doors, and soundproof Low-E double glass units.'
+                        : 'Chuyên sản xuất cửa nhựa uPVC lõi thép mạ kẽm, cửa nhôm cao cấp, cửa tự động cảm biến và hộp kính cách âm Low-E tiêu chuẩn Châu Âu.'
                       }
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100">
-                  <div className="w-10 h-10 rounded-lg bg-[#005ba7] text-white flex items-center justify-center font-bold shrink-0">F4</div>
+                  <div className="w-10 h-10 rounded-lg bg-[#005ba7] text-white flex items-center justify-center font-bold shrink-0 text-xs">NM2</div>
                   <div>
-                    <h4 className="font-bold text-gray-900 text-base">{isEn ? 'Factory 4 (Hoa Khanh IZ, Da Nang)' : 'Nhà máy 4 (KCN Hòa Khánh, Đà Nẵng)'}</h4>
+                    <h4 className="font-bold text-gray-900 text-base">
+                      {isEn ? 'Factory 2: Quarter 4, Uyen Hung Town, Tan Yen District, Binh Duong' : 'Nhà máy 2: Khu 4, Thị Trấn Uyên Hưng, Huyện Tân Yên, Tỉnh Bình Dương'}
+                    </h4>
+                    <p className="text-xs text-gray-600 mt-1">
+                      {isEn
+                        ? 'Southern manufacturing complex specializing in wooden doors, thermally modified solid wood, 60-120 min fire-rated doors, and aluminum glass curtain walls.'
+                        : 'Tổ hợp sản xuất phía Nam chuyên gia công cửa gỗ tự nhiên biến tính nhiệt, cửa gỗ chống cháy 60-120 phút QCVN và hệ cửa nhôm kính cao cấp.'
+                      }
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100">
+                  <div className="w-10 h-10 rounded-lg bg-[#005ba7] text-white flex items-center justify-center font-bold shrink-0 text-xs">NM3</div>
+                  <div>
+                    <h4 className="font-bold text-gray-900 text-base">
+                      {isEn ? 'Factory 3: Lot 3, Hoa Khanh Industrial Zone, Lien Chieu, Da Nang' : 'Nhà máy 3: Lô Số 3, KCN Hòa Khánh, Q.Liên Chiểu, TP.Đà Nẵng'}
+                    </h4>
                     <p className="text-xs text-gray-600 mt-1">
                       {isEn
                         ? 'Supplying aluminum glass doors & wooden doors for Central Vietnam and Central Highlands markets.'
@@ -239,13 +232,30 @@ export default function GioiThieuPage() {
                 </div>
 
                 <div className="flex items-start gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100">
-                  <div className="w-10 h-10 rounded-lg bg-[#005ba7] text-white flex items-center justify-center font-bold shrink-0">F5</div>
+                  <div className="w-10 h-10 rounded-lg bg-[#005ba7] text-white flex items-center justify-center font-bold shrink-0 text-xs">NM4</div>
                   <div>
-                    <h4 className="font-bold text-gray-900 text-base">{isEn ? 'Factory 5 (Di An IZ, Binh Duong)' : 'Nhà máy 5 (KCN Dĩ An, Bình Dương)'}</h4>
+                    <h4 className="font-bold text-gray-900 text-base">
+                      {isEn ? 'Factory 4: Lot 49, Quang Minh Industrial Zone, Me Linh, Hanoi' : 'Nhà máy 4: Lô 49, Khu Công Nghiệp Quang Minh, Mê Linh, Hà Nội'}
+                    </h4>
                     <p className="text-xs text-gray-600 mt-1">
                       {isEn
-                        ? 'Complex for manufacturing Unitized curtain walls and aluminum roller shutters.'
-                        : 'Tổ hợp sản xuất vách nhôm kính lớn Unitized và cửa cuốn nhôm khe thoáng chống giật.'
+                        ? 'Processing center for high-end aluminum doors and Unitized glass curtain walls for high-rise buildings.'
+                        : 'Trung tâm gia công cửa nhôm cao cấp, vách nhôm kính mặt dựng Unitized cho các công trình cao tầng trọng điểm.'
+                      }
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100">
+                  <div className="w-10 h-10 rounded-lg bg-[#005ba7] text-white flex items-center justify-center font-bold shrink-0 text-xs">NM5</div>
+                  <div>
+                    <h4 className="font-bold text-gray-900 text-base">
+                      {isEn ? 'Factory 5: Quarter 7, Uyen Hung Town, Tan Uyen District, Binh Duong' : 'Nhà máy 5: Khu 7, Thị Trấn Uyên Hưng, Huyện Tân Uyên, Tỉnh Bình Dương'}
+                    </h4>
+                    <p className="text-xs text-gray-600 mt-1">
+                      {isEn
+                        ? 'Complex for manufacturing Unitized curtain walls and aluminum roller shutters for the Southern market.'
+                        : 'Tổ hợp sản xuất vách nhôm kính Unitized và cửa cuốn nhôm khe thoáng cho thị trường phía Nam.'
                       }
                     </p>
                   </div>
@@ -315,7 +325,13 @@ export default function GioiThieuPage() {
                   <p>{isEn ? 'Eurowindow Office Building, No. 02 Ton That Tung, Kim Lien, Hanoi' : 'Tòa nhà Văn phòng Eurowindow Office Building, Số 02 Tôn Thất Tùng, Kim Liên, Hà Nội'}</p>
                   <p className="text-white font-bold pt-2">🏬 {isEn ? 'Southern Branch:' : 'Chi nhánh Miền Nam:'}</p>
                   <p>{isEn ? '39 Bis Mac Dinh Chi St., Tan Dinh Ward, HCMC' : '39 Bis Mạc Đĩnh Chi, P. Tân Định, TP.HCM'}</p>
-                  <p>☎️ {isEn ? 'Hotline:' : 'Hotline:'} 0966 994 338</p>
+                  <p className="text-white font-bold pt-2">🏭 {isEn ? 'Manufacturing Plants:' : 'Hệ thống nhà máy:'}</p>
+                  <p>• NM1: {isEn ? 'Lot 15, Quang Minh IZ, Me Linh, Hanoi' : 'Lô 15, KCN Quang Minh, Mê Linh, Hà Nội'}</p>
+                  <p>• NM2: {isEn ? 'Quarter 4, Uyen Hung, Tan Yen, Binh Duong' : 'Khu 4, TT. Uyên Hưng, Huyện Tân Yên, Bình Dương'}</p>
+                  <p>• NM3: {isEn ? 'Lot 3, Hoa Khanh IZ, Lien Chieu, Da Nang' : 'Lô Số 3, KCN Hòa Khánh, Q.Liên Chiểu, Đà Nẵng'}</p>
+                  <p>• NM4: {isEn ? 'Lot 49, Quang Minh IZ, Me Linh, Hanoi' : 'Lô 49, KCN Quang Minh, Mê Linh, Hà Nội'}</p>
+                  <p>• NM5: {isEn ? 'Quarter 7, Uyen Hung, Tan Uyen, Binh Duong' : 'Khu 7, TT. Uyên Hưng, Huyện Tân Uyên, Bình Dương'}</p>
+                  <p className="pt-2">☎️ {isEn ? 'Hotline:' : 'Hotline:'} 0966 994 338</p>
                   <p>📧 Email: thangtq2@eurowindow.biz</p>
                 </div>
                 <div className="space-y-2">

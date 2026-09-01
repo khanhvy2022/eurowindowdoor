@@ -18,6 +18,11 @@ export const metadata: Metadata = {
     description: 'Hệ thống Showroom hiện đại trải dài từ Bắc vào Nam.',
     url: 'https://eurowindowdoor.com/showroom',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Showroom Eurowindow - Trải Nghiệm Thực Tế Sản Phẩm Cao Cấp',
+    description: 'Hệ thống Showroom hiện đại trải dài từ Bắc vào Nam.',
+  },
 };
 
 export default function ShowroomLayout({

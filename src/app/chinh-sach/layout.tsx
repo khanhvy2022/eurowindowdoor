@@ -17,6 +17,11 @@ export const metadata: Metadata = {
     description: 'Chính sách bảo hành và bảo trì hàng đầu ngành cửa tại Việt Nam.',
     url: 'https://eurowindowdoor.com/chinh-sach',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Chính Sách Eurowindow - Cam Kết Chất Lượng & Bảo Hành Uy Tín',
+    description: 'Chính sách bảo hành và bảo trì hàng đầu ngành cửa tại Việt Nam.',
+  },
 };
 
 export default function PoliciesLayout({

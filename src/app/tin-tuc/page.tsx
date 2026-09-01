@@ -2,8 +2,7 @@ import React, { Suspense } from 'react';
 import NewsContent from './NewsContent';
 import connectToDatabase from '@/lib/db';
 import { Article } from '@/models/Article';
-
-
+import { newsArticles } from '@/data/news';
 
 // Next.js config to ensure fresh data
 export const revalidate = 60;
@@ -23,6 +22,10 @@ export default async function TinTucPage() {
     }
   } catch (err: any) {
     console.warn('Could not fetch tin-tuc articles from MongoDB:', err.message || err);
+  }
+
+  if (!serializedArticles || serializedArticles.length === 0) {
+    serializedArticles = newsArticles as any[];
   }
 
   return (

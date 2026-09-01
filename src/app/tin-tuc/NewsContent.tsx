@@ -17,10 +17,16 @@ export default function NewsContent({ initialCategory, articlesData }: { initial
 
   useEffect(() => {
     if (catParam) {
-      if (catParam.includes('sự kiện') || catParam.includes('nội bộ')) setSelectedCategory('Tin nội bộ');
-      else if (catParam.includes('dự án')) setSelectedCategory('Tin dự án');
-      else if (catParam.includes('khuyến mãi')) setSelectedCategory('Tin khuyến mãi');
-      else if (catParam.includes('Tư vấn')) setSelectedCategory('Tư vấn');
+      const clean = catParam.toLowerCase();
+      if (clean.includes('sự kiện') || clean.includes('nội bộ') || clean.includes('su-kien') || clean.includes('noi-bo') || clean.includes('event')) {
+        setSelectedCategory('Tin nội bộ');
+      } else if (clean.includes('dự án') || clean.includes('du-an') || clean.includes('project')) {
+        setSelectedCategory('Tin dự án');
+      } else if (clean.includes('khuyến mãi') || clean.includes('khuyen-mai') || clean.includes('promo')) {
+        setSelectedCategory('Tin khuyến mãi');
+      } else if (clean.includes('tư vấn') || clean.includes('tu-van') || clean.includes('consult')) {
+        setSelectedCategory('Tư vấn');
+      }
     }
   }, [catParam]);
 

@@ -167,6 +167,61 @@ export default function RootLayout({
           addressRegion: 'Thành phố Hồ Chí Minh',
           addressCountry: 'VN',
         }
+      },
+      {
+        '@type': 'LocalBusiness',
+        name: 'Nhà máy Eurowindow 1 - KCN Quang Minh',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'Lô 15, Khu Công Nghiệp Quang Minh',
+          addressLocality: 'Huyện Mê Linh',
+          addressRegion: 'Hà Nội',
+          addressCountry: 'VN',
+        }
+      },
+      {
+        '@type': 'LocalBusiness',
+        name: 'Nhà máy Eurowindow 2 - Tân Yên, Bình Dương',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'Khu 4, Thị Trấn Uyên Hưng',
+          addressLocality: 'Huyện Tân Yên',
+          addressRegion: 'Bình Dương',
+          addressCountry: 'VN',
+        }
+      },
+      {
+        '@type': 'LocalBusiness',
+        name: 'Nhà máy Eurowindow 3 - KCN Hòa Khánh, Đà Nẵng',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'Lô Số 3, KCN Hòa Khánh, Q.Liên Chiểu',
+          addressLocality: 'Thành phố Đà Nẵng',
+          addressRegion: 'Đà Nẵng',
+          addressCountry: 'VN',
+        }
+      },
+      {
+        '@type': 'LocalBusiness',
+        name: 'Nhà máy Eurowindow 4 - KCN Quang Minh (Lô 49)',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'Lô 49, Khu Công Nghiệp Quang Minh',
+          addressLocality: 'Huyện Mê Linh',
+          addressRegion: 'Hà Nội',
+          addressCountry: 'VN',
+        }
+      },
+      {
+        '@type': 'LocalBusiness',
+        name: 'Nhà máy Eurowindow 5 - Tân Uyên, Bình Dương',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'Khu 7, Thị Trấn Uyên Hưng',
+          addressLocality: 'Huyện Tân Uyên',
+          addressRegion: 'Bình Dương',
+          addressCountry: 'VN',
+        }
       }
     ]
   };

@@ -19,15 +19,16 @@ const EUROWINDOW_ORG = {
   ],
   contactPoint: {
     '@type': 'ContactPoint',
-    telephone: '1800-599-909',
+    telephone: '0966-994-338',
     contactType: 'customer service',
     areaServed: 'VN',
     availableLanguage: 'Vietnamese',
   },
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Lô B3, KCN Thăng Long, Đông Anh',
-    addressLocality: 'Hà Nội',
+    streetAddress: 'Tòa nhà Văn phòng Eurowindow Office Building, Số 02 Tôn Thất Tùng, Kim Liên',
+    addressLocality: 'Quận Đống Đa',
+    addressRegion: 'Hà Nội',
     addressCountry: 'VN',
   },
 };

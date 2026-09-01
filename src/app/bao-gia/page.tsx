@@ -19,11 +19,29 @@ import {
 } from './pricing';
 
 export const metadata: Metadata = {
-  title: 'Báo Giá Cửa Nhôm Kính & Cửa Nhựa uPVC',
+  title: 'Báo Giá Cửa Nhôm Kính & Cửa Nhựa uPVC Eurowindow',
   description:
     'Bảng giá tham khảo cửa nhôm EA55, EA60i và cửa nhựa uPVC Kommerling, uPVC Asia theo m². Hotline 0966 994 338 để nhận báo giá chi tiết chính xác.',
+  keywords: [
+    'Báo giá cửa Eurowindow',
+    'Giá cửa nhôm EA55',
+    'Báo giá cửa nhôm EA60i',
+    'Báo giá cửa nhựa uPVC Kommerling',
+    'Giá cửa nhựa uPVC Asia'
+  ],
   alternates: {
     canonical: 'https://eurowindowdoor.com/bao-gia',
+  },
+  openGraph: {
+    title: 'Báo Giá Cửa Nhôm Kính & Cửa Nhựa uPVC Eurowindow Mới Nhất',
+    description: 'Bảng giá tham khảo hệ cửa nhôm cao cấp và cửa uPVC lõi thép tiêu chuẩn Châu Âu.',
+    url: 'https://eurowindowdoor.com/bao-gia',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Báo Giá Cửa Nhôm Kính & Cửa Nhựa uPVC Eurowindow',
+    description: 'Bảng giá tham khảo hệ cửa nhôm cao cấp và cửa uPVC lõi thép tiêu chuẩn Châu Âu.',
   },
 };
 

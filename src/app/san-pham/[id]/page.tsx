@@ -8,17 +8,33 @@ import { FloatingContact } from '@/components/FloatingContact';
 import { productsData } from '@/data/products';
 import { ImageWithFallback } from '@/components/ImageWithFallback';
 import { useLanguage } from '@/context/LanguageContext';
+import ProductsContent from '../ProductsContent';
 import { use } from 'react';
 
 interface ProductDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
+const PRODUCT_CATEGORY_MAP: Record<string, string> = {
+  'cua-nhom': 'Cửa nhôm',
+  'cua-upvc': 'Cửa uPVC',
+  'cua-go': 'Cửa gỗ',
+  'cua-cuon': 'Cửa cuốn',
+  'cua-tu-dong': 'Cửa tự động',
+  'san-pham-kinh': 'Sản phẩm kính',
+  'cua-thong-minh': 'Cửa thông minh',
+  'cua-di-nhom-eurowindow': 'Cửa nhôm',
+  'cua-tu-dong-thong-minh': 'Cửa thông minh',
+};
 
 export default function ProductDetailPage({ params }: ProductDetailPageProps) {
   const resolvedParams = use(params);
   const { language, t } = useLanguage();
   const isEn = language === 'ENG';
+
+  if (PRODUCT_CATEGORY_MAP[resolvedParams.id]) {
+    return <ProductsContent initialCategory={PRODUCT_CATEGORY_MAP[resolvedParams.id]} />;
+  }
 
   const product = productsData.find(
     (p) => p.slug === resolvedParams.id || p.id === resolvedParams.id

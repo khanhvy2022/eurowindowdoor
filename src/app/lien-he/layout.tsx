@@ -18,6 +18,11 @@ export const metadata: Metadata = {
     description: 'Liên hệ ngay để nhận hỗ trợ tư vấn giải pháp cửa và vách kính tiêu chuẩn Châu Âu.',
     url: 'https://eurowindowdoor.com/lien-he',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Liên Hệ Eurowindow - Hotline 0966 994 338 | Tư Vấn Báo Giá',
+    description: 'Liên hệ ngay để nhận hỗ trợ tư vấn giải pháp cửa và vách kính tiêu chuẩn Châu Âu.',
+  },
 };
 
 export default function ContactLayout({

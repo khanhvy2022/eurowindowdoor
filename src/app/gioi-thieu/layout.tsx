@@ -14,9 +14,14 @@ export const metadata: Metadata = {
     canonical: 'https://eurowindowdoor.com/gioi-thieu',
   },
   openGraph: {
-  title: 'Giới Thiệu - 23 Năm Tiên Phong Công Nghệ Châu Âu',
+    title: 'Giới Thiệu - 23 Năm Tiên Phong Công Nghệ Châu Âu',
     description: 'Hành trình tiên phong kiến tạo không gian sống xanh và hiện đại.',
     url: 'https://eurowindowdoor.com/gioi-thieu',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Giới Thiệu - 23 Năm Tiên Phong Công Nghệ Châu Âu',
+    description: 'Hành trình tiên phong kiến tạo không gian sống xanh và hiện đại.',
   },
 };
 

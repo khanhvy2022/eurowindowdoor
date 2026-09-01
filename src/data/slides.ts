@@ -22,7 +22,7 @@ export const slidesData: Slide[] = [
     title: 'BỘ GIẢI PHÁP CỬA NHÔM KÍNH TIÊU CHUẨN CHÂU ÂU CAO CẤP',
     titleEn: 'PREMIUM EUROPEAN STANDARD ALUMINUM GLASS DOOR SOLUTIONS',
     alt: 'Cửa nhôm kính Eurowindow',
-    link: '/san-pham/cua-di-nhom-eurowindow'
+    link: '/san-pham/cua-nhom'
   },
   {
     id: '3',
@@ -38,6 +38,6 @@ export const slidesData: Slide[] = [
     title: 'CỬA THÔNG MINH BẢO MẬT VÂN TAY & KHUÔN MẶT CÔNG NGHỆ 4.0',
     titleEn: 'SMART DOORS WITH FINGERPRINT & FACE RECOGNITION 4.0 TECHNOLOGY',
     alt: 'Cửa thông minh 4.0',
-    link: '/san-pham/cua-tu-dong-thong-minh'
+    link: '/san-pham/cua-thong-minh'
   }
 ];

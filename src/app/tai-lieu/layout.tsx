@@ -18,6 +18,11 @@ export const metadata: Metadata = {
     description: 'Thư viện tài liệu kỹ thuật và brochure giải pháp vật liệu xây dựng xanh.',
     url: 'https://eurowindowdoor.com/tai-lieu',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Tài Liệu Kỹ Thuật Eurowindow - Tải Catalog Chính Thức',
+    description: 'Thư viện tài liệu kỹ thuật và brochure giải pháp vật liệu xây dựng xanh.',
+  },
 };
 
 export default function DocumentsLayout({

@@ -156,7 +156,7 @@ export const Header: React.FC = () => {
                     <li><Link href="/san-pham/cua-so-mo-truot-upvc-4-canh" className="hover:text-[#005ba7] hover:font-semibold flex items-center gap-1.5"><span>•</span> {isEn ? '45dB Soundproof uPVC Windows' : 'Cửa sổ uPVC lõi thép cách âm 45dB'}</Link></li>
                   </ul>
                   <div className="pt-1">
-                    <Link href="/san-pham?cat=Cửa+nhôm" className="text-[11px] font-bold text-[#005ba7] hover:underline flex items-center gap-1">
+                    <Link href="/san-pham/cua-nhom" className="text-[11px] font-bold text-[#005ba7] hover:underline flex items-center gap-1">
                       {isEn ? 'View All Aluminum Doors (20 models) →' : 'Xem tất cả Cửa nhôm (20 dòng) →'}
                     </Link>
                   </div>
@@ -178,7 +178,7 @@ export const Header: React.FC = () => {
                     <li><Link href="/san-pham/cua-cuon-nhom-khe-thoang-easd45" className="hover:text-[#005ba7] hover:font-semibold flex items-center gap-1.5"><span>•</span> {isEn ? 'Safety Vent Aluminum Roller Shutters' : 'Cửa cuốn khe thoáng EASD45 chống giật'}</Link></li>
                   </ul>
                   <div className="pt-1">
-                    <Link href="/san-pham?cat=Cửa+gỗ" className="text-[11px] font-bold text-[#005ba7] hover:underline flex items-center gap-1">
+                    <Link href="/san-pham/cua-go" className="text-[11px] font-bold text-[#005ba7] hover:underline flex items-center gap-1">
                       {isEn ? 'View All Wood & Roller Shutters →' : 'Xem tất cả Cửa gỗ & Cửa cuốn →'}
                     </Link>
                   </div>
@@ -200,7 +200,7 @@ export const Header: React.FC = () => {
                     <li><Link href="/san-pham/rem-trong-hop-kinh" className="hover:text-[#005ba7] font-semibold flex items-center gap-1.5"><span>★</span> {isEn ? 'Motorized Blinds Inside IGU Glass' : 'Rèm trong hộp kính điều khiển điện'}</Link></li>
                   </ul>
                   <div className="pt-1">
-                    <Link href="/san-pham?cat=Cửa+thông+minh" className="text-[11px] font-bold text-[#005ba7] hover:underline flex items-center gap-1">
+                    <Link href="/san-pham/cua-thong-minh" className="text-[11px] font-bold text-[#005ba7] hover:underline flex items-center gap-1">
                       {isEn ? 'Explore Smart Doors 2026 →' : 'Khám phá Cửa thông minh 2026 →'}
                     </Link>
                   </div>
@@ -369,12 +369,12 @@ export const Header: React.FC = () => {
               </button>
               {mobileSubmenu === 'products' && (
                 <div className="pl-4 py-2 space-y-2 normal-case font-normal text-gray-600 bg-gray-50 rounded-lg my-1">
-                  <Link href="/san-pham?cat=Cửa+nhôm" className="block py-1 font-semibold text-[#005ba7]">{isEn ? 'Aluminum Doors & Windows' : 'Cửa nhôm cao cấp'}</Link>
-                  <Link href="/san-pham?cat=Cửa+uPVC" className="block py-1 font-semibold text-[#005ba7]">{isEn ? 'uPVC Doors & Windows' : 'Cửa uPVC lõi thép'}</Link>
-                  <Link href="/san-pham?cat=Cửa+gỗ" className="block py-1 font-semibold text-[#005ba7]">{isEn ? 'Wooden Doors' : 'Cửa gỗ cao cấp'}</Link>
-                  <Link href="/san-pham?cat=Cửa+cuốn" className="block py-1 font-semibold text-[#005ba7]">{isEn ? 'Roller Shutters' : 'Cửa cuốn nhôm'}</Link>
-                  <Link href="/san-pham?cat=Cửa+tự+động" className="block py-1 font-semibold text-[#005ba7]">{isEn ? 'Automatic Doors' : 'Cửa tự động cảm biến'}</Link>
-                  <Link href="/san-pham?cat=Sản+phẩm+kính" className="block py-1 font-semibold text-[#005ba7]">{isEn ? 'Glass Products & Smart Glass' : 'Sản phẩm kính & Kính điện'}</Link>
+                  <Link href="/san-pham/cua-nhom" className="block py-1 font-semibold text-[#005ba7]">{isEn ? 'Aluminum Doors & Windows' : 'Cửa nhôm cao cấp'}</Link>
+                  <Link href="/san-pham/cua-upvc" className="block py-1 font-semibold text-[#005ba7]">{isEn ? 'uPVC Doors & Windows' : 'Cửa uPVC lõi thép'}</Link>
+                  <Link href="/san-pham/cua-go" className="block py-1 font-semibold text-[#005ba7]">{isEn ? 'Wooden Doors' : 'Cửa gỗ cao cấp'}</Link>
+                  <Link href="/san-pham/cua-cuon" className="block py-1 font-semibold text-[#005ba7]">{isEn ? 'Roller Shutters' : 'Cửa cuốn nhôm'}</Link>
+                  <Link href="/san-pham/cua-tu-dong" className="block py-1 font-semibold text-[#005ba7]">{isEn ? 'Automatic Doors' : 'Cửa tự động cảm biến'}</Link>
+                  <Link href="/san-pham/san-pham-kinh" className="block py-1 font-semibold text-[#005ba7]">{isEn ? 'Glass Products & Smart Glass' : 'Sản phẩm kính & Kính điện'}</Link>
                 </div>
               )}
             </div>
