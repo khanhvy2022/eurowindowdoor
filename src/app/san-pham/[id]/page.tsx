@@ -31,13 +31,14 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
   const resolvedParams = use(params);
   const { language, t } = useLanguage();
   const isEn = language === 'ENG';
+  const cleanId = resolvedParams.id.replace(/\.html$/, '');
 
-  if (PRODUCT_CATEGORY_MAP[resolvedParams.id]) {
-    return <ProductsContent initialCategory={PRODUCT_CATEGORY_MAP[resolvedParams.id]} />;
+  if (PRODUCT_CATEGORY_MAP[cleanId] || PRODUCT_CATEGORY_MAP[resolvedParams.id]) {
+    return <ProductsContent initialCategory={PRODUCT_CATEGORY_MAP[cleanId] || PRODUCT_CATEGORY_MAP[resolvedParams.id]} />;
   }
 
   const product = productsData.find(
-    (p) => p.slug === resolvedParams.id || p.id === resolvedParams.id
+    (p) => p.slug === cleanId || p.id === cleanId || p.slug === resolvedParams.id || p.id === resolvedParams.id
   );
 
   if (!product) {

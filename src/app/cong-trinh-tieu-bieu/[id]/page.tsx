@@ -17,12 +17,14 @@ const CATEGORY_MAP: Record<string, string> = {
 
 export async function generateMetadata({ params }: ProjectDetailPageProps): Promise<Metadata> {
   const resolvedParams = await params;
+  const cleanId = resolvedParams.id.replace(/\.html$/, '');
   
-  if (CATEGORY_MAP[resolvedParams.id]) {
-    return { title: `${CATEGORY_MAP[resolvedParams.id]} | Công trình tiêu biểu` };
+  if (CATEGORY_MAP[cleanId] || CATEGORY_MAP[resolvedParams.id]) {
+    const catName = CATEGORY_MAP[cleanId] || CATEGORY_MAP[resolvedParams.id];
+    return { title: `${catName} | Công trình tiêu biểu` };
   }
   
-  const project = projectsData.find((p) => p.slug === resolvedParams.id || p.id === resolvedParams.id);
+  const project = projectsData.find((p) => p.slug === cleanId || p.id === cleanId || p.slug === resolvedParams.id || p.id === resolvedParams.id);
 
   if (!project) {
     return { title: 'Công trình tiêu biểu' };
@@ -46,16 +48,17 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
 
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
   const resolvedParams = await params;
+  const cleanId = resolvedParams.id.replace(/\.html$/, '');
   
-  if (CATEGORY_MAP[resolvedParams.id]) {
+  if (CATEGORY_MAP[cleanId] || CATEGORY_MAP[resolvedParams.id]) {
     return (
       <Suspense fallback={<div className="min-h-screen bg-white" />}>
-        <ProjectsContent initialCategory={CATEGORY_MAP[resolvedParams.id]} />
+        <ProjectsContent initialCategory={CATEGORY_MAP[cleanId] || CATEGORY_MAP[resolvedParams.id]} />
       </Suspense>
     );
   }
   
-  const project = projectsData.find((p) => p.slug === resolvedParams.id || p.id === resolvedParams.id);
+  const project = projectsData.find((p) => p.slug === cleanId || p.id === cleanId || p.slug === resolvedParams.id || p.id === resolvedParams.id);
 
   if (!project) {
     notFound();

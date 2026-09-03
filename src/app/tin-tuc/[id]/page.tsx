@@ -19,21 +19,23 @@ export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
+  const cleanId = id.replace(/\.html$/, '');
   
-  if (CATEGORY_MAP[id]) {
-    return { title: `${CATEGORY_MAP[id]} | Tin tức` };
+  if (CATEGORY_MAP[cleanId] || CATEGORY_MAP[id]) {
+    const catName = CATEGORY_MAP[cleanId] || CATEGORY_MAP[id];
+    return { title: `${catName} | Tin tức` };
   }
   
   let article: any = null;
   try {
     const conn = await connectToDatabase();
     if (conn) {
-      article = await Article.findOne({ slug: id }).lean() || await Article.findById(id).lean().catch(() => null);
+      article = await Article.findOne({ $or: [{ slug: cleanId }, { slug: id }] }).lean() || await Article.findById(cleanId).lean().catch(() => null);
     }
   } catch (e) {}
 
   if (!article) {
-    article = newsArticles.find((a) => a.slug === id || a.id === id);
+    article = newsArticles.find((a) => a.slug === cleanId || a.id === cleanId || a.slug === id || a.id === id);
   }
 
   if (article) {
@@ -59,8 +61,10 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function ArticleDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const cleanId = id.replace(/\.html$/, '');
 
-  if (CATEGORY_MAP[id]) {
+  if (CATEGORY_MAP[cleanId] || CATEGORY_MAP[id]) {
+    const catName = CATEGORY_MAP[cleanId] || CATEGORY_MAP[id];
     let serializedArticles: any[] = [];
     try {
       const conn = await connectToDatabase();
@@ -80,7 +84,7 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
 
     return (
       <Suspense fallback={<div className="min-h-screen bg-white" />}>
-        <NewsContent initialCategory={CATEGORY_MAP[id]} articlesData={serializedArticles} />
+        <NewsContent initialCategory={catName} articlesData={serializedArticles} />
       </Suspense>
     );
   }
@@ -89,12 +93,12 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
   try {
     const conn = await connectToDatabase();
     if (conn) {
-      rawArticle = await Article.findOne({ slug: id }).lean() || await Article.findById(id).lean().catch(() => null);
+      rawArticle = await Article.findOne({ $or: [{ slug: cleanId }, { slug: id }] }).lean() || await Article.findById(cleanId).lean().catch(() => null);
     }
   } catch (e) {}
 
   if (!rawArticle) {
-    rawArticle = newsArticles.find((a) => a.slug === id || a.id === id);
+    rawArticle = newsArticles.find((a) => a.slug === cleanId || a.id === cleanId || a.slug === id || a.id === id);
   }
 
   if (!rawArticle) {

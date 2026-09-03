@@ -25,25 +25,26 @@ const PRODUCT_CATEGORY_MAP: Record<string, string> = {
 
 export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
   const resolvedParams = await params;
+  const cleanId = resolvedParams.id.replace(/\.html$/, '');
 
-  if (PRODUCT_CATEGORY_MAP[resolvedParams.id]) {
-    const catName = PRODUCT_CATEGORY_MAP[resolvedParams.id];
+  if (PRODUCT_CATEGORY_MAP[cleanId] || PRODUCT_CATEGORY_MAP[resolvedParams.id]) {
+    const catName = PRODUCT_CATEGORY_MAP[cleanId] || PRODUCT_CATEGORY_MAP[resolvedParams.id];
     return {
       title: `${catName} Eurowindow - Bộ Sưu Tập Chính Hãng`,
       description: `Khám phá các dòng sản phẩm ${catName} tiêu chuẩn Châu Âu cao cấp từ Eurowindow.`,
       alternates: {
-        canonical: `${BASE_URL}/san-pham/${resolvedParams.id}`,
+        canonical: `${BASE_URL}/san-pham/${cleanId}`,
       },
       openGraph: {
         title: `${catName} Eurowindow Chính Hãng`,
         description: `Khám phá các dòng sản phẩm ${catName} tiêu chuẩn Châu Âu cao cấp.`,
-        url: `${BASE_URL}/san-pham/${resolvedParams.id}`,
+        url: `${BASE_URL}/san-pham/${cleanId}`,
       },
     };
   }
 
   const product = productsData.find(
-    (p) => p.slug === resolvedParams.id || p.id === resolvedParams.id
+    (p) => p.slug === cleanId || p.id === cleanId || p.slug === resolvedParams.id || p.id === resolvedParams.id
   );
 
   if (!product) {
@@ -76,8 +77,9 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
 
 export default async function ProductDetailLayout({ children, params }: LayoutProps) {
   const resolvedParams = await params;
+  const cleanId = resolvedParams.id.replace(/\.html$/, '');
   const product = productsData.find(
-    (p) => p.slug === resolvedParams.id || p.id === resolvedParams.id
+    (p) => p.slug === cleanId || p.id === cleanId || p.slug === resolvedParams.id || p.id === resolvedParams.id
   );
 
   if (!product) {
