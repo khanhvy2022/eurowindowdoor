@@ -75,6 +75,7 @@ export const Footer: React.FC = () => {
             <li><a href="https://www.eurowindowvn.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Eurowindow-Chi Nhánh Miền Nam</a></li>
             <li><a href="https://www.eurowindowhcm.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Cửa Eurowindow Hồ Chí Minh</a></li>
             <li><a href="https://www.eurowindow.top/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Cửa Eurowindow Miền Nam</a></li>
+            <li><a href="https://eurowindow.asia/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Eurowindow Asia</a></li>
           </ul>
         </div>
 
