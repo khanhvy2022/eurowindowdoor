@@ -89,6 +89,13 @@ for (const product of productsData) {
       if (!dest || !dest['addressCountry']) addError(product.name, product.slug, 'shippingDetails.destination', 'Missing shippingDestination');
       const deliveryTime = shipping['deliveryTime'] as Record<string, unknown>;
       if (!deliveryTime) addWarning(product.name, product.slug, 'shippingDetails.deliveryTime', 'Missing deliveryTime');
+      const rate = shipping['shippingRate'] as Record<string, unknown>;
+      if (!rate) {
+        addError(product.name, product.slug, 'shippingDetails.shippingRate', 'Missing shippingRate (GSC warning)');
+      } else {
+        if (rate['@type'] !== 'MonetaryAmount') addError(product.name, product.slug, 'shippingRate.@type', 'Must be MonetaryAmount');
+        if (rate['currency'] !== 'VND') addError(product.name, product.slug, 'shippingRate.currency', 'Currency must be VND');
+      }
     }
 
     // hasMerchantReturnPolicy validation (GSC fix)

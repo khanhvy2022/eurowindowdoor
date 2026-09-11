@@ -78,6 +78,11 @@ function buildProduct(data: Record<string, unknown>) {
       seller: { '@type': 'Organization', name: 'Eurowindow' },
       shippingDetails: {
         '@type': 'OfferShippingDetails',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: 0,
+          currency: 'VND',
+        },
         shippingDestination: {
           '@type': 'DefinedRegion',
           addressCountry: 'VN',

@@ -33,6 +33,11 @@ const EUROWINDOW_RETURN_POLICY = {
 
 const EUROWINDOW_SHIPPING_DETAILS = {
   '@type': 'OfferShippingDetails' as const,
+  shippingRate: {
+    '@type': 'MonetaryAmount' as const,
+    value: 0,
+    currency: 'VND',
+  },
   shippingDestination: {
     '@type': 'DefinedRegion' as const,
     addressCountry: 'VN',
