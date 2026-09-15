@@ -15,7 +15,6 @@ export const FeaturedProjects: React.FC = () => {
 
   const filteredProjects = projectsData.filter((p) => p.category === activeCategory);
   const mainProject = filteredProjects[currentSlideIndex] || filteredProjects[0];
-  const secondaryProjects = filteredProjects.filter((_, idx) => idx !== currentSlideIndex);
 
   // Auto-slide vertical dots for active category
   useEffect(() => {
@@ -33,7 +32,7 @@ export const FeaturedProjects: React.FC = () => {
   return (
     <section className="py-28 bg-white font-sans overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Text Column (4 cols) */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
@@ -189,48 +188,6 @@ export const FeaturedProjects: React.FC = () => {
               </motion.div>
             );
           })()}
-        </div>
-
-        {/* Bottom 2 Grid Project Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {secondaryProjects.map((proj, idx) => {
-            const projName = isEn && proj.nameEn ? proj.nameEn : proj.name;
-            const projLocation = isEn && proj.locationEn ? proj.locationEn : proj.location;
-
-            return (
-              <motion.div 
-                key={proj.id} 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: idx * 0.2 }}
-                className="relative h-64 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl group"
-              >
-                <Link href={`/cong-trinh-tieu-bieu/${proj.slug}`} className="relative block w-full h-full">
-                  <ImageWithFallback
-                    src={proj.image}
-                    alt={projName}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-
-                  <div className="absolute bottom-6 left-6 text-white">
-                    <h3 className="text-sm font-bold uppercase tracking-wide mb-1 group-hover:text-amber-300 transition-colors">
-                      {projName}
-                    </h3>
-                    <p className="text-xs text-white/80 flex items-center">
-                      <svg className="w-3 h-3 mr-1 fill-current text-amber-400" viewBox="0 0 24 24">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                      </svg>
-                      {projLocation} • {proj.year}
-                    </p>
-                  </div>
-                </Link>
-              </motion.div>
-            );
-          })}
         </div>
       </div>
     </section>
