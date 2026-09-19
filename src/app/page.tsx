@@ -9,8 +9,8 @@ import { Article } from '@/models/Article';
 export const revalidate = 60;
 
 // Below-the-fold: lazy load to reduce initial bundle
-const InteractiveEstimator = dynamic(() =>
-  import('@/components/InteractiveEstimator').then(m => ({ default: m.InteractiveEstimator }))
+const HeroVideo = dynamic(() =>
+  import('@/components/HeroVideo').then(m => ({ default: m.default }))
 );
 const FeaturedProjects = dynamic(() =>
   import('@/components/FeaturedProjects').then(m => ({ default: m.FeaturedProjects }))
@@ -57,7 +57,7 @@ export default async function Home() {
       <HeroBanner />
       <IntroduceSection />
       <ProductCategories />
-      <InteractiveEstimator />
+      <HeroVideo />
       <FeaturedProjects />
       <AdsBanner />
       <NotableAchievements />

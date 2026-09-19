@@ -247,3 +247,65 @@ body::after {
 .animate-fade-in {
   animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* Editorial eyebrow label */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+/* Ken-burns background effect */
+@keyframes kenBurns {
+  0%   { transform: scale(1) translate(0%, 0%); }
+  50%  { transform: scale(1.06) translate(-1.5%, -1%); }
+  100% { transform: scale(1.04) translate(1%, 0.5%); }
+}
+
+.ken-burns {
+  animation: kenBurns 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Awards Marquee Slide */
+@keyframes awardMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.awards-marquee {
+  will-change: transform;
+  animation: awardMarquee var(--marquee-duration, 46s) linear infinite;
+}
+
+.awards-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Midnight & Champagne Dark Mode Guarantees */
+.bg-midnight {
+  background-color: #0a1f3c !important;
+}
+.bg-midnight-card {
+  background-color: #0d2548 !important;
+}
+.bg-midnight-deep {
+  background-color: #06142a !important;
+}
+.text-champagne {
+  color: #c5a968 !important;
+}
+.border-champagne {
+  border-color: rgba(197, 169, 104, 0.35) !important;
+}
