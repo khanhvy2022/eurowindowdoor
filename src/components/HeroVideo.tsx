@@ -79,13 +79,13 @@ export default function HeroVideo() {
 
       {/* ── Content — bottom-anchored ── */}
       <div
-        className="relative z-10 h-full flex flex-col justify-end pb-16 lg:pb-20 px-6 sm:px-10 lg:px-16 xl:px-20 max-w-[1536px] mx-auto w-full"
+        className="relative z-10 h-full flex flex-col justify-end pb-12 sm:pb-16 lg:pb-20 px-5 sm:px-10 lg:px-16 xl:px-20 max-w-[1536px] mx-auto w-full"
         style={{
           opacity: isLoaded ? 1 : 0,
           transition: "opacity 0.6s 0.2s ease",
         }}
       >
-        <div className="space-y-6 max-w-2xl">
+        <div className="space-y-4 sm:space-y-6 max-w-2xl">
           {/* Eyebrow */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -157,7 +157,7 @@ export default function HeroVideo() {
         initial={{ opacity: 0, x: 16 }}
         animate={isLoaded ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 0.8, ease: EASE, delay: 0.9 }}
-        className="absolute right-6 lg:right-10 bottom-16 lg:bottom-20 z-20"
+        className="hidden sm:block absolute right-6 lg:right-10 bottom-16 lg:bottom-20 z-20"
       >
         <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-5 py-3 text-right">
           <p className="text-[9px] font-bold text-white/60 uppercase tracking-[0.18em]">

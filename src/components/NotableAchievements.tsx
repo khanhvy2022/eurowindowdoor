@@ -368,7 +368,7 @@ export const NotableAchievements: React.FC = () => {
             {/* Right: Technical Support Image Showcase (5 cols) */}
             <div
               style={{ backgroundColor: "#06142a" }}
-              className="lg:col-span-5 bg-midnight-deep rounded-3xl overflow-hidden shadow-2xl border border-white/15 relative flex flex-col justify-between p-0 text-white min-h-[540px] group"
+              className="lg:col-span-5 bg-midnight-deep rounded-3xl overflow-hidden shadow-2xl border border-white/15 relative flex flex-col justify-between p-0 text-white min-h-[420px] sm:min-h-[480px] lg:min-h-[540px] group"
             >
               <Image
                 src="/images/official/architect_hub_hd.jpg"
@@ -391,20 +391,20 @@ export const NotableAchievements: React.FC = () => {
                 <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-4 space-y-2">
                   <p className="text-[12px] font-bold text-[#c5a968] uppercase tracking-wider flex items-center gap-1.5">
                     <FileCode className="w-4 h-4 text-[#c5a968]" />
-                    {isEn ? "TECHNICAL SUPPORT FOR ARCHITECTS" : "HỖ TRỢ THIẾT KẾ & BẢN VẼ BIM"}
+                    {isEn ? "DESIGN CONSULTATION & QUOTATION" : "HỖ TRỢ THIẾT KẾ & Lên Dự Toán"}
                   </p>
                   <ul className="text-[12px] text-slate-200 space-y-1.5">
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
-                      <span>Cung cấp file 3D Revit (.RFA) chuẩn thông số kỹ thuật</span>
+                      <span>{isEn ? "Expert door solution advisory" : "Tư vấn giải pháp cửa phù hợp"}</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
-                      <span>Bản vẽ mặt cắt profile AutoCAD (.DWG) chi tiết</span>
+                      <span>{isEn ? "Review and align with architectural drawings" : "Kiểm tra và đối chiếu với bản vẽ kiến trúc tổng thể"}</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
-                      <span>Hồ sơ thí nghiệm âm học 45dB & chứng chỉ Green Building</span>
+                      <span>{isEn ? "Detailed quotation & material estimation" : "Báo giá chi tiết & lên dự toán vật liệu"}</span>
                     </li>
                   </ul>
                 </div>
@@ -417,7 +417,7 @@ export const NotableAchievements: React.FC = () => {
                   className="bg-midnight/95 backdrop-blur-xl p-6 rounded-t-2xl border-t border-white/15 space-y-2"
                 >
                   <span className="text-[10px] font-bold text-[#c5a968] uppercase tracking-wider block">
-                    {isEn ? "HOTLINE FOR SPEC & TECHNICAL SUPPORT" : "HỖ TRỢ TƯ VẤN KỸ THUẬT 24/7"}
+                    {isEn ? "FREE CONSULTATION & QUOTATION HOTLINE" : "TƯ VẤN & LÊN DỰ TOÁN MIỄN PHÍ"}
                   </span>
                   <a
                     href="tel:0966994338"
@@ -427,8 +427,8 @@ export const NotableAchievements: React.FC = () => {
                   </a>
                   <p className="text-[12.5px] text-slate-300 font-sans">
                     {isEn
-                      ? "Fast response for aluminum-glass structural specs & architectural BIM model queries."
-                      : "Giải đáp mọi thắc mắc kết cấu nhôm kính & hỗ trợ xuất file BIM theo yêu cầu dự án."}
+                      ? "Free consultation on door solutions & quotation aligned with your architectural drawings."
+                      : "Tư vấn giải pháp cửa phù hợp & lên dự toán theo bản vẽ kiến trúc của bạn."}
                   </p>
                 </div>
               </div>
@@ -459,31 +459,33 @@ export const NotableAchievements: React.FC = () => {
             </div>
 
             {/* Category Filter Pills */}
-            <div className="flex items-center gap-1.5 bg-white/[0.08] p-1.5 rounded-2xl border border-white/15 backdrop-blur-md text-[12px] font-bold">
-              {[
-                { id: "all", label: isEn ? "All Awards" : "Tất cả giải thưởng" },
-                { id: "national", label: isEn ? "National Awards" : "Giải thưởng Quốc gia" },
-                { id: "international", label: isEn ? "International ISO" : "Chứng nhận Quốc tế" },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setAwardFilter(tab.id as "all" | "national" | "international")}
-                  className={`px-4 py-2 rounded-xl transition-all duration-300 cursor-pointer ${
-                    awardFilter === tab.id
-                      ? "bg-[#c5a968] text-[#0a1f3c] shadow-md"
-                      : "text-slate-300 hover:text-white hover:bg-white/10"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
+            <div className="overflow-x-auto pb-1 -mb-1">
+              <div className="flex items-center gap-1.5 bg-white/[0.08] p-1.5 rounded-2xl border border-white/15 backdrop-blur-md text-[12px] font-bold w-max min-w-full sm:w-auto sm:min-w-0">
+                {[
+                  { id: "all", label: isEn ? "All Awards" : "Tất cả giải thưởng" },
+                  { id: "national", label: isEn ? "National Awards" : "Giải thưởng Quốc gia" },
+                  { id: "international", label: isEn ? "International ISO" : "Chứng nhận Quốc tế" },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setAwardFilter(tab.id as "all" | "national" | "international")}
+                    className={`px-4 py-2 rounded-xl transition-all duration-300 cursor-pointer whitespace-nowrap ${
+                      awardFilter === tab.id
+                        ? "bg-[#c5a968] text-[#0a1f3c] shadow-md"
+                        : "text-slate-300 hover:text-white hover:bg-white/10"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* Full Width Iconic Project Showcase Slider */}
           <div
             style={{ backgroundColor: "#06142a" }}
-            className="rounded-3xl overflow-hidden shadow-2xl border border-white/15 relative flex flex-col justify-between min-h-[460px] lg:min-h-[540px] p-8 sm:p-12 text-white group"
+            className="rounded-3xl overflow-hidden shadow-2xl border border-white/15 relative flex flex-col justify-between min-h-[380px] sm:min-h-[460px] lg:min-h-[540px] p-5 sm:p-8 md:p-12 text-white group"
           >
             <Image
               src={featuredProjects[activeProjectIdx].img}
@@ -517,18 +519,18 @@ export const NotableAchievements: React.FC = () => {
             </div>
 
             {/* Bottom Caption */}
-            <div className="relative z-10 space-y-3 pt-24 max-w-3xl">
+            <div className="relative z-10 space-y-3 pt-8 sm:pt-20 max-w-3xl">
               <span className="text-[11px] font-bold text-[#c5a968] uppercase tracking-widest block">
                 {isEn ? "COMPLETED ICONIC LANDMARK" : "CÔNG TRÌNH BIỂU TƯỢNG ĐÃ HOÀN THÀNH"}
               </span>
-              <h3 className="font-bold text-[24px] sm:text-[36px] text-white leading-tight drop-shadow-md">
+              <h3 className="font-bold text-[20px] sm:text-[28px] md:text-[36px] text-white leading-tight drop-shadow-md">
                 {featuredProjects[activeProjectIdx].title}
               </h3>
-              <p className="text-[14px] sm:text-[15px] text-slate-200 leading-relaxed font-sans max-w-2xl">
+              <p className="text-[13px] sm:text-[15px] text-slate-200 leading-relaxed font-sans max-w-2xl">
                 {isEn ? featuredProjects[activeProjectIdx].descEn : featuredProjects[activeProjectIdx].desc}
               </p>
 
-              <div className="flex items-center justify-between pt-4 border-t border-white/20">
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/20">
                 <span className="text-[12px] font-bold text-[#c5a968] flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4" />
                   EUROWINDOW QUALITY ASSURED
@@ -559,7 +561,7 @@ export const NotableAchievements: React.FC = () => {
             </span>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border-y border-white/15 py-4 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+          <div className="overflow-hidden rounded-2xl border-y border-white/15 py-4 [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)] sm:[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
             <div
               className="awards-marquee flex w-max select-none"
               style={{ "--marquee-duration": "38s" } as React.CSSProperties}
