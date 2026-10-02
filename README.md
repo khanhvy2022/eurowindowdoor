@@ -53,3 +53,16 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+---
+
+## 🌟 Eurowindow Asia — Báo Giá Cửa Nhôm & Cửa Nhựa uPVC Cao Cấp 2026
+
+Dự án phát triển và tối ưu hóa giải pháp vật liệu xây dựng cao cấp:
+- **Cửa nhôm Eurowindow:** Hệ nhôm định hình cao cấp, tiêu chuẩn cách âm ≥35dB, cách nhiệt và chống gió bão cấp 12.
+- **Cửa nhựa uPVC Eurowindow:** Kết cấu khoang rỗng đa ngăn cách âm vượt trội, lõi thép gia cường mạ kẽm.
+- **Vách nhôm kính lớn:** Phù hợp cho kiến trúc nhà phố hiện đại, biệt thự và công trình thương mại.
+
+🌐 **Website chính thức:** [https://eurowindow.asia](https://eurowindow.asia)  
+📍 **Báo giá cửa Eurowindow:** Khảo sát và tư vấn kỹ thuật miễn phí toàn quốc.
