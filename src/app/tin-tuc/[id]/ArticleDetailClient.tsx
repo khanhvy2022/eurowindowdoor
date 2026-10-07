@@ -116,9 +116,7 @@ export function ArticleDetailClient({ article }: ArticleDetailClientProps) {
         // Remove data-original-* attributes from img (keep src/alt/title only)
         .replace(/\s+data-original-[a-z-]+="[^"]*"/g, '')
         // Remove external links wrapping images (crawler artifacts)
-        .replace(/<a\s+href="https?:\/\/(?!eurowindow)[^"]*"[^>]*>([\s\S]*?)<\/a>/g, '$1')
-        // Remove Google Drive download links
-        .replace(/<a\s+href="https?:\/\/drive\.google[^"]*"[^>]*>[\s\S]*?<\/a>/g, '')
+        .replace(/<a\s+href="https?:\/\/(?!eurowindow)[^"]*"[^>]*>(\s*<img[\s\S]*?)<\/a>/g, '$1')
         // Remove leftover bracket links like [link text](url)
         .replace(/(?<!\!)\[([^\]]+)\]\(https?:\/\/[^)]+\)/g, '$1')
         // Remove paragraphs containing phone numbers concatenated with emails (footer contact artifacts)
