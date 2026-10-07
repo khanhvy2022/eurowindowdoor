@@ -115,7 +115,7 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
     headline: article.title,
-    image: [`https://eurowindowdoor.com${article.image}`],
+    image: [article.image?.startsWith('http') ? article.image : `https://eurowindowdoor.com${article.image}`],
     datePublished: article.date,
     dateModified: article.date,
     author: {

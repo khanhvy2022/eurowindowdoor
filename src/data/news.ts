@@ -32,7 +32,7 @@ export const newsArticles: NewsArticle[] = [
   date: "2026-09-30",
   category: "Tin khuyến mãi",
   categoryEn: "Promotions",
-  image: "/images/khuyen-mai-2026.png",
+  image: "https://eurowindowdoor.com/images/khuyen-mai-2026.png",
   imageAlt: "Thể lệ chương trình khuyến mại Sắm cửa đón sang – Sẵn sàng rinh xế của Eurowindow",
   imageAltEn: "Official Rules of Eurowindow Upgrade Your Doors – Ready to Win a Luxury Car Promotion 2026",
   excerpt: "Từ ngày 30/09/2026 đến 30/11/2026, Công ty Cổ phần Eurowindow triển khai chương trình khuyến mại “Sắm cửa đón sang – Sẵn sàng rinh xế” dành cho khách hàng nhà riêng trên toàn quốc với cơ hội trúng xe Mercedes-Benz C200 trị giá 1,599 tỷ đồng.",
@@ -47,7 +47,7 @@ export const newsArticles: NewsArticle[] = [
   <li><strong>Đối tượng:</strong> Khách hàng nhà riêng trên toàn quốc ký hợp đồng/phụ lục hợp đồng mua sản phẩm của Công ty Cổ phần Eurowindow.</li>
   <li><strong>Điều kiện:</strong> Áp dụng với hợp đồng/phụ lục hợp đồng ký trong thời gian khuyến mại từ ngày 30/09/2026 đến hết ngày 30/11/2026 và hoàn thành thủ tục thanh toán đặt cọc tối thiểu 30% giá trị hợp đồng/phụ lục hợp đồng đến hết ngày 08/12/2026.</li>
 </ul>
-<img src="/images/khuyen-mai-2026.png" alt="Thể lệ chương trình khuyến mại Sắm cửa đón sang – Sẵn sàng rinh xế của Eurowindow" title="Chương trình khuyến mại Sắm cửa đón sang – Sẵn sàng rinh xế Eurowindow 2026" />
+<img src="/images/khuyen-mai-2026.png?v=2026" alt="Thể lệ chương trình khuyến mại Sắm cửa đón sang – Sẵn sàng rinh xế của Eurowindow" title="Chương trình khuyến mại Sắm cửa đón sang – Sẵn sàng rinh xế Eurowindow 2026" />
 <p class="text-center italic">Chương trình khuyến mại “Sắm cửa đón sang – Sẵn sàng rinh xế” từ ngày 30/09/2026 đến 30/11/2026 của Eurowindow</p>
 <h2>5. Nội dung chương trình khuyến mại</h2>
 <h3>Tặng máy giặt kết hợp sấy Bosch</h3>
